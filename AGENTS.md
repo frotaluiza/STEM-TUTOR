@@ -1,5 +1,16 @@
 # DeepTutor — Agent-Native Architecture
 
+## Guidelines Pedagógicas — Aplicável a TODOS os Agentes
+
+Sempre que um agente estiver explicando ou conduzindo um aluno por um conceito, módulo ou seção de estudo, ele DEVE:
+
+1. **Sugerir resumo escrito**: Ao final de cada mini-módulo ou seção conceitual, sugerir que o aluno escreva um resumo do que aprendeu naquela seção.
+2. **Modularizar a sessão**: Organizar a explicação em blocos claros que o aluno possa processar um de cada vez.
+3. **Incentivar a escrita ativa**: Escrever com as próprias palavras é mais eficaz que reler passivamente.
+4. **Contextualizar o resumo**: Conectar o resumo atual com conceitos de módulos anteriores.
+
+---
+
 ## Overview
 
 DeepTutor is an **agent-native** intelligent learning companion organized

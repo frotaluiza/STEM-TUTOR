@@ -8,10 +8,9 @@ import {
   Loader2,
   RotateCcw,
   Trash2,
-  CircleCheck,
-  CircleDot,
-  Circle,
   MessageSquare,
+  Network,
+  List,
 } from "lucide-react";
 
 import {
@@ -21,8 +20,9 @@ import {
   redoProgress,
   type ProgressSummary,
   type MasteryMapResult,
-  type ObjectiveStatus,
 } from "@/lib/learning-api";
+import ModuleMap from "@/components/learning/ModuleMap";
+import ConceptGraph from "@/components/learning/ConceptGraph";
 
 /**
  * Mastery Path dashboard — the persistent "screen" of the mastery experience.
@@ -45,6 +45,7 @@ export default function MasteryPathPage() {
   const [detail, setDetail] = useState<MasteryMapResult | null>(null);
   const [loadingList, setLoadingList] = useState(true);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "graph">("list");
 
   const loadList = useCallback(async () => {
     setLoadingList(true);
@@ -201,173 +202,71 @@ export default function MasteryPathPage() {
             </p>
           </div>
         ) : (
-          <MapView
-            result={detail}
-            zh={!!zh}
-            tr={tr}
-            onContinue={() =>
-              selected && router.push(`/home/${encodeURIComponent(selected)}`)
-            }
-            onRedo={() => selected && handleRedo(selected)}
-            onDelete={() => selected && handleDelete(selected)}
-          />
+          <>
+            <div className="flex items-center justify-between px-6 pt-3 pb-1">
+              <div className="flex items-center gap-1 rounded-lg border border-[var(--border)] p-0.5">
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors cursor-pointer ${
+                    viewMode === "list"
+                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                  List
+                </button>
+                <button
+                  onClick={() => setViewMode("graph")}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors cursor-pointer ${
+                    viewMode === "graph"
+                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  <Network className="w-3.5 h-3.5" />
+                  Graph
+                </button>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => selected && handleRedo(selected)}
+                  title={tr("重置进度", "Reset progress")}
+                  className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-[var(--accent)] cursor-pointer"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => selected && handleDelete(selected)}
+                  title={tr("删除", "Delete")}
+                  className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-red-500/10 hover:text-red-500 cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              {viewMode === "list" ? (
+                <ModuleMap
+                  result={detail}
+                  onContinue={() =>
+                    selected && router.push(`/home/${encodeURIComponent(selected)}`)
+                  }
+                />
+              ) : (
+                <ConceptGraph
+                  result={detail}
+                  onNodeClick={(kpId) =>
+                    router.push(`/home/${encodeURIComponent(selected)}?kp=${kpId}`)
+                  }
+                />
+              )}
+            </div>
+          </>
         )}
       </section>
     </div>
   );
 }
 
-const STATUS_META: Record<
-  ObjectiveStatus,
-  { cn: string; en: string; className: string }
-> = {
-  mastered: { cn: "已掌握", en: "Mastered", className: "text-green-500" },
-  learning: { cn: "学习中", en: "Learning", className: "text-yellow-500" },
-  new: {
-    cn: "未开始",
-    en: "Not started",
-    className: "text-[var(--muted-foreground)]",
-  },
-};
-
-const ACTION_LABEL: Record<string, { cn: string; en: string }> = {
-  probe: { cn: "先探查是否已掌握", en: "Probe — test out first" },
-  practice: { cn: "练习直到达标", en: "Practice until the gate clears" },
-  assess: { cn: "用自己的话解释", en: "Explain it in your own words" },
-  review: { cn: "到期复习", en: "Due for review" },
-  answer_pending: {
-    cn: "有待回答的问题",
-    en: "A question is awaiting your answer",
-  },
-  complete: { cn: "已全部掌握 🎉", en: "All mastered 🎉" },
-};
-
-function StatusIcon({ status }: { status: ObjectiveStatus }) {
-  const cls = `w-3 h-3 shrink-0 ${STATUS_META[status].className}`;
-  if (status === "mastered") return <CircleCheck className={cls} />;
-  if (status === "learning") return <CircleDot className={cls} />;
-  return <Circle className={cls} />;
-}
-
-function MapView({
-  result,
-  zh,
-  tr,
-  onContinue,
-  onRedo,
-  onDelete,
-}: {
-  result: MasteryMapResult;
-  zh: boolean;
-  tr: (cn: string, en: string) => string;
-  onContinue: () => void;
-  onRedo: () => void;
-  onDelete: () => void;
-}) {
-  const { map, next } = result;
-  const pct = map.counts.total
-    ? Math.round((map.counts.mastered / map.counts.total) * 100)
-    : 0;
-  const action = ACTION_LABEL[next.action] ?? {
-    cn: next.reason,
-    en: next.reason,
-  };
-
-  return (
-    <div className="max-w-2xl mx-auto px-6 py-5">
-      {/* Header: progress + next + actions */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-            <span>
-              {map.counts.mastered}/{map.counts.total}{" "}
-              {tr("已掌握", "mastered")}
-            </span>
-            {map.due_reviews > 0 && (
-              <span className="text-yellow-600">
-                · {map.due_reviews} {tr("项待复习", "due for review")}
-              </span>
-            )}
-          </div>
-          <div className="mt-1.5 h-1.5 w-full rounded-full bg-[var(--accent)] overflow-hidden">
-            <div
-              className="h-full bg-green-500 transition-all"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            onClick={onRedo}
-            title={tr("重置进度", "Reset progress")}
-            className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-[var(--accent)] cursor-pointer"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
-          <button
-            onClick={onDelete}
-            title={tr("删除", "Delete")}
-            className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-red-500/10 hover:text-red-500 cursor-pointer"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Next step */}
-      <button
-        onClick={onContinue}
-        className="mt-4 w-full text-left rounded-lg border border-[var(--border)] hover:border-[var(--primary)]/40 hover:bg-[var(--accent)] p-3 transition-colors cursor-pointer"
-      >
-        <div className="text-xs text-[var(--muted-foreground)]">
-          {tr("接下来", "Next")}
-        </div>
-        <div className="mt-0.5 text-sm font-medium text-[var(--foreground)]">
-          {next.action === "complete"
-            ? tr(action.cn, action.en)
-            : `${next.knowledge_point_name} — ${tr(action.cn, action.en)}`}
-        </div>
-        <div className="mt-1 text-xs text-[var(--primary)]">
-          {tr("在对话中继续辅导 →", "Continue tutoring in Chat →")}
-        </div>
-      </button>
-
-      {/* Module / objective map */}
-      <div className="mt-5 space-y-4">
-        {map.modules.map((module) => (
-          <div key={module.id}>
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-[var(--foreground)]">
-                {module.name}
-              </h3>
-              <span className="text-xs text-[var(--muted-foreground)]">
-                {module.mastered}/{module.total}
-              </span>
-            </div>
-            <div className="mt-1.5 space-y-1">
-              {module.knowledge_points.map((kp) => (
-                <div
-                  key={kp.id}
-                  className="flex items-center gap-2 px-2 py-1 rounded-md text-sm"
-                >
-                  <StatusIcon status={kp.status} />
-                  <span className="flex-1 truncate text-[var(--foreground)]">
-                    {kp.name}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-wide text-[var(--muted-foreground)]">
-                    {kp.type}
-                  </span>
-                  <span
-                    className={`text-xs ${STATUS_META[kp.status].className}`}
-                  >
-                    {zh ? STATUS_META[kp.status].cn : STATUS_META[kp.status].en}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+// MapView replaced by ModuleMap (components/learning/ModuleMap.tsx)
