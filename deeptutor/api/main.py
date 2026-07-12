@@ -322,6 +322,7 @@ from deeptutor.api.routers import (
     partners,
     personas,
     plugins_api,
+    project_state,
     question,
     question_notebook,
     quiz_judge,
@@ -425,6 +426,12 @@ app.include_router(
 )
 app.include_router(
     partners.router, prefix="/api/v1/partners", tags=["partners"], dependencies=_admin
+)
+app.include_router(
+    project_state.router,
+    prefix="/api/v1/project",
+    tags=["project"],
+    dependencies=_auth,
 )
 app.include_router(
     attachments.router,
