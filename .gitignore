@@ -11,7 +11,7 @@ data/
 run_code_workspace/
 deeptutor/agents/question/reference_papers/
 deeptutor/services/rag/eg_only_for_analysis/
-/docs/
+# docs/ is tracked for project documentation
 /site/
 .claude
 .agents/
