@@ -1,0 +1,50 @@
+﻿{
+    "project":  "AI STEM Tutor",
+    "slug":  "ai-stem-tutor",
+    "created":  "2026-07-11T21:11:50Z",
+    "last_updated":  "2026-07-11T22:00:38Z",
+    "branch":  "feature/mind-map-module",
+    "last_commit":  "d36e8244 feat: mind map module + pedagogical guidelines + platform messages",
+    "git_log":  "d36e8244 feat: mind map module + pedagogical guidelines + platform messages\r\n3e3b9a6e release: v1.5.1\r\ndf6922bb release: v1.5.0\r\n3d5b669c minor fix\r\nbca6f6e9 release: v1.4.15\r\n4fab4489 minor fix \u0026 new channel\r\n0bbd4668 Merge pull request #604 from spring618/codex/fix-mastery-choice-persistence\r\n85756d01 Merge pull request #602 from VectorPeak/codex/fix-chunk-overlap-zero\r\n943e9fb7 fix mastery choice persistence and grading\r\n8ba7dd2f fix: preserve zero LlamaIndex chunk overlap\r\n8f39545d release: v1.4.14\r\n3b823ae5 minor fixes\r\n284066ad release: v1.4.13\r\ncc1721c9 docs: update DeepTutor technical poster artifact\r\n9983c0a3 fix: partners \u0026 multi-user",
+    "sessions":  [
+                     {
+                         "id":  "playful-mountain",
+                         "title":  "Arquitetura AI STEM Tutor",
+                         "date":  "2026-07-11",
+                         "summary":  "",
+                         "decisions":  [
+
+                                       ],
+                         "files":  [
+
+                                   ],
+                         "todos":  [
+
+                                   ]
+                     },
+                     {
+                         "id":  "playful-mountain",
+                         "title":  "Arquitetura AI STEM Tutor",
+                         "date":  "2026-07-11",
+                         "summary":  "",
+                         "decisions":  [
+
+                                       ],
+                         "files":  [
+
+                                   ],
+                         "todos":  [
+
+                                   ]
+                     }
+                 ],
+    "decisions":  [
+
+                  ],
+    "issues":  [
+
+               ],
+    "todos":  [
+
+              ]
+}
