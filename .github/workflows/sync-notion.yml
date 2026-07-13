@@ -54,7 +54,7 @@ jobs:
 
       - name: Sync sessions to Notion
         env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_API_KEY: ${{ secrets.OPENCODE_WATCHER }}
           SESSOES_DB_ID: "372191ce-57f9-810c-99aa-d5fa31deb926"
           PROJETOS_DB_ID: "9172be34-0056-4f38-aa2a-093339bb5790"
         run: |
