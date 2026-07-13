@@ -42,7 +42,12 @@ jobs:
             echo "slug=${{ inputs.slug }}" >> $GITHUB_OUTPUT
             echo "mode=single" >> $GITHUB_OUTPUT
           else
-            CHANGED=$(git diff --name-only HEAD~1 -- 'kb/sessoes/' | sed 's|kb/sessoes/||;s|\.md||' | tr '\n' ',' | sed 's/,$//')
+            CHANGED=$(git diff --name-only HEAD~1 -- 'kb/sessoes/' 2>/dev/null || echo "")
+            if [ -z "$CHANGED" ]; then
+              CHANGED=$(git diff --name-only HEAD~2 -- 'kb/sessoes/' 2>/dev/null | sed 's|kb/sessoes/||;s|\.md||' | tr '\n' ',' | sed 's/,$//')
+            else
+              CHANGED=$(echo "$CHANGED" | sed 's|kb/sessoes/||;s|\.md||' | tr '\n' ',' | sed 's/,$//')
+            fi
             echo "slug=$CHANGED" >> $GITHUB_OUTPUT
             echo "mode=batch" >> $GITHUB_OUTPUT
           fi
@@ -55,5 +60,4 @@ jobs:
         run: |
           python scripts/kb/gh-sync-notion.py \
             --slugs "${{ steps.changes.outputs.slug }}" \
-            --mode "${{ steps.changes.outputs.mode }}" \
-            --api-key "${{ secrets.NOTION_API_KEY }}"
+            --mode "${{ steps.changes.outputs.mode }}"
