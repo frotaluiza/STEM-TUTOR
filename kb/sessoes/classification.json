@@ -1,0 +1,2156 @@
+{
+  "classification": {
+    "brave-canyon": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-07-05T23:26:23.803Z",
+      "date": "2026-07-05",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.0
+    },
+    "brave-meadow": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "New session - 2026-05-30T20:18:30.225Z (fork #1)",
+      "date": "2026-06-03",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.599824
+    },
+    "brave-panda": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Extract per-output RMSE (@explore subagent)",
+      "date": "2026-06-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "calm-canyon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "New session - 2026-07-11T15:06:05.342Z",
+      "date": "2026-07-11",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.097666
+    },
+    "calm-garden": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-06-14",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.01488
+    },
+    "calm-island": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore opencode note setup (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "calm-nebula": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013506
+    },
+    "calm-orchid": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find results data files (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.019903
+    },
+    "calm-pixel": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Documentar testes no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.028196
+    },
+    "calm-rocket": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Read Ingrid thesis lit review structure (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "calm-sailor": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Find Sadiku PDF download (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00261
+    },
+    "clever-cactus": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research Mathpix alternatives (@general subagent)",
+      "date": "2026-06-02",
+      "agent": "general",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "clever-engine": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research COPPE project article (@general subagent)",
+      "date": "2026-06-15",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.004269
+    },
+    "clever-garden": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-07-12T00:23:03.700Z",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.471286
+    },
+    "clever-island": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find fluxograma, espacos busca, HPD, scatter files (@explore subagent)",
+      "date": "2026-05-29",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "clever-knight": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.375561
+    },
+    "clever-lagoon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore web frontend viewers (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015195
+    },
+    "clever-moon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.025948
+    },
+    "clever-otter": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Adicionar testes opencode framework IA",
+      "date": "2026-06-25",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.068247
+    },
+    "clever-planet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Explore Notion DBs and local vault (@explore subagent)",
+      "date": "2026-06-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013179
+    },
+    "clever-rocket": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Update Notion with new roteiro (@session subagent)",
+      "date": "2026-06-28",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003685
+    },
+    "cosmic-cabin": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-15",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.01211
+    },
+    "cosmic-eagle": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Criar database Test Reports Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.019544
+    },
+    "cosmic-falcon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Add voice input to DeepTutor (@explore subagent)",
+      "date": "2026-06-15",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009807
+    },
+    "cosmic-island": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Find nav items and page patterns (@explore subagent)",
+      "date": "2026-07-13",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.005265
+    },
+    "cosmic-meadow": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Log session to Notion (@session subagent)",
+      "date": "2026-06-01",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "cosmic-moon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find TCC slides repo and desalination branches slide (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009549
+    },
+    "cosmic-panda": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Como acessar todas as seções",
+      "date": "2026-06-04",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009923
+    },
+    "cosmic-rocket": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Últimas entradas deeptutor no Notion",
+      "date": "2026-06-21",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 2.578682
+    },
+    "crisp-cabin": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:33:02.283Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "claude-sonnet-4",
+      "cost": 0.0
+    },
+    "crisp-canyon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore STEM TUTOR project (@explore subagent)",
+      "date": "2026-06-16",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.011958
+    },
+    "crisp-forest": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify AndresManas 2023 V-AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015476
+    },
+    "crisp-meadow": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find MD review papers in TCC folders (@explore subagent)",
+      "date": "2026-07-07",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "crisp-mountain": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Ansari2022 and read new paper (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "crisp-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Log session to Notion (@session subagent)",
+      "date": "2026-06-01",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "crisp-otter": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:33:42.207Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "gpt-4o",
+      "cost": 0.0
+    },
+    "crisp-planet": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-16",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015655
+    },
+    "crisp-river": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Sync session to Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.023643
+    },
+    "crisp-rocket": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find TCC code files (@explore subagent)",
+      "date": "2026-07-08",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "crisp-squid": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Criar database Fontes Projetos Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.030507
+    },
+    "curious-cabin": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research academic papers (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007207
+    },
+    "curious-canyon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-07-08T18:28:28.478Z",
+      "date": "2026-07-08",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "curious-engine": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-07-08T18:40:15.135Z",
+      "date": "2026-07-08",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "curious-forest": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "New session - 2026-07-12T00:04:56.367Z",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.06251
+    },
+    "curious-harbor": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Sessões perdidas do TCC",
+      "date": "2026-06-03",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.053514
+    },
+    "curious-island": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-06-01T20:38:48.987Z",
+      "date": "2026-06-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "curious-lagoon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Criar sessão opencode com dados de sessão anterior",
+      "date": "2026-06-03",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.004678
+    },
+    "curious-meadow": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Central de notícias no Notion",
+      "date": "2026-06-28",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.017894
+    },
+    "curious-nebula": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find CV metrics in TCC code (@explore subagent)",
+      "date": "2026-07-07",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "curious-orchid": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Explore Stage 2 codebase (@explore subagent)",
+      "date": "2026-06-02",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "curious-river": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "eager-cabin": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Documentar teste no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.029376
+    },
+    "eager-falcon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search flux importance SEC GOR papers (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "eager-forest": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Entrada logs opencode e live doc TCC",
+      "date": "2026-06-22",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.105615
+    },
+    "eager-nebula": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Chat para instalação DeepTutor",
+      "date": "2026-06-15",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.141137
+    },
+    "eager-otter": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "New session - 2026-05-30T20:18:30.225Z (fork #1)",
+      "date": "2026-06-03",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.735193
+    },
+    "eager-squid": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor project (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.011886
+    },
+    "eager-tiger": {
+      "project_slug": "plex",
+      "project_name": "Plex / Media",
+      "title": "Baixar Duets no Radarr",
+      "date": "2026-06-09",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.002884
+    },
+    "eager-wizard": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Yang 2023 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007859
+    },
+    "eager-wolf": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-06-27",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007887
+    },
+    "gentle-cactus": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Lisboa variables (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.010795
+    },
+    "gentle-canyon": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "gentle-circuit": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Khayet 2012 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009569
+    },
+    "gentle-engine": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "STEM TUTOR: engenharia elétrica em quadrinhos",
+      "date": "2026-06-16",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.197087
+    },
+    "gentle-forest": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Surrogate do modelo 0D",
+      "date": "2026-06-30",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.05619
+    },
+    "gentle-nebula": {
+      "project_slug": "pinns",
+      "project_name": "PINNs",
+      "title": "Search PINNs MD papers (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.012347
+    },
+    "gentle-otter": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "New session - 2026-05-30T20:18:30.225Z (fork #1)",
+      "date": "2026-06-03",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.451122
+    },
+    "gentle-tiger": {
+      "project_slug": "plex",
+      "project_name": "Plex / Media",
+      "title": "Baixar Letra e Música no Radarr",
+      "date": "2026-06-13",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003109
+    },
+    "glowing-canyon": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.320137
+    },
+    "glowing-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Converter checkboxes não marcados em tarefas",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003895
+    },
+    "glowing-engine": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Assistente semanal e diário de tarefas",
+      "date": "2026-06-11",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.140997
+    },
+    "glowing-garden": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Criar database Test Reports no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.035026
+    },
+    "glowing-meadow": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search flow rate and hydraulic pressure in MD (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "glowing-mountain": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Rodar front e back do Deep Tutor",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006877
+    },
+    "glowing-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Upload 25 fixed-encoding sessions (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.058393
+    },
+    "glowing-panda": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Novo projeto Caminhos do Xadrez",
+      "date": "2026-07-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.041748
+    },
+    "glowing-pixel": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search VMD vs V-AGMD difference (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "glowing-planet": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find overlay plot scripts (@explore subagent)",
+      "date": "2026-07-06",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013493
+    },
+    "glowing-rocket": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find C_NaCl unit in model 0D (@explore subagent)",
+      "date": "2026-06-21",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013395
+    },
+    "glowing-squid": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find Zotero and TCC PDFs (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.01196
+    },
+    "glowing-wizard": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00594
+    },
+    "glowing-wolf": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Run @session to push live doc (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "happy-eagle": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Buscar sessão sobre database de rotinas (@explore subagent)",
+      "date": "2026-06-04",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.0
+    },
+    "happy-engine": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "DeepTutor KB API + Learning Space (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "happy-island": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Update Notion with new roteiro (@session subagent)",
+      "date": "2026-06-28",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.033565
+    },
+    "happy-mountain": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore chat message flow (@explore subagent)",
+      "date": "2026-06-15",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.016544
+    },
+    "happy-nebula": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Organizar reunião TCC: código e slides",
+      "date": "2026-06-08",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.352619
+    },
+    "happy-otter": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search flux importance in user's papers (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "happy-wizard": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Search hybrid architectures AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015618
+    },
+    "hidden-cabin": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research comic/visual tools (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006614
+    },
+    "hidden-circuit": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Post test report to Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.021514
+    },
+    "hidden-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Extract Notion tools from file (@explore subagent)",
+      "date": "2026-06-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.002664
+    },
+    "hidden-garden": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor test structure (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.0
+    },
+    "hidden-meadow": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "hidden-moon": {
+      "project_slug": "pinns",
+      "project_name": "PINNs",
+      "title": "Acessar live doc da sessão PINNs",
+      "date": "2026-06-17",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 4.268368
+    },
+    "hidden-nebula": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "New session - 2026-05-30T20:18:30.225Z (fork #1)",
+      "date": "2026-06-03",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.451122
+    },
+    "hidden-orchid": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore tutor stem project (@explore subagent)",
+      "date": "2026-07-08",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "hidden-otter": {
+      "project_slug": "opencode-explore",
+      "project_name": "OpenCode Exploration",
+      "title": "Explore opencode SQLite data (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003346
+    },
+    "hidden-pixel": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-06-01T20:43:03.866Z",
+      "date": "2026-06-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "hidden-river": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore LLM service layer (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "hidden-sailor": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-11",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "jolly-canyon": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-05-31T16:24:23.612Z",
+      "date": "2026-05-31",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "jolly-comet": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "List all output files (@explore subagent)",
+      "date": "2026-05-31",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "jolly-engine": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Rodar @session para esta sessão (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009928
+    },
+    "jolly-falcon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Leitura artigos TCC via scihub MCP",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.375485
+    },
+    "jolly-moon": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.320137
+    },
+    "jolly-otter": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Generate detailed live docs (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.033307
+    },
+    "jolly-pixel": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research technical diagram OCR (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.018761
+    },
+    "jolly-star": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "kind-cabin": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:32:36.139Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "",
+      "cost": 0.0
+    },
+    "kind-harbor": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-11",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "kind-knight": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find per-target best params (@explore subagent)",
+      "date": "2026-07-02",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.024361
+    },
+    "kind-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Explore Notion news project (@explore subagent)",
+      "date": "2026-06-28",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015958
+    },
+    "lucky-canyon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Kim 2022 V-AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.004223
+    },
+    "lucky-circuit": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Sessão sobre database de rotinas",
+      "date": "2026-06-04",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.005506
+    },
+    "lucky-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Rodar @update-guidelines (@update-guidelines subagent)",
+      "date": "2026-06-11",
+      "agent": "update-guidelines",
+      "model": "deepseek-v4-flash",
+      "cost": 0.037683
+    },
+    "lucky-engine": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "@session final para esta sessão (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.017721
+    },
+    "lucky-island": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "RAG primeiros capítulos tese Ingrid no DeepTutor",
+      "date": "2026-07-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 2.333693
+    },
+    "lucky-moon": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.371191
+    },
+    "lucky-mountain": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor test setup (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007233
+    },
+    "lucky-nebula": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Logs automáticos para contribuições no TCC",
+      "date": "2026-06-15",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.081497
+    },
+    "lucky-panda": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find TCC repo and bib files (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.01845
+    },
+    "lucky-river": {
+      "project_slug": "plex",
+      "project_name": "Plex / Media",
+      "title": "Como rodar Plex desktop",
+      "date": "2026-06-05",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.048318
+    },
+    "lucky-squid": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.371191
+    },
+    "mighty-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Lisboa 2024 V-AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00527
+    },
+    "mighty-garden": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-06-11T13:36:32.132Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00291
+    },
+    "mighty-meadow": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Upload 25 analyzed sessions (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.083564
+    },
+    "mighty-mountain": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "mighty-wizard": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Investigate original outputs (@explore subagent)",
+      "date": "2026-05-31",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "misty-canyon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "DeepTutor KB and RAG analysis (@explore subagent)",
+      "date": "2026-06-17",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.022351
+    },
+    "misty-comet": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor codebase (@explore subagent)",
+      "date": "2026-06-17",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.019812
+    },
+    "misty-island": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:32:50.838Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "anthropic/claude-sonnet",
+      "cost": 0.0
+    },
+    "misty-nebula": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:34:09.164Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.002688
+    },
+    "misty-planet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Upload 25 live docs to Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.067741
+    },
+    "misty-rocket": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "TCC project state check (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.011592
+    },
+    "misty-sailor": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find 0D comparison script (@explore subagent)",
+      "date": "2026-05-31",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "misty-star": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Update TCC log in Notion (@session subagent)",
+      "date": "2026-06-27",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.022143
+    },
+    "misty-tiger": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Explore TCC project structure (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.019511
+    },
+    "neon-cactus": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-01T21:13:10.640Z",
+      "date": "2026-06-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "neon-moon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Research Sci-Hub MCP (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013109
+    },
+    "neon-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-06-30",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015157
+    },
+    "neon-planet": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Contexto dashboard 2026",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.004271
+    },
+    "neon-rocket": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Chat do projeto TCC",
+      "date": "2026-06-11",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.39009
+    },
+    "neon-tiger": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Explore slides and fluxogram (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.012388
+    },
+    "neon-wizard": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Register PM-1 test report (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.002757
+    },
+    "nimble-falcon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Find leitura individual files (@explore subagent)",
+      "date": "2026-06-02",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "nimble-forest": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore project-manager code (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015214
+    },
+    "nimble-garden": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore TUTOR project structure (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009217
+    },
+    "nimble-meadow": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Analyze template image styles (@explore subagent)",
+      "date": "2026-05-29",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "nimble-moon": {
+      "project_slug": "plex",
+      "project_name": "Plex / Media",
+      "title": "Search MD papers for complexity/overfitting (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "nimble-planet": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-07-08T18:58:02.105Z",
+      "date": "2026-07-08",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "nimble-sailor": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find Luc appendix images (@explore subagent)",
+      "date": "2026-06-15",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015437
+    },
+    "nimble-star": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Find Logs TCC database (@session subagent)",
+      "date": "2026-06-27",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.02604
+    },
+    "playful-cactus": {
+      "project_slug": "personal",
+      "project_name": "Personal / PC",
+      "title": "Diagnóstico de lentidão e erro Bonjour",
+      "date": "2026-06-25",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.227924
+    },
+    "playful-canyon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Abrir sessões do opencode.db",
+      "date": "2026-06-04",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006404
+    },
+    "playful-comet": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search MD configurations tradeoffs (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "playful-forest": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "NoteBlocks - Implementacao completa + Roadmap Memphis",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.553965
+    },
+    "playful-lagoon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Extract all slide details (@explore subagent)",
+      "date": "2026-06-27",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007108
+    },
+    "playful-meadow": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Read all TCC chapters (@explore subagent)",
+      "date": "2026-06-30",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.016496
+    },
+    "playful-mountain": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "New session - 2026-07-11T20:59:17.530Z",
+      "date": "2026-07-11",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.712423
+    },
+    "playful-planet": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search MD vapor pressure sources (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "playful-rocket": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor frontend nav (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009634
+    },
+    "playful-wolf": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore STEM TUTOR project (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "proud-eagle": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Test sync agent (@sync subagent)",
+      "date": "2026-06-01",
+      "agent": "sync",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "proud-engine": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Template anos 2000 Site do Pão",
+      "date": "2026-06-16",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.073586
+    },
+    "proud-wizard": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search PDFs for MD context (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "quick-cabin": {
+      "project_slug": "personal",
+      "project_name": "Personal / PC",
+      "title": "Cancelar aba de monitoramento",
+      "date": "2026-06-26",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006917
+    },
+    "quick-canyon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Criar database Relatórios de Testes 2026",
+      "date": "2026-07-12",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008539
+    },
+    "quick-engine": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Explore TCC and slides structure (@explore subagent)",
+      "date": "2026-06-26",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008968
+    },
+    "quick-forest": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Alterar código agente backup Notion",
+      "date": "2026-06-10",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.190281
+    },
+    "quick-harbor": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Compare V-AGMD papers (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008323
+    },
+    "quick-knight": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "quick-lagoon": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Vender melhor o peixe do TCC",
+      "date": "2026-06-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.563858
+    },
+    "quick-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Check live doc and AGENTS.md (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "quick-panda": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore mind-map-module changes (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "quick-star": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Projetos IA e ecossistema guidelines",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.005319
+    },
+    "quick-tiger": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "New session - 2026-05-30T20:18:30.225Z",
+      "date": "2026-05-30",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.534914
+    },
+    "quiet-cactus": {
+      "project_slug": "personal",
+      "project_name": "Personal / PC",
+      "title": "Associar comando de voz para conversa contínua",
+      "date": "2026-06-15",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.040776
+    },
+    "quiet-harbor": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Analyze corrections plan (@explore subagent)",
+      "date": "2026-05-29",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "quiet-lagoon": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.375561
+    },
+    "quiet-meadow": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.382362
+    },
+    "quiet-pixel": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Nova entrada no STEM TUTOR",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.102578
+    },
+    "quiet-star": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-05-31T10:18:28.668Z",
+      "date": "2026-05-31",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "shiny-cabin": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.024327
+    },
+    "shiny-cactus": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-11T13:33:13.205Z",
+      "date": "2026-06-11",
+      "agent": "plan",
+      "model": "",
+      "cost": 0.0
+    },
+    "shiny-canyon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Upload 25 reformatted sessions (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.033655
+    },
+    "shiny-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Guidelines globais no OpenCode",
+      "date": "2026-06-10",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.159492
+    },
+    "shiny-eagle": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore Deeptutor project (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "shiny-island": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe",
+      "date": "2026-06-28",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.436125
+    },
+    "shiny-mountain": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Jawed 2025 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006537
+    },
+    "shiny-nebula": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Failed to fetch no deeptutor",
+      "date": "2026-06-16",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.031936
+    },
+    "shiny-planet": {
+      "project_slug": "personal",
+      "project_name": "Personal / PC",
+      "title": "NotebookLM é opensource?",
+      "date": "2026-06-27",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.354083
+    },
+    "shiny-squid": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Khalifa 2017 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006273
+    },
+    "shiny-tiger": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Notion Projetos 2026 page ID lookup",
+      "date": "2026-07-12",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00742
+    },
+    "shiny-wizard": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Search YouTube STEM tools (@general subagent)",
+      "date": "2026-06-02",
+      "agent": "general",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "shiny-wolf": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "New session - 2026-07-11T20:45:32.087Z",
+      "date": "2026-07-11",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.416582
+    },
+    "silent-island": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Shirazian 2017 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.006798
+    },
+    "silent-lagoon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Test session logging agent (@session subagent)",
+      "date": "2026-06-01",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "silent-moon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-02",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.011929
+    },
+    "stellar-engine": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Reformat sessions using opencode export (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.0227
+    },
+    "stellar-meadow": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor KB/navigation (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.026573
+    },
+    "stellar-nebula": {
+      "project_slug": "pinns",
+      "project_name": "PINNs",
+      "title": "Search PINNs in MD papers (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003364
+    },
+    "stellar-pixel": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Find opencode session files (@explore subagent)",
+      "date": "2026-05-31",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "stellar-squid": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "New session - 2026-05-30T20:18:30.225Z (fork #1)",
+      "date": "2026-06-03",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.451122
+    },
+    "sunny-cactus": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore HKU codebase structure (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "sunny-circuit": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Test session logging (@session subagent)",
+      "date": "2026-06-01",
+      "agent": "session",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "sunny-eagle": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Acessar repositório de slides e TCC",
+      "date": "2026-06-26",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.48319
+    },
+    "sunny-forest": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Rodada que gerou dados do TCC",
+      "date": "2026-07-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 1.679011
+    },
+    "sunny-moon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Survey all projects in sessions (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008285
+    },
+    "sunny-pixel": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Read Ibnouf2024 AI review (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.016968
+    },
+    "sunny-sailor": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Find Requena 2023 paper PDF (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.00652
+    },
+    "swift-cabin": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-15",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.012519
+    },
+    "swift-cactus": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-05-31T10:58:30.965Z",
+      "date": "2026-05-31",
+      "agent": "plan",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "swift-canyon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor codebase (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "swift-circuit": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-05-31T00:44:34.606Z",
+      "date": "2026-05-31",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "swift-knight": {
+      "project_slug": "pinns",
+      "project_name": "PINNs",
+      "title": "Implementação de PINNs a partir de artigos",
+      "date": "2026-06-14",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 2.578226
+    },
+    "swift-nebula": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Documentar ciclo de testes no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.029623
+    },
+    "swift-orchid": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Search GitHub STEM tool projects (@general subagent)",
+      "date": "2026-06-02",
+      "agent": "general",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "swift-planet": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Tarefa testes IA retroativos Deep Tutor",
+      "date": "2026-06-25",
+      "agent": "plan",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008507
+    },
+    "swift-river": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Extend V-AGMD comparison table (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013497
+    },
+    "swift-tiger": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "@session para playful-forest (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.013725
+    },
+    "swift-wizard": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Search existing papers for flux importance (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "tidy-comet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Upload reformatted sessions via @session (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.062135
+    },
+    "tidy-mountain": {
+      "project_slug": "pinns",
+      "project_name": "PINNs",
+      "title": "Search PINNs AGMD Consensus (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.007763
+    },
+    "tidy-pixel": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Verify Abdulrahim 2026 AGMD (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.008884
+    },
+    "tidy-river": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Search Reddit STEM tool forums (@general subagent)",
+      "date": "2026-06-02",
+      "agent": "general",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "tidy-tiger": {
+      "project_slug": "empty",
+      "project_name": "** Empty (no content) **",
+      "title": "New session - 2026-06-01T21:36:31.013Z",
+      "date": "2026-06-01",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "witty-cabin": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Testar @session START flow (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.003239
+    },
+    "witty-circuit": {
+      "project_slug": "luc-repport",
+      "project_name": "Luc-Repport",
+      "title": "Abrir Luc-Repport no Adobe (fork #1)",
+      "date": "2026-07-01",
+      "agent": "None",
+      "model": "unknown",
+      "cost": 0.380066
+    },
+    "witty-knight": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Find article by PII number (@general subagent)",
+      "date": "2026-06-22",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.009785
+    },
+    "witty-lagoon": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Explore DeepTutor web codebase (@explore subagent)",
+      "date": "2026-06-16",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.012586
+    },
+    "witty-meadow": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Find Notion backup agents (@explore subagent)",
+      "date": "2026-06-10",
+      "agent": "explore",
+      "model": "deepseek-v4-flash",
+      "cost": 0.0
+    },
+    "witty-moon": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "New session - 2026-05-31T02:37:00.217Z",
+      "date": "2026-05-31",
+      "agent": "build",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "witty-nebula": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Deep search technical image VLMs (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.016212
+    },
+    "witty-orchid": {
+      "project_slug": "tcc",
+      "project_name": "TCC — Ingrid (MD/Desalination)",
+      "title": "Explore TCC slides directory (@explore subagent)",
+      "date": "2026-07-08",
+      "agent": "explore",
+      "model": "deepseek-v4-flash-free",
+      "cost": 0.0
+    },
+    "witty-otter": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Update Notion with roteiro.md (@session subagent)",
+      "date": "2026-06-28",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.050818
+    },
+    "witty-planet": {
+      "project_slug": "notion-infra",
+      "project_name": "Notion Infrastructure",
+      "title": "Research DeepSeek embedding models (@general subagent)",
+      "date": "2026-06-17",
+      "agent": "general",
+      "model": "deepseek-v4-flash",
+      "cost": 0.004979
+    },
+    "witty-rocket": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-17",
+      "agent": "session",
+      "model": "deepseek-v4-flash",
+      "cost": 0.015059
+    },
+    "witty-wizard": {
+      "project_slug": "ai-stem-tutor",
+      "project_name": "AI STEM Tutor — DeepTutor",
+      "title": "Integração OpenCode STEM TUTOR",
+      "date": "2026-07-12",
+      "agent": "build",
+      "model": "deepseek-v4-flash",
+      "cost": 0.24313
+    }
+  },
+  "total": 239
+}

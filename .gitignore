@@ -305,6 +305,16 @@ celerybeat.pid
 # question_agents/reference_papers/**/*.pdf
 
 # ============================================
+# KB / Project Space (tracked, not ignored)
+# ============================================
+!kb/
+!kb/**
+!scripts/kb/
+!scripts/kb/**
+!project-state/
+!project-state/**
+
+# ============================================
 # Audio/Video Output (TTS generated)
 # ============================================
 *.mp3

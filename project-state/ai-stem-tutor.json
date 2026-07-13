@@ -1,50 +1,654 @@
-﻿{
-    "project":  "AI STEM Tutor",
-    "slug":  "ai-stem-tutor",
-    "created":  "2026-07-11T21:11:50Z",
-    "last_updated":  "2026-07-11T22:00:38Z",
-    "branch":  "feature/mind-map-module",
-    "last_commit":  "d36e8244 feat: mind map module + pedagogical guidelines + platform messages",
-    "git_log":  "d36e8244 feat: mind map module + pedagogical guidelines + platform messages\r\n3e3b9a6e release: v1.5.1\r\ndf6922bb release: v1.5.0\r\n3d5b669c minor fix\r\nbca6f6e9 release: v1.4.15\r\n4fab4489 minor fix \u0026 new channel\r\n0bbd4668 Merge pull request #604 from spring618/codex/fix-mastery-choice-persistence\r\n85756d01 Merge pull request #602 from VectorPeak/codex/fix-chunk-overlap-zero\r\n943e9fb7 fix mastery choice persistence and grading\r\n8ba7dd2f fix: preserve zero LlamaIndex chunk overlap\r\n8f39545d release: v1.4.14\r\n3b823ae5 minor fixes\r\n284066ad release: v1.4.13\r\ncc1721c9 docs: update DeepTutor technical poster artifact\r\n9983c0a3 fix: partners \u0026 multi-user",
-    "sessions":  [
-                     {
-                         "id":  "playful-mountain",
-                         "title":  "Arquitetura AI STEM Tutor",
-                         "date":  "2026-07-11",
-                         "summary":  "",
-                         "decisions":  [
-
-                                       ],
-                         "files":  [
-
-                                   ],
-                         "todos":  [
-
-                                   ]
-                     },
-                     {
-                         "id":  "playful-mountain",
-                         "title":  "Arquitetura AI STEM Tutor",
-                         "date":  "2026-07-11",
-                         "summary":  "",
-                         "decisions":  [
-
-                                       ],
-                         "files":  [
-
-                                   ],
-                         "todos":  [
-
-                                   ]
-                     }
-                 ],
-    "decisions":  [
-
-                  ],
-    "issues":  [
-
-               ],
-    "todos":  [
-
-              ]
+{
+  "project": "AI STEM Tutor",
+  "slug": "ai-stem-tutor",
+  "sessions": [
+    {
+      "id": "cosmic-island",
+      "title": "Find nav items and page patterns (@explore subagent)",
+      "date": "2026-07-13",
+      "agent": "explore",
+      "cost": 0.005265,
+      "summary": ""
+    },
+    {
+      "id": "calm-island",
+      "title": "Explore opencode note setup (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "calm-nebula",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.013506,
+      "summary": ""
+    },
+    {
+      "id": "calm-pixel",
+      "title": "Documentar testes no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.028196,
+      "summary": ""
+    },
+    {
+      "id": "clever-moon",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.025948,
+      "summary": ""
+    },
+    {
+      "id": "crisp-river",
+      "title": "Sync session to Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.023643,
+      "summary": ""
+    },
+    {
+      "id": "curious-forest",
+      "title": "New session - 2026-07-12T00:04:56.367Z",
+      "date": "2026-07-12",
+      "agent": "build",
+      "cost": 0.06251,
+      "summary": ""
+    },
+    {
+      "id": "eager-cabin",
+      "title": "Documentar teste no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.029376,
+      "summary": ""
+    },
+    {
+      "id": "glowing-mountain",
+      "title": "Rodar front e back do Deep Tutor",
+      "date": "2026-07-12",
+      "agent": "build",
+      "cost": 0.006877,
+      "summary": ""
+    },
+    {
+      "id": "glowing-wizard",
+      "title": "Register session in Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.00594,
+      "summary": ""
+    },
+    {
+      "id": "glowing-wolf",
+      "title": "Run @session to push live doc (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "hidden-circuit",
+      "title": "Post test report to Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.021514,
+      "summary": ""
+    },
+    {
+      "id": "hidden-garden",
+      "title": "Explore DeepTutor test structure (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "jolly-engine",
+      "title": "Rodar @session para esta sessão (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.009928,
+      "summary": ""
+    },
+    {
+      "id": "lucky-engine",
+      "title": "@session final para esta sessão (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.017721,
+      "summary": ""
+    },
+    {
+      "id": "lucky-mountain",
+      "title": "Explore DeepTutor test setup (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.007233,
+      "summary": ""
+    },
+    {
+      "id": "neon-moon",
+      "title": "Research Sci-Hub MCP (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.013109,
+      "summary": ""
+    },
+    {
+      "id": "nimble-forest",
+      "title": "Explore project-manager code (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.015214,
+      "summary": ""
+    },
+    {
+      "id": "playful-forest",
+      "title": "NoteBlocks - Implementacao completa + Roadmap Memphis",
+      "date": "2026-07-12",
+      "agent": "build",
+      "cost": 1.553965,
+      "summary": ""
+    },
+    {
+      "id": "playful-rocket",
+      "title": "Explore DeepTutor frontend nav (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.009634,
+      "summary": ""
+    },
+    {
+      "id": "quick-panda",
+      "title": "Explore mind-map-module changes (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "quiet-pixel",
+      "title": "Nova entrada no STEM TUTOR",
+      "date": "2026-07-12",
+      "agent": "build",
+      "cost": 0.102578,
+      "summary": ""
+    },
+    {
+      "id": "shiny-cabin",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.024327,
+      "summary": ""
+    },
+    {
+      "id": "shiny-eagle",
+      "title": "Explore Deeptutor project (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "shiny-tiger",
+      "title": "Notion Projetos 2026 page ID lookup",
+      "date": "2026-07-12",
+      "agent": "plan",
+      "cost": 0.00742,
+      "summary": ""
+    },
+    {
+      "id": "stellar-meadow",
+      "title": "Explore DeepTutor KB/navigation (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.026573,
+      "summary": ""
+    },
+    {
+      "id": "sunny-cactus",
+      "title": "Explore HKU codebase structure (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "sunny-moon",
+      "title": "Survey all projects in sessions (@explore subagent)",
+      "date": "2026-07-12",
+      "agent": "explore",
+      "cost": 0.008285,
+      "summary": ""
+    },
+    {
+      "id": "swift-nebula",
+      "title": "Documentar ciclo de testes no Notion (@general subagent)",
+      "date": "2026-07-12",
+      "agent": "general",
+      "cost": 0.029623,
+      "summary": ""
+    },
+    {
+      "id": "swift-tiger",
+      "title": "@session para playful-forest (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.013725,
+      "summary": ""
+    },
+    {
+      "id": "witty-cabin",
+      "title": "Testar @session START flow (@session subagent)",
+      "date": "2026-07-12",
+      "agent": "session",
+      "cost": 0.003239,
+      "summary": ""
+    },
+    {
+      "id": "witty-wizard",
+      "title": "Integração OpenCode STEM TUTOR",
+      "date": "2026-07-12",
+      "agent": "build",
+      "cost": 0.24313,
+      "summary": ""
+    },
+    {
+      "id": "calm-canyon",
+      "title": "New session - 2026-07-11T15:06:05.342Z",
+      "date": "2026-07-11",
+      "agent": "build",
+      "cost": 1.097666,
+      "summary": ""
+    },
+    {
+      "id": "happy-engine",
+      "title": "DeepTutor KB API + Learning Space (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "hidden-river",
+      "title": "Explore LLM service layer (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "hidden-sailor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-11",
+      "agent": "session",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "kind-harbor",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-07-11",
+      "agent": "session",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "playful-mountain",
+      "title": "New session - 2026-07-11T20:59:17.530Z",
+      "date": "2026-07-11",
+      "agent": "build",
+      "cost": 0.712423,
+      "summary": ""
+    },
+    {
+      "id": "playful-wolf",
+      "title": "Explore STEM TUTOR project (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "shiny-wolf",
+      "title": "New session - 2026-07-11T20:45:32.087Z",
+      "date": "2026-07-11",
+      "agent": "plan",
+      "cost": 0.416582,
+      "summary": ""
+    },
+    {
+      "id": "swift-canyon",
+      "title": "Explore DeepTutor codebase (@explore subagent)",
+      "date": "2026-07-11",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "hidden-orchid",
+      "title": "Explore tutor stem project (@explore subagent)",
+      "date": "2026-07-08",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    },
+    {
+      "id": "silent-moon",
+      "title": "Registrar sessão no Notion (@session subagent)",
+      "date": "2026-07-02",
+      "agent": "session",
+      "cost": 0.011929,
+      "summary": ""
+    },
+    {
+      "id": "clever-lagoon",
+      "title": "Explore web frontend viewers (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "cost": 0.015195,
+      "summary": ""
+    },
+    {
+      "id": "eager-squid",
+      "title": "Explore DeepTutor project (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "cost": 0.011886,
+      "summary": ""
+    },
+    {
+      "id": "glowing-panda",
+      "title": "Novo projeto Caminhos do Xadrez",
+      "date": "2026-07-01",
+      "agent": "build",
+      "cost": 0.041748,
+      "summary": ""
+    },
+    {
+      "id": "lucky-island",
+      "title": "RAG primeiros capítulos tese Ingrid no DeepTutor",
+      "date": "2026-07-01",
+      "agent": "build",
+      "cost": 2.333693,
+      "summary": ""
+    },
+    {
+      "id": "nimble-garden",
+      "title": "Explore TUTOR project structure (@explore subagent)",
+      "date": "2026-07-01",
+      "agent": "explore",
+      "cost": 0.009217,
+      "summary": ""
+    },
+    {
+      "id": "swift-planet",
+      "title": "Tarefa testes IA retroativos Deep Tutor",
+      "date": "2026-06-25",
+      "agent": "plan",
+      "cost": 0.008507,
+      "summary": ""
+    },
+    {
+      "id": "cosmic-rocket",
+      "title": "Últimas entradas deeptutor no Notion",
+      "date": "2026-06-21",
+      "agent": "build",
+      "cost": 2.578682,
+      "summary": ""
+    },
+    {
+      "id": "misty-canyon",
+      "title": "DeepTutor KB and RAG analysis (@explore subagent)",
+      "date": "2026-06-17",
+      "agent": "explore",
+      "cost": 0.022351,
+      "summary": ""
+    },
+    {
+      "id": "misty-comet",
+      "title": "Explore DeepTutor codebase (@explore subagent)",
+      "date": "2026-06-17",
+      "agent": "explore",
+      "cost": 0.019812,
+      "summary": ""
+    },
+    {
+      "id": "witty-rocket",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-17",
+      "agent": "session",
+      "cost": 0.015059,
+      "summary": ""
+    },
+    {
+      "id": "crisp-canyon",
+      "title": "Explore STEM TUTOR project (@explore subagent)",
+      "date": "2026-06-16",
+      "agent": "explore",
+      "cost": 0.011958,
+      "summary": ""
+    },
+    {
+      "id": "crisp-planet",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-16",
+      "agent": "session",
+      "cost": 0.015655,
+      "summary": ""
+    },
+    {
+      "id": "gentle-engine",
+      "title": "STEM TUTOR: engenharia elétrica em quadrinhos",
+      "date": "2026-06-16",
+      "agent": "build",
+      "cost": 0.197087,
+      "summary": ""
+    },
+    {
+      "id": "shiny-nebula",
+      "title": "Failed to fetch no deeptutor",
+      "date": "2026-06-16",
+      "agent": "build",
+      "cost": 0.031936,
+      "summary": ""
+    },
+    {
+      "id": "witty-lagoon",
+      "title": "Explore DeepTutor web codebase (@explore subagent)",
+      "date": "2026-06-16",
+      "agent": "explore",
+      "cost": 0.012586,
+      "summary": ""
+    },
+    {
+      "id": "cosmic-cabin",
+      "title": "Register session in Notion (@session subagent)",
+      "date": "2026-06-15",
+      "agent": "session",
+      "cost": 0.01211,
+      "summary": ""
+    },
+    {
+      "id": "cosmic-falcon",
+      "title": "Add voice input to DeepTutor (@explore subagent)",
+      "date": "2026-06-15",
+      "agent": "explore",
+      "cost": 0.009807,
+      "summary": ""
+    },
+    {
+      "id": "eager-nebula",
+      "title": "Chat para instalação DeepTutor",
+      "date": "2026-06-15",
+      "agent": "build",
+      "cost": 0.141137,
+      "summary": ""
+    },
+    {
+      "id": "happy-mountain",
+      "title": "Explore chat message flow (@explore subagent)",
+      "date": "2026-06-15",
+      "agent": "explore",
+      "cost": 0.016544,
+      "summary": ""
+    },
+    {
+      "id": "nimble-falcon",
+      "title": "Find leitura individual files (@explore subagent)",
+      "date": "2026-06-02",
+      "agent": "explore",
+      "cost": 0.0,
+      "summary": ""
+    }
+  ],
+  "total_sessions": 63,
+  "total_cost": 10.052049,
+  "last_updated": "2026-07-12 21:34:05",
+  "total_decisions": 238,
+  "total_tools": 33,
+  "total_sessions_analyzed": 63,
+  "last_decision_update": "2026-07-12 21:51:48",
+  "decisions": [
+    "**PDF/Content Map**: When student uploads a PDF (to KB), generate a concept mind map showing related concepts as visual nodes (like Obsidian graph view), showing the essence of the content",
+    "**Lesson Map**: When student starts a lesson (theory or exercises mode), the tutor understands the module context and creates a map that shows how the content is digestible/modularized",
+    "**Reassuring messages**: The user wants to hand-write custom initial messages like \"Tá tudo bem, esse livro é intimidador mas ele é digerível...\"",
+    "**Platform philosophy**: Messages that modularize content, reduce intimidation",
+    "**Trigger:** After PDF is uploaded & ingested into a KB",
+    "**Concept Extraction:** Use the existing LlamaIndex RAG pipeline + LLM to extract key concepts and relationships",
+    "**Visualization:**",
+    "**Frontend Component:** New `ConceptMapViewer.tsx` component + \"Mind Map\" tab in KB detail view",
+    "**Trigger:** When student starts a lesson (selects theory/exercises mode)",
+    "**Context:** Tutor reads the module's knowledge graph and current student progress",
+    "deeptutor/api/routers/project_state.py (###)",
+    "**Batch 1** (24 blocos): Contexto, Decisões (Engine de parsing, Sci-Hub, Mermaid, 3 bugs)",
+    "**Batch 2** (18 blocos): Arquivos Modificados, MCP Servers Ativos, KB Memphis References",
+    "**Batch 3** (25 blocos): Project Mind Map, Cross-Reference table, Próximos Passos, Arquivos Locais",
+    "**Share URL**: Não foi gerado para esta sessão (nenhum share ativo no SQLite)",
+    "**Relação Projeto 1**: A associação com AI STEM Tutor pode não ter sido efetivada via Notion API — verificar manualmente se a relação está correta na página da sessão",
+    "**Projeto Vinculado nas tarefas**: As relações com o projeto precisam de verificação manual",
+    "Created DeepTutor skill \"pinn-executor\" for automatic PINN implementation from papers",
+    "Implemented and verified Burgers equation PINN using DeepXDE + PyTorch (Adam + L-BFGS, loss 0.0000034)",
+    "Planned reimplementation of TCC models with hyperparameter optimization",
+    "Created DeepTutor skill \"pinn-executor\" for automatic PINN implementation from papers",
+    "Implemented and verified Burgers equation PINN using DeepXDE + PyTorch (Adam + L-BFGS, loss 0.0000034)",
+    "Planned reimplementation of TCC models with hyperparameter optimization",
+    "Created DeepTutor skill \"pinn-executor\" for automatic PINN implementation from papers",
+    "Implemented and verified Burgers equation PINN using DeepXDE + PyTorch (Adam + L-BFGS, loss 0.0000034)",
+    "Planned reimplementation of TCC models with hyperparameter optimization",
+    "But user says title should be: \"PINN Executor Skill + TCC Reimplementation Planning\"",
+    "\"Adicionar provedor RAG para opencode/DeepTutor\"",
+    "**Docling** (IBM, MIT) como backbone de extração - ele já faz PDF → Markdown com estrutura preservada (tabelas, fórmulas, headers, captions, equações)",
+    "**PDFStract** como camada unificada para poder trocar extratores sem refatorar",
+    "**License:** MIT ✅",
+    "**Stars:** 61,896 — extremely mature",
+    "**What it does:** PDF → Markdown/HTML/JSON with full structural preservation",
+    "**Why for DeepTutor:** Converte livros-texto (Sadiku, etc.) em Markdown estruturado com tabelas, fórmulas, hierarquia de capítulos. Perfeito pro seu objetivo de \"transformar livro em Notebook Markdown\". Já tem chunker nativo (HierarchicalChunker, HybridChunker). Integra com LangChain/LlamaIndex. Roda 100% local.",
+    "**Incorporação:** `pip install docling` → converter PDF → exportar Markdown → chunk → embedding → KB",
+    "**License:** sem license explícita (precisa verificar)",
+    "**Depende de:** OpenAI, Anthropic, Cohere (APIs pagas)",
+    "`deeptutor/` -- Backend Python (FastAPI) com motor agentico",
+    "LLM Provider: DeepSeek (modelo `deepseek-chat`, base_url `https://api.deepseek.com`)",
+    "Created DeepTutor skill \"pinn-executor\" implementing PINNs from papers",
+    "Implemented and verified Burgers equation PINN using DeepXDE (Adam + L-BFGS, loss 0.0000034)",
+    "\"Gerar share URL (opencode serve + API)\"",
+    "**Sessão** (title): \"PINN Agent Implementation + TCC Hybrid Architectures\"",
+    "**Data** (date): \"2026-06-16\" (today)",
+    "**Resumo (curto)** (rich_text): Brief summary from live doc",
+    "**Chat ID** (rich_text): \"ses_138acff51ffeEJp5jwfCQr0c6f\"",
+    "**Título Resumido** (rich_text): \"Agente PINN + Hibridos TCC\"",
+    "**Thread / Chat URL** (url): No share URL available yet - I'll leave it empty or check if we can generate one",
+    "**Origem** (select): \"opencode\"",
+    "**Status:** Planejar",
+    "**Área:** IA",
+    "**Prioridade:** Alta",
+    "**Notas:** Plataforma de aprendizado progressivo. RAG de livros didáticos → repositórios markdown. Tutor LLM que acompanha o usuário com ferramentas (Wolfram, simulações, code exec). Progressão visual: Obsidian-like nodes → mundo virtual. Junção AI STEM Tutor + Mar da Elétrica.",
+    "**ID:** eb257164-7a4f-4424-acbe-10995d8fc4f8",
+    "\"Daria pra implementar um tutor literalmente \\\"em cima\\\" de arquivos\" - tutor/AI STEM tutor related",
+    "Tarefa (title): \"Verificar feature de crop image + todas as outras features implementadas no DeepTutor até o momento\"",
+    "Custom `deeptutor/api/routers/project_state.py` had broken import — was importing `get_runtime_settings` (doesn't exist), fixed to `get_runtime_settings_service`.",
+    "Server now listening on port 8001, API returns sessions with existing conversations (13 sessions, 42 messages).",
+    "Created new task: \"Verificar feature de crop image + todas as features implementadas no DeepTutor\" (Alta, IA, STEM Tutor).",
+    "They use opencode which is powered by an LLM API",
+    "GitHub Copilot: has a monthly fee but not a general API",
+    "**Anakin AI** - has monthly plans",
+    "**Poe** - $20/month access to multiple models",
+    "**Perplexity Pro** - $20/month",
+    "For OpenAI-compatible API (which DeepTutor needs), most services are pay-per-token",
+    "Base URL: https://api.deepseek.com",
+    "API key: sk-6c4b96cd265f40eb94b983049bf07add",
+    "LLM provider / base URL / API key / model",
+    "LLM provider: openai (since DeepSeek uses OpenAI-compatible API)",
+    "**Prompt-to-Comic**, **ComicForge**, **MythGen** — open source, LLM + imagem, pipeline completo",
+    "**Comistitch**, **Comic AI (Physics/Engineering)** — educacionais automatizados",
+    "**Comic-Diffusion v2** — SD fine-tuned pra estilo comic no HuggingFace",
+    "**ComicMath (Khetan 2026)** — o pipeline mais próximo da nossa abordagem",
+    "Sistema de `render_type` — basta adicionar `\"comic\"`",
+    "Or could generate SVG directly (no external API needed)",
+    "**Type**: Capability + Agent",
+    "**Name**: `caminhos_xadrez` (Portuguese, matching the project name)",
+    "**Pattern**: Similar to `deep_solve` or `math_animator`, but tailored for chess education",
+    "**Python**: `python-chess`",
+    "**JS**: `chess.js` + `react-chessboard` (já existem no npm)",
+    "A **entrada no Notion** (tarefa ou entrada de projeto) — como especificação do que será implementado",
+    "\"Só criar o live doc e subir o plano inicial do implementaçao no Notion\" = Just create the live doc and upload the initial implementation plan to Notion",
+    "Criação: deeptutor/api/routers/project_state.py (API mind map)",
+    "Modificação: deeptutor/api/main.py (registro do router)",
+    "~~Adicionar project-state/ dentro do repo~~ OK",
+    "~~Implementar mind map do project state no DeepTutor~~ OK",
+    "Implementar KB _project_context auto-sync (Notion → DeepTutor)",
+    "Implementar Roadmap backend + frontend (kanban de features)",
+    "Implementar Timeline (git + sessões visual)",
+    "Implementar Billing + BYOK (Stripe/Mercado Pago)",
+    "Criação: deeptutor/api/routers/project_state.py (API mind map)",
+    "Modificação: deeptutor/api/main.py (registro do router)",
+    "**Local** (padrao): cria diretorio em `data/knowledge_bases/`",
+    "**Obsidian vault**: ponteiro read-only para vault do Obsidian",
+    "**Linked folder**: monta indice existente de outro engine",
+    "**LightRAG server**: delega consultas para servidor externo",
+    "**Admin-assigned**: KBs compartilhadas por admin em multi-usuario",
+    "**Layout**: Sidebar de 256px a esquerda com lista de paths + area de detalhe a direita",
+    "**Funcionalidades**:",
+    "**APIs usadas**: `fetchAllProgress()`, `fetchMasteryMap()`, `deleteProgress()`, `redoProgress()` de `@/lib/learning-api`"
+  ],
+  "tools": [
+    "\"node:test\" (select)",
+    "\"pytest\"",
+    "\"quantas sessões ativas? qual projeto? quanto tempo?\"",
+    "** Next.js 16 (App Router) with React 19, TypeScript, Tailwind CSS",
+    "** Node.js built-in `node:test` + `node:assert/strict` (unit tests)",
+    "** `/api/v1/mindmap/test` retorna dados ✅",
+    "** `GET /api/v1/project/state` → retorna grafo com nós (project, branch, commits, sessions, decision",
+    "** pytest + pytest-asyncio",
+    "12 nodes, incluindo ela como uma das sessions.",
+    "CRUD notebooks and records",
+    "DeepTutor",
+    "DeepTutor fork + SkillOpt + LlamaIndex + Next.js",
+    "Docling",
+    "GET /api/v1/mindmap/{pathId}",
+    "LLM",
+    "Node test runner (built-in)",
+    "PyMuPDF",
+    "Read deeptutor/api/ - list all files, then read the knowledge router(s) if they exist. I need to see",
+    "`C:\\Users\\frota\\Documents\\Projetos\\AI TUTOR\\deeptutor\\api\\main.py`",
+    "```",
+    "alguma",
+    "cytoscape",
+    "ele",
+    "groupKFold",
+    "meu",
+    "opencode + n8n + Obsidian + Notion + OCR + Semantic Scholar |",
+    "opencode + n8n + Obsidian + Notion + OCR + Zotero |",
+    "par",
+    "para",
+    "rag, web_search, paper_search, brainstorm, exec...",
+    "select",
+    "select \"node:test\"",
+    "select \"playwright\""
+  ]
 }
