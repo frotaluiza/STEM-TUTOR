@@ -32,7 +32,7 @@ if ($Remove) {
 }
 
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument @"
--NoProfile -WindowStyle Hidden -File "$ScriptPath" -Port $Port -Background
+-NoProfile -WindowStyle Hidden -File "$ScriptPath" -Port $Port -Background:$true
 "@
 
 $Trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME

@@ -112,6 +112,72 @@ def resolve_project_slug(page):
     return '_unassigned'
 
 
+def _push_session_to_notion(local_path, slug, projeto_slug):
+    """Push a local session .md to Notion."""
+    text = local_path.read_text(encoding='utf-8')
+
+    # Parse frontmatter
+    fm = {}
+    import re
+    m = re.match(r'^---\s*\n(.*?)\n---', text, re.DOTALL)
+    if m:
+        for line in m.group(1).split('\n'):
+            if ':' in line:
+                k, v = line.split(':', 1)
+                fm[k.strip()] = v.strip().strip('"').strip("'")
+
+    # Extract preview from first user message
+    preview = ''
+    m2 = re.search(r'^## 👤 Usuário.*?\n\n(.*?)(?=\n##\s|\Z)', text, re.DOTALL)
+    if m2:
+        preview = m2.group(1).strip()[:300]
+
+    title = fm.get('title', slug)[:100]
+    data = fm.get('date', '')[:10]
+
+    props = {
+        'Sessão': {'title': [{'text': {'content': title}}]},
+        'Chat ID': {'rich_text': [{'text': {'content': slug}}]},
+        'Data': {'date': {'start': data}},
+        'Status': {'status': {'name': 'Concluído'}},
+        'Resumo (curto)': {'rich_text': [{'text': {'content': preview[:150]}}]},
+        'Título Resumido': {'rich_text': [{'text': {'content': title[:60]}}]},
+        'Origem': {'select': {'name': 'github_action'}},
+    }
+
+    # Link to project
+    for d in PROJETOS_DIR.iterdir():
+        if not d.is_dir() or d.name != projeto_slug:
+            continue
+        ps_path = d / 'project-state.yaml'
+        if ps_path.exists():
+            with open(ps_path, encoding='utf-8') as f:
+                ps = yaml.safe_load(f)
+            if ps:
+                proj_name = ps.get('projeto', '')
+                # Query Notion for the project page ID
+                resp = notion_request('POST', f'databases/{PROJETOS_DB_ID}/query', {
+                    'filter': {'property': 'Projeto', 'title': {'equals': proj_name}},
+                })
+                if resp and resp.get('results'):
+                    proj_page_id = resp['results'][0]['id']
+                    props['Projeto 1'] = {'relation': [{'id': proj_page_id}]}
+        break
+
+    # Find existing or create
+    existing = notion_request('POST', f'databases/{SESSOES_DB_ID}/query', {
+        'filter': {'property': 'Chat ID', 'rich_text': {'contains': slug}},
+    })
+    if existing and existing.get('results'):
+        page_id = existing['results'][0]['id']
+        notion_request('PATCH', f'pages/{page_id}', {'properties': props})
+    else:
+        notion_request('POST', 'pages', {
+            'parent': {'database_id': SESSOES_DB_ID},
+            'properties': props,
+        })
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='Reconcile Notion ↔ local')
@@ -204,13 +270,7 @@ _Pulled from Notion via reconcile at {datetime.now(timezone.utc).isoformat()}_
                 break
 
         if not args.dry_run:
-            # Use gh-sync-notion logic to push
-            from gh_sync_notion import upsert_session
-            upsert_session({
-                'path': local_path,
-                'slug': slug,
-                'projeto_slug': projeto_slug,
-            })
+            _push_session_to_notion(local_path, slug, projeto_slug)
             print(f'  Pushed: {slug}')
         else:
             print(f'  Would push: {slug} (projeto: {projeto_slug})')
