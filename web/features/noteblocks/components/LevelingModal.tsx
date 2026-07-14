@@ -40,7 +40,7 @@ export function LevelingModal({ topic, onComplete, onSkip }: LevelingModalProps)
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100]">
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-[100]">
       <div className="bg-[#111] border border-[#222] rounded-xl p-6 w-[440px] shadow-2xl">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">🎯</span>

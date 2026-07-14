@@ -13,6 +13,7 @@ const MarkdownRenderer = dynamic(() => import("@/components/common/MarkdownRende
 
 interface NoteBlocksViewProps {
   noteId?: string;
+  showLevelingOnMount?: boolean;
 }
 
 type ViewTab = "note" | "terminal" | "live-doc";
@@ -103,10 +104,10 @@ function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
   );
 }
 
-export function NoteBlocksView({ noteId: externalNoteId }: NoteBlocksViewProps) {
+export function NoteBlocksView({ noteId: externalNoteId, showLevelingOnMount = false }: NoteBlocksViewProps) {
   const [note, setNote] = useState<Note | null>(null);
   const [activeTab, setActiveTab] = useState<ViewTab>("note");
-  const [showLeveling, setShowLeveling] = useState(!externalNoteId);
+  const [showLeveling, setShowLeveling] = useState(showLevelingOnMount);
   const [level, setLevel] = useState<string | null>(null);
 
   const hasSession = !!(note?.session);
