@@ -1,129 +1,107 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { FileText, MessageSquare, Terminal } from "lucide-react";
 import { NoteEditor } from "./Editor/NoteEditor";
 import { TerminalPane } from "./Terminal/TerminalPane";
 import { LevelingModal } from "./LevelingModal";
-import { VideoPane } from "./VideoPane";
+import SessionViewer from "@/components/pm/SessionViewer";
+import type { Note } from "../types";
 
 interface NoteBlocksViewProps {
   noteId?: string;
 }
 
+type ViewTab = "note" | "terminal";
+
 export function NoteBlocksView({ noteId: externalNoteId }: NoteBlocksViewProps) {
-  const [leftPanel, setLeftPanel] = useState<"terminal" | "video" | "agent" | null>(null);
-  const [syncing, setSyncing] = useState(false);
+  const [note, setNote] = useState<Note | null>(null);
+  const [activeTab, setActiveTab] = useState<ViewTab>("note");
   const [showLeveling, setShowLeveling] = useState(!externalNoteId);
   const [level, setLevel] = useState<string | null>(null);
-  const [noteId, setNoteId] = useState<string | undefined>(externalNoteId);
+  const [navNoteId, setNavNoteId] = useState<string | undefined>(externalNoteId);
 
-  const handleLevelComplete = useCallback(async (selectedLevel: string, _customDescription: string) => {
+  const hasSession = !!(note?.session);
+
+  // Load note metadata from API
+  useEffect(() => {
+    if (!externalNoteId) return;
+    fetch(`/api/v1/noteblocks/notes/${externalNoteId}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((data: Note | null) => {
+        if (data) setNote(data);
+      })
+      .catch(() => {});
+  }, [externalNoteId]);
+
+  const handleLevelComplete = useCallback(async (selectedLevel: string) => {
     setLevel(selectedLevel);
     setShowLeveling(false);
-    if (noteId) {
+    if (navNoteId) {
       try {
         await fetch(`/api/v1/noteblocks/agent/leveling/answer`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ note_id: noteId, level: selectedLevel, topic: "" }),
+          body: JSON.stringify({ note_id: navNoteId, level: selectedLevel, topic: "" }),
         });
-      } catch {
-        // ignore
-      }
+      } catch {}
     }
-  }, [noteId]);
+  }, [navNoteId]);
 
-  const handleLevelSkip = useCallback(() => {
-    setShowLeveling(false);
-  }, []);
+  const handleLevelSkip = useCallback(() => setShowLeveling(false), []);
 
-  const handleSync = async () => {
-    if (!noteId || syncing) return;
-    setSyncing(true);
-    try {
-      const res = await fetch(`/api/v1/noteblocks/agent/sync-to-notion/${noteId}`, {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (data.success) {
-        alert(`Synced to Notion: ${data.url}`);
-      } else {
-        alert(`Sync failed: ${data.error}`);
-      }
-    } catch {
-      alert("Sync error");
-    } finally {
-      setSyncing(false);
-    }
-  };
+  const tabs: { id: ViewTab; label: string; icon: typeof FileText }[] = [
+    { id: "note", label: "Nota", icon: FileText },
+    { id: "terminal", label: "Terminal", icon: Terminal },
+  ];
 
   return (
     <div className="flex h-full w-full bg-[#0a0a0a] text-gray-100">
       {showLeveling && (
         <LevelingModal
           topic="este assunto"
-          onComplete={handleLevelComplete}
+          onComplete={(l) => handleLevelComplete(l)}
           onSkip={handleLevelSkip}
         />
       )}
 
-      {leftPanel && (
-        <div className="flex flex-col border-r border-[#1a1a1a] w-1/2">
-          <div className="flex items-center gap-1 px-2 py-1 text-xs text-gray-400 border-b border-[#1a1a1a]">
+      <div className="flex flex-col flex-1 min-w-0">
+        {/* Tab bar */}
+        <div className="flex shrink-0 items-center gap-0.5 border-b border-[#1a1a1a] bg-[#0d0d0d] px-3 pt-1.5">
+          {tabs.map((t) => (
             <button
-              onClick={() => setLeftPanel("terminal")}
-              className={`px-2 py-0.5 rounded ${leftPanel === "terminal" ? "bg-[#1a1a1a] text-gray-100" : "hover:text-gray-200"}`}
+              key={t.id}
+              type="button"
+              onClick={() => setActiveTab(t.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-medium rounded-t-md transition-colors ${
+                activeTab === t.id
+                  ? "bg-[#0a0a0a] text-gray-100 border border-[#1a1a1a] border-b-transparent"
+                  : "text-gray-500 hover:text-gray-300 hover:bg-[#151515]"
+              }`}
             >
-              Terminal
+              <t.icon size={12} strokeWidth={1.8} />
+              {t.label}
             </button>
-            <button
-              onClick={() => setLeftPanel("video")}
-              className={`px-2 py-0.5 rounded ${leftPanel === "video" ? "bg-[#1a1a1a] text-gray-100" : "hover:text-gray-200"}`}
-            >
-              Video
-            </button>
-            <button
-              onClick={() => setLeftPanel("agent")}
-              className={`px-2 py-0.5 rounded ${leftPanel === "agent" ? "bg-[#1a1a1a] text-gray-100" : "hover:text-gray-200"}`}
-            >
-              Agent
-            </button>
-            <button
-              onClick={() => setLeftPanel(null)}
-              className="ml-auto px-2 py-0.5 text-gray-400 hover:text-gray-200"
-            >
-              Hide
-            </button>
-          </div>
-          <div className="flex-1 min-h-0">
-            {leftPanel === "terminal" && <TerminalPane />}
-            {leftPanel === "video" && <VideoPane />}
-            {leftPanel === "agent" && (
-              <div className="p-4 text-gray-300 text-sm">Agent output will appear here</div>
-            )}
-          </div>
-        </div>
-      )}
+          ))}
 
-      <div className="flex flex-col flex-1 min-w-0 relative">
-        <div className="absolute top-2 right-2 z-10 flex items-center gap-2">
-          {noteId && (
-            <button
-              onClick={handleSync}
-              disabled={syncing}
-              className="px-2 py-1 text-xs text-gray-300 hover:text-gray-100 bg-[#0a0a0a]/80 rounded border border-[#1a1a1a] disabled:opacity-40"
+          {/* Session badge */}
+          {hasSession && (
+            <a
+              href={`/session-viewer/${note!.session}`}
+              className="ml-auto flex items-center gap-1.5 px-2.5 py-1 text-[11px] text-cyan-400/70 hover:text-cyan-300 rounded border border-[#1a1a1a] hover:bg-[#151515] transition-colors"
+              title="Ver sessão completa"
             >
-              {syncing ? "..." : "sync notion"}
-            </button>
+              <MessageSquare size={11} strokeWidth={1.8} />
+              Sessão: {note!.session}
+            </a>
           )}
-          <button
-            onClick={() => setLeftPanel(leftPanel ? null : "terminal")}
-            className="px-2 py-1 text-xs text-gray-400 hover:text-gray-200 bg-[#0a0a0a]/80 rounded border border-[#1a1a1a]"
-          >
-            {leftPanel ? "Full" : "Split"}
-          </button>
         </div>
-        <NoteEditor noteId={noteId} />
+
+        {/* Content */}
+        <div className="flex-1 min-h-0">
+          {activeTab === "note" && <NoteEditor noteId={externalNoteId} />}
+          {activeTab === "terminal" && <TerminalPane />}
+        </div>
       </div>
     </div>
   );
