@@ -427,8 +427,12 @@ async def pm_project_sessions(slug: str, limit: int = 50, offset: int = 0):
     }
 
 
+OPCODE_DOCS_DIR = Path.home() / ".local" / "share" / "opencode" / "docs"
+
+
 def _resolve_session_file(slug: str) -> tuple[dict, Path, str]:
-    """Resolve a session slug to its classification info, file path, and project slug."""
+    """Resolve a session slug to its classification info, file path, and project slug.
+    Falls back to opencode docs dir when KB file doesn't exist."""
     classification = _get_classification()
     if not classification:
         raise HTTPException(status_code=404, detail="No classification data")
@@ -438,13 +442,19 @@ def _resolve_session_file(slug: str) -> tuple[dict, Path, str]:
         raise HTTPException(status_code=404, detail=f"Session '{slug}' not found")
 
     project_slug = info.get("project_slug", "")
+
+    # Try KB dir first
     sessoes_dir = PROJETOS_DIR / project_slug / "sessoes"
     session_file = sessoes_dir / f"{slug}.md"
+    if session_file.exists():
+        return info, session_file, project_slug
 
-    if not session_file.exists():
-        raise HTTPException(status_code=404, detail=f"Live doc not found for session '{slug}'")
+    # Fallback to opencode docs dir
+    session_file = OPCODE_DOCS_DIR / f"{slug}.md"
+    if session_file.exists():
+        return info, session_file, project_slug
 
-    return info, session_file, project_slug
+    raise HTTPException(status_code=404, detail=f"Live doc not found for session '{slug}'")
 
 
 @router.get("/api/v1/pm/sessions/{slug}/live-doc")
