@@ -40,9 +40,21 @@ GitHub: frotaluiza/Projetos/        ← repositório único de project-spaces
 
 ### Ao alterar código do projeto:
 - Se o projeto tem repo de código (ex: deeptutor/):
-  - Criar branch `feature/{descricao}` no repo de código
-  - Trabalhar localmente
-  - Mergear quando pronto
+  - **Criar duas branches:**
+    1. `ps/{feature}` no project-space (a partir de `sessao/{slug}`)
+    2. `feature/{feature}` no repo de código
+  - Atualizar `project-state.yaml`: `branch_codigo: "feature/{feature}"`
+  - Trabalhar em ambas simultaneamente
+  - Mergear quando pronto: `feature/` → `main` (código) + `ps/` → `sessao/` (project-space)
+
+### Hierarquia completa de branches:
+```
+main
+  └── sessao/{slug}            ← criada no início da sessão
+       └── ps/{feature}        ← criada quando decide implementar código
+                                   ↑
+                              feature/{feature}  ← repo de código
+```
 
 ### Ao finalizar sessão:
 1. **Atualizar project-state.yaml** com:
