@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException
 from pathlib import Path
+
+from fastapi import APIRouter, HTTPException
 import yaml
-import os
 
 router = APIRouter()
 

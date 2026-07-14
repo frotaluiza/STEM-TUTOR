@@ -14,15 +14,15 @@ Options:
     --once          Run a single check and exit (for cron/task scheduler)
 """
 
-import sqlite3
+import argparse
+from datetime import datetime
 import json
 import os
+from pathlib import Path
+import sqlite3
+import subprocess
 import sys
 import time
-import subprocess
-import argparse
-from datetime import datetime, timezone
-from pathlib import Path
 
 # --- Paths ---
 OPCODE_DB = os.path.expanduser(r'~\.local\share\opencode\opencode.db')
@@ -140,7 +140,7 @@ def run_pipeline(slug):
     success = True
 
     # Step 1: Extract live doc
-    log(f'  Step 1: Extract live doc...')
+    log('  Step 1: Extract live doc...')
     result = subprocess.run(
         [sys.executable, str(EXTRACT_SCRIPT), '--slug', slug],
         capture_output=True, text=True, timeout=120
@@ -149,10 +149,10 @@ def run_pipeline(slug):
         log(f'  Step 1 FAILED: {result.stderr[:500]}', 'ERROR')
         success = False
     else:
-        log(f'  Step 1 OK')
+        log('  Step 1 OK')
 
     # Step 2: Classification (runs for all but we need to pick up new one)
-    log(f'  Step 2: Classify session...')
+    log('  Step 2: Classify session...')
     result = subprocess.run(
         [sys.executable, str(CLASSIFY_SCRIPT)],
         capture_output=True, text=True, timeout=60
@@ -161,10 +161,10 @@ def run_pipeline(slug):
         log(f'  Step 2 FAILED: {result.stderr[:500]}', 'ERROR')
         success = False
     else:
-        log(f'  Step 2 OK')
+        log('  Step 2 OK')
 
     # Step 3: Build project spaces
-    log(f'  Step 3: Build project spaces...')
+    log('  Step 3: Build project spaces...')
     result = subprocess.run(
         [sys.executable, str(BUILD_SPACES_SCRIPT)],
         capture_output=True, text=True, timeout=60
@@ -173,10 +173,10 @@ def run_pipeline(slug):
         log(f'  Step 3 FAILED: {result.stderr[:500]}', 'ERROR')
         success = False
     else:
-        log(f'  Step 3 OK')
+        log('  Step 3 OK')
 
     # Step 4: Update project state (for stem tutor)
-    log(f'  Step 4: Update project state...')
+    log('  Step 4: Update project state...')
     result = subprocess.run(
         [sys.executable, str(UPDATE_STATE_SCRIPT)],
         capture_output=True, text=True, timeout=60
@@ -185,10 +185,10 @@ def run_pipeline(slug):
         log(f'  Step 4 FAILED: {result.stderr[:500]}', 'ERROR')
         # Non-fatal
     else:
-        log(f'  Step 4 OK')
+        log('  Step 4 OK')
 
     # Step 5: Git commit + push to personal fork
-    log(f'  Step 5: Git commit and push...')
+    log('  Step 5: Git commit and push...')
     try:
         git_result = subprocess.run(
             ['git', 'add', '-f', 'kb/', 'scripts/kb/', 'project-state/'],
@@ -205,7 +205,7 @@ def run_pipeline(slug):
                     capture_output=True, text=True, timeout=60, cwd=AI_TUTOR_DIR
                 )
                 if push_result.returncode == 0:
-                    log(f'  Step 5 OK — pushed to personal remote')
+                    log('  Step 5 OK — pushed to personal remote')
                 else:
                     log(f'  Step 5 push stderr: {push_result.stderr[:300]}', 'WARN')
             else:
@@ -213,7 +213,7 @@ def run_pipeline(slug):
         else:
             log(f'  Step 5 add FAILED: {git_result.stderr[:200]}', 'ERROR')
     except subprocess.TimeoutExpired:
-        log(f'  Step 5 timed out', 'WARN')
+        log('  Step 5 timed out', 'WARN')
     except Exception as e:
         log(f'  Step 5 error: {e}', 'WARN')
 

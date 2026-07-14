@@ -15,12 +15,12 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+from datetime import datetime
 import json
+from pathlib import Path
 import re
 import shutil
 import sys
-from datetime import datetime
-from pathlib import Path
 
 import fitz
 
@@ -439,7 +439,7 @@ class TextbookIngester:
             capture_output=True, text=True, cwd=str(PROJECT_ROOT),
         )
         if result.returncode == 0:
-            lines = [l for l in result.stdout.split("\n") if l.strip()]
+            lines = [line for line in result.stdout.split("\n") if line.strip()]
             print(f"[ingest] Formatted {len(lines)} files")
         else:
             print(f"[ingest] Format warning: {result.stderr[:200]}")

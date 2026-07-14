@@ -11,12 +11,12 @@ Now supports:
   - Leitura de perfis/frota.yaml para mapear slugs → pages
 """
 
-import json
 import os
+from pathlib import Path
 import re
 import sys
+
 import yaml
-from pathlib import Path
 
 # --- Config from env ---
 NOTION_API_KEY = os.environ.get('NOTION_API_KEY', os.environ.get('OPENCODE_WATCHER', ''))

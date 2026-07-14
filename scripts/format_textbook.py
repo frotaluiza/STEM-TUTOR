@@ -19,9 +19,9 @@ Usage:
 from __future__ import annotations
 
 import argparse
+from pathlib import Path
 import re
 import shutil
-from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 MODULES_DIR = PROJECT_ROOT / "data" / "modules" / "sadiku"

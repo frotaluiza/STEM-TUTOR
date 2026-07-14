@@ -1,4 +1,5 @@
 import re
+
 CIRCUIT_COMP_RE = re.compile(r"\b[RCLEFUQ]\d+\b")
 tests = ['R1 47', 'C3', 'L1', 'U1 SBL-1 Mixer', '10 k', '7 MHz C6', 'Antenna', 'Oscillator']
 for t in tests:

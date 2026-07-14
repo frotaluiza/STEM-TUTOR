@@ -6,9 +6,8 @@ Usage: python scripts/resplit_sections.py
 """
 from __future__ import annotations
 
-import re
-import shutil
 from pathlib import Path
+import re
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 MODULES_DIR = PROJECT_ROOT / "data" / "modules" / "sadiku"

@@ -4,20 +4,19 @@ pm_dashboard.py — Project Manager Dashboard API
 Endpoints for monitoring the watcher, sessions, projects, and pipeline health.
 """
 
+from datetime import datetime, timezone
 import json
 import os
+from pathlib import Path
 import re
 import subprocess
 import uuid
-from datetime import datetime, timezone
-from pathlib import Path
-
-import yaml
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
+import yaml
 
-from deeptutor.noteblocks.models import Note, Block, BlockType
+from deeptutor.noteblocks.models import Block, BlockType, Note
 from deeptutor.noteblocks.storage import NoteStorage
 
 router = APIRouter(tags=["pm"])

@@ -19,14 +19,12 @@ Flow:
   5. Commit (if called from GitHub Action)
 """
 
-import json
-import os
-import re
-import sys
-import time
-import yaml
 from datetime import datetime, timezone
+import os
 from pathlib import Path
+import sys
+
+import yaml
 
 # --- Config from env ---
 NOTION_API_KEY = os.environ.get('NOTION_API_KEY', os.environ.get('OPENCODE_WATCHER', ''))
@@ -231,7 +229,7 @@ def pull_sessions(since_ts):
         content += f'_Pulled from Notion at {datetime.now(timezone.utc).isoformat()}_\n\n'
         content += f'- **Criado em**: {created}\n'
         content += f'- **Última edição**: {last_edited}\n'
-        content += f'- **Origem**: Notion\n'
+        content += '- **Origem**: Notion\n'
 
         # Conflict detection
         if target_file.exists():

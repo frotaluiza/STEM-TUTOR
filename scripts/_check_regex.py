@@ -1,4 +1,5 @@
 import re
+
 # Simulate the exact TypeScript regex on the exact API response
 text_source = open(r'C:\Users\frota\Documents\Projetos\AI TUTOR\data\knowledge_bases\sadiku\raw\ch01_12-systems-of-units.md', encoding='utf-8').read()
 

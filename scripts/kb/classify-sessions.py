@@ -9,10 +9,9 @@ Output:
   - Prints summary of classification results
 """
 
-import os
-import re
 import json
 from pathlib import Path
+import re
 
 AI_TUTOR_DIR = Path(__file__).resolve().parents[2]
 SESSOES_DIR = AI_TUTOR_DIR / 'kb' / 'sessoes'
@@ -245,7 +244,7 @@ def print_summary(classification):
         total_cost += info['cost']
 
     print(f'\n{"=" * 60}')
-    print(f'  Session Classification Summary')
+    print('  Session Classification Summary')
     print(f'  Total: {total_sessions} sessions, ${total_cost:.2f} total cost')
     print(f'{"=" * 60}')
     print(f'{"Project":40s} {"Sessions":>8s} {"Cost":>10s}')
@@ -264,7 +263,7 @@ def print_summary(classification):
         for s in sorted(unclassified):
             info = classification[s]
             print(f'  * {s:25s} | {info["title"][:60]}')
-        print(f'\nTo classify them manually, edit the rules in classify-sessions.py')
+        print('\nTo classify them manually, edit the rules in classify-sessions.py')
     
     return by_project
 

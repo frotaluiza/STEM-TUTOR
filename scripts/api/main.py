@@ -1,6 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import projects, sessions, readings, tasks, daily_reports
+
+from .routers import daily_reports, projects, readings, sessions, tasks
 
 app = FastAPI(
     title="Project Orchestrator API",

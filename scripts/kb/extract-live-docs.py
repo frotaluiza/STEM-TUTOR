@@ -12,12 +12,12 @@ By default, only processes sessions tagged as 'AI STEM Tutor' in registry.
 Use --all to process ALL 266 sessions, or --slug to process a single one.
 """
 
-import sqlite3
+from datetime import datetime, timezone
 import json
 import os
-import re
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import re
+import sqlite3
 
 # --- Constants ---
 OPCODE_DB = os.path.expanduser(r'~\.local\share\opencode\opencode.db')
@@ -161,7 +161,7 @@ def render_reasoning(part, idx):
     if not text:
         return ''
     out = []
-    out.append(f'<details open>')
+    out.append('<details open>')
     out.append(f'<summary>🧠 Raciocínio #{idx+1}</summary>')
     out.append('')
     out.append(text)
@@ -324,7 +324,7 @@ def generate_live_doc(slug):
     registry_map = load_registry_map()
 
     if slug not in session_map:
-        print(f'    SKIP: slug not found in SQLite')
+        print('    SKIP: slug not found in SQLite')
         conn.close()
         return False
 
@@ -336,7 +336,7 @@ def generate_live_doc(slug):
     conn.close()
 
     if not msgs:
-        print(f'    SKIP: no messages found')
+        print('    SKIP: no messages found')
         return False
 
     fm = build_frontmatter(slug, session_sql, registry_entry, msgs, switches)
@@ -487,7 +487,7 @@ def generate_live_doc(slug):
             if start_count > 1:
                 content.append(f'*{plural(start_count, "novo passo")} nesta mensagem*')
             elif start_count == 1:
-                content.append(f'*Novo passo iniciado*')
+                content.append('*Novo passo iniciado*')
             content.append('')
 
         if compaction_parts:

@@ -1,4 +1,7 @@
-import requests, re
+import re
+
+import requests
+
 r = requests.get('http://localhost:8001/api/v1/knowledge/sadiku/files/ch01_12-systems-of-units.md')
 if r.status_code == 200:
     text = r.text

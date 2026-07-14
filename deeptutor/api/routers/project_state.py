@@ -4,8 +4,6 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from deeptutor.services.config.runtime_settings import get_runtime_settings_service as get_runtime_settings
-
 router = APIRouter(tags=["project"])
 
 PROJECT_DIR = Path(__file__).resolve().parents[3]  # AI TUTOR/

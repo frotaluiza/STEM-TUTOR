@@ -8,12 +8,12 @@ Usage:
     python scripts/kb/update-project-state.py
 """
 
+from datetime import datetime, timezone
 import json
 import os
+from pathlib import Path
 import re
 import subprocess
-from datetime import datetime, timezone
-from pathlib import Path
 
 AI_TUTOR_DIR = Path(__file__).resolve().parents[2]
 SESSOES_DIR = AI_TUTOR_DIR / 'kb' / 'sessoes'

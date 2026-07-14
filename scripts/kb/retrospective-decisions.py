@@ -10,12 +10,12 @@ Output:
   project-state/{slug}.json        — updated with decisions
 """
 
-import json
-import os
-import re
 from collections import defaultdict
 from datetime import datetime
+import json
+import os
 from pathlib import Path
+import re
 
 AI_TUTOR_DIR = Path(__file__).resolve().parents[2]
 SESSOES_DIR = AI_TUTOR_DIR / 'kb' / 'sessoes'
@@ -236,8 +236,8 @@ def write_timeline_md(meta, data):
     lines.append('')
     lines.append('## Timeline de Sessões')
     lines.append('')
-    lines.append(f'| Data | Título | Agente | Custo | Resumo |')
-    lines.append(f'|------|--------|--------|-------|--------|')
+    lines.append('| Data | Título | Agente | Custo | Resumo |')
+    lines.append('|------|--------|--------|-------|--------|')
 
     for s in data['sessions']:
         date_str = s.get('date', '')[:10]

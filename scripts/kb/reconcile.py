@@ -13,12 +13,12 @@ Uso:
   python scripts/kb/reconcile.py [--dry-run]
 """
 
-import json
-import os
-import sys
-import yaml
 from datetime import datetime, timezone
+import os
 from pathlib import Path
+import sys
+
+import yaml
 
 NOTION_API_KEY = os.environ.get('NOTION_API_KEY', os.environ.get('OPENCODE_WATCHER', ''))
 SESSOES_DB_ID = os.environ.get('SESSOES_DB_ID', '372191ce-57f9-810c-99aa-d5fa31deb926')

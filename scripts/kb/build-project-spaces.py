@@ -11,12 +11,12 @@ Output:
   Also updates project-state/ for projects that already have one.
 """
 
+from datetime import datetime
 import json
 import os
+from pathlib import Path
 import re
 import shutil
-from pathlib import Path
-from datetime import datetime
 
 AI_TUTOR_DIR = Path(__file__).resolve().parents[2]
 SESSOES_DIR = AI_TUTOR_DIR / 'kb' / 'sessoes'
@@ -164,8 +164,8 @@ def write_project_index(proj):
 
     lines.append('## Sessoes')
     lines.append('')
-    lines.append(f'| Data | Titulo | Agente | Custo |')
-    lines.append(f'|------|--------|--------|-------|')
+    lines.append('| Data | Titulo | Agente | Custo |')
+    lines.append('|------|--------|--------|-------|')
 
     for s in sessions:
         cost_str = f'${s["cost"]:.2f}' if s['cost'] else ''
@@ -249,7 +249,7 @@ def main():
     print()
     print('Done!')
 
-    print(f'\n Summary:')
+    print('\n Summary:')
     print(f'  Projects: {len([p for p in projects if p != "empty"])}')
     total_sessions = sum(len(proj['sessions']) for proj in projects.values() if proj['slug'] != 'empty')
     print(f'  Total classified sessions: {total_sessions}')
