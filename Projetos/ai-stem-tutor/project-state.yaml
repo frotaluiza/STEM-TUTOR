@@ -63,6 +63,8 @@ proximos_passos:
     prioridade: media
   - descricao: "Popular Projetos/ com dados reais dos outros projetos (TCC, bateria, PC)"
     prioridade: media
+  - descricao: "Visualização de worktree no PM — acompanhar branches em tempo real pelo DeepTutor"
+    prioridade: media
   - descricao: "Relatório diário automático — resumo das alterações do dia no project-state e código"
     prioridade: baixa
 
