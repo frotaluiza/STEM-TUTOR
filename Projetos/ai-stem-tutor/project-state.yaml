@@ -5,13 +5,13 @@ area: IA
 status: "Em andamento"
 objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
 repositorio_codigo: "frotaluiza/STEM-TUTOR"
-branch_atual: "feature/project-orchestrator"
+branch_atual: "main"
 ultima_sessao:
-  slug: cheerful-session-name
-  titulo: "Project Orchestrator — implementação completa"
+  slug: continuacao-sessao
+  titulo: "Project Orchestrator — implementação completa + merge"
   data: 2026-07-14
-  branch: "feature/project-orchestrator"
-  decisoes: 3
+  branch: "feature/continuacao-sessao"
+  decisoes: 10
 
 caminho:
   - fase: "Pesquisa"
@@ -34,16 +34,37 @@ decisoes_acumuladas:
   - contexto: "Mini-game 2D estilo Dino Chrome para remediação"
     escolha: "Canvas 2D puro (HTML5), boneco pixel art monocromático"
     mecanica: "Frases como obstáculos — ordenadas por pré-requisito (escada Memphis)"
+  - contexto: "Centralizar todos os project-spaces em um repositório único Projetos/"
+    escolha: "Estrutura Projetos/{slug}/ com subpastas padronizadas (fontes, arquitetura, tarefas, etc.)"
+    stack: "YAML + Markdown + git"
+    data: 2026-07-14
+  - contexto: "Sincronização bidirecional com Notion"
+    escolha: "GitHub Action com push (commit → Notion) + pull (schedule 30min Notion → commit)"
+    stack: "GitHub Actions + Notion API + Python"
+    data: 2026-07-14
+  - contexto: "API REST para servir project-states ao DeepTutor"
+    escolha: "FastAPI em scripts/api/ rodando em localhost:8080 com auto-start via Task Scheduler"
+    stack: "FastAPI, Uvicorn, PyYAML"
+    data: 2026-07-14
+  - contexto: "Hierarquia de branches entre código e project-state"
+    escolha: "sessao/{slug} → ps/{feature} (project-space) + feature/{feature} (código), mergeados juntos"
+    data: 2026-07-14
+  - contexto: "Mini-sessões no NoteBlocks (chat inline)"
+    escolha: "Novo tipo de bloco Slate.js com origem: noteblocks, filtrável no PM"
+    data: 2026-07-14
+  - contexto: "Filtro de sessões por origem no PM"
+    escolha: "API /sessions?origem= + checkbox 'Mostrar mini-sessões' no frontend"
+    data: 2026-07-14
 
 proximos_passos:
-  - descricao: "Implementar NoteBlocks completo com NoteBlocks"
+  - descricao: "Pipeline agent robusto — watcher contínuo Python para automatizar branch/merge/sync sem depender do LLM"
     prioridade: alta
-  - descricao: "Watcher de pull Notion → Local"
-    prioridade: alta
-  - descricao: "Sistema de perfil Frota no DeepTutor"
+  - descricao: "ChatBlock no NoteBlocks — mini-sessão opencode com origem: noteblocks"
     prioridade: media
-  - descricao: "API estruturada dos project-states"
+  - descricao: "Popular Projetos/ com dados reais dos outros projetos (TCC, bateria, PC)"
     prioridade: media
+  - descricao: "Relatório diário automático — resumo das alterações do dia no project-state e código"
+    prioridade: baixa
 
 mastery_paths:
   - nome: "Fundamentos de Engenharia"
@@ -62,6 +83,6 @@ fontes:
   leituras: 8
   artigos: 5
   anotacoes: 3
-  sessoes: 240
+  sessoes: 3
 
 ultima_atualizacao: 2026-07-14
