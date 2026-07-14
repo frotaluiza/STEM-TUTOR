@@ -26,13 +26,15 @@ import { NODE_COLORS } from "./types";
 
 interface UnifiedMindMapProps {
   pathId?: string;
+  slug?: string;
   apiBase?: string;
   initialData?: MindMapResponse | null;
   onSave?: (data: MindMapResponse) => void;
   readOnly?: boolean;
 }
 
-const nodeTypes = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const nodeTypes: Record<string, any> = {
   project: ProjectNode,
   branch: BaseNode,
   commit: BaseNode,
@@ -41,9 +43,12 @@ const nodeTypes = {
   todo: BaseNode,
   module: BaseNode,
   kp: BaseNode,
+  kb: BaseNode,
+  note: BaseNode,
+  issue: BaseNode,
 };
 
-function Flow({ pathId = "default", apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
+function Flow({ pathId, slug, apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [loading, setLoading] = useState(true);
@@ -65,9 +70,20 @@ function Flow({ pathId = "default", apiBase = "/api/v1/mindmap", initialData, on
     setLoading(true);
     setError(null);
 
+    const url = slug
+      ? `/api/v1/pm/space/${encodeURIComponent(slug)}`
+      : pathId
+        ? `${apiBase}/${encodeURIComponent(pathId)}`
+        : null;
+    if (!url && !initialData) {
+      setError("No pathId, slug, or initialData provided");
+      setLoading(false);
+      return;
+    }
+
     const dataPromise: Promise<MindMapResponse> = initialData
       ? Promise.resolve(initialData)
-      : fetch(`${apiBase}/${encodeURIComponent(pathId)}`).then((r) => {
+      : fetch(url!).then((r) => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
         });
