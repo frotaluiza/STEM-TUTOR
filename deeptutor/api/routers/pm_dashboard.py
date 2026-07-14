@@ -222,7 +222,7 @@ async def pm_logs(tail: int = 50):
 
 @router.get("/api/v1/pm/projects")
 async def pm_projects():
-    """All projects with session counts and cost."""
+    """All projects with session counts, cost, and latest session date."""
     classification = _get_classification()
     if not classification:
         return {"projects": [], "total_sessions": 0, "total_cost": 0.0}
@@ -231,9 +231,15 @@ async def pm_projects():
     for slug, info in classification.get("classification", {}).items():
         proj = info.get("project_name", "Unknown")
         if proj not in by_project:
-            by_project[proj] = {"name": proj, "slug": info.get("project_slug", ""), "count": 0, "cost": 0.0}
+            by_project[proj] = {
+                "name": proj, "slug": info.get("project_slug", ""),
+                "count": 0, "cost": 0.0, "last_date": "",
+            }
         by_project[proj]["count"] += 1
         by_project[proj]["cost"] += info.get("cost", 0)
+        date = info.get("date", "")
+        if date and date > by_project[proj].get("last_date", ""):
+            by_project[proj]["last_date"] = date
 
     projects = sorted(by_project.values(), key=lambda p: -p["count"])
     total_cost = sum(p["cost"] for p in projects)

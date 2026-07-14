@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Activity, BarChart3, Database, ExternalLink, FileDown, Github, Layers, Loader2 } from "lucide-react";
 import PMProjectSelector from "./PMProjectSelector";
 import PMReportSection from "./PMReportSection";
@@ -29,6 +29,7 @@ function StatCard({ label, value, icon: Icon }: { label: string; value: string |
 
 export default function PMDashboardV2() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     projects,
     totalCost,
@@ -44,6 +45,26 @@ export default function PMDashboardV2() {
 
   const [activeView, setActiveView] = useState<"dashboard" | "mindmap">("dashboard");
 
+  // Auto-select: URL param > most recent > first
+  const defaultSlug = useMemo(() => {
+    if (selectedSlug) return selectedSlug;
+    const fromUrl = searchParams.get("project");
+    if (fromUrl && projects.find((p) => p.slug === fromUrl)) return fromUrl;
+    const sorted = [...projects].sort(
+      (a, b) => (b.last_date || "").localeCompare(a.last_date || ""),
+    );
+    return sorted[0]?.slug || projects[0]?.slug || null;
+  }, [projects, selectedSlug, searchParams]);
+
+  // Select default on first load
+  const [initialized, setInitialized] = useState(false);
+  useEffect(() => {
+    if (!initialized && defaultSlug && !selectedSlug) {
+      selectProject(defaultSlug);
+      setInitialized(true);
+    }
+  }, [defaultSlug, selectedSlug, selectProject, initialized]);
+
   const handleSessionClick = useCallback(
     (row: SessionBrief) => {
       router.push(`/session-viewer/${row.slug}`);
@@ -51,17 +72,12 @@ export default function PMDashboardV2() {
     [router],
   );
 
-  const defaultSlug = useMemo(() => {
-    if (selectedSlug) return selectedSlug;
-    const stem = projects.find((p) => p.slug === "ai-stem-tutor");
-    return stem?.slug || projects[0]?.slug || null;
-  }, [projects, selectedSlug]);
-
   const handleProjectSelect = useCallback(
     (slug: string) => {
       selectProject(slug);
+      router.replace(`/pm?project=${slug}`, { scroll: false });
     },
-    [selectProject],
+    [selectProject, router],
   );
 
   const sessionColumns = useMemo<Column<SessionBrief>[]>(

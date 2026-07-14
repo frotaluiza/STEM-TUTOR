@@ -3,6 +3,7 @@ export type ProjectInfo = {
   slug: string;
   count: number;
   cost: number;
+  last_date?: string;
 };
 
 export type ProjectsResponse = {
