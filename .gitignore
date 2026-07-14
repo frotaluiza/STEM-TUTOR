@@ -321,3 +321,11 @@ celerybeat.pid
 *.wav
 *.ogg
 !demo/*.mp4
+
+# ============================================
+# Project Orchestrator
+# ============================================
+*.out
+*.err
+*.pid
+.last_pull_timestamp
