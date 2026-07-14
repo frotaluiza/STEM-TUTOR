@@ -87,7 +87,7 @@ export default function ProjectDetailPage() {
   const state = project.project_state;
 
   return (
-    <div className="mx-auto max-w-5xl p-6">
+    <div className="mx-auto h-full max-w-5xl overflow-y-auto p-6">
       {/* Header */}
       <div className="mb-6">
         <Link

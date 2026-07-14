@@ -34,16 +34,16 @@ def _list_session_files(projeto_dir: Path, origem: str = None):
         return []
     sessions = []
     for f in sorted(sessoes_dir.glob("*.md"), reverse=True):
-        if origem:
-            text = f.read_text(encoding="utf-8")
-            fm = _parse_frontmatter(text)
-            file_origem = fm.get("origem", "opencode")
-            if file_origem != origem:
-                continue
+        text = f.read_text(encoding="utf-8")
+        fm = _parse_frontmatter(text)
+        file_origem = fm.get("origem", "opencode")
+        if origem and file_origem != origem:
+            continue
         sessions.append({
             "slug": f.stem,
             "arquivo": f.name,
             "projeto": projeto_dir.name,
+            "origem": file_origem,
         })
     return sessions
 

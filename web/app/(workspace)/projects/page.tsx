@@ -68,7 +68,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-6">
+    <div className="mx-auto h-full max-w-5xl overflow-y-auto p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Projetos</h1>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
