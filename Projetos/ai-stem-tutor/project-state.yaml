@@ -5,6 +5,13 @@ area: IA
 status: "Em andamento"
 objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
 repositorio_codigo: "frotaluiza/STEM-TUTOR"
+branch_atual: "feature/project-orchestrator"
+ultima_sessao:
+  slug: cheerful-session-name
+  titulo: "Project Orchestrator — implementação completa"
+  data: 2026-07-14
+  branch: "feature/project-orchestrator"
+  decisoes: 3
 
 caminho:
   - fase: "Pesquisa"

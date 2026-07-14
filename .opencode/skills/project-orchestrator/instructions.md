@@ -45,10 +45,42 @@ GitHub: frotaluiza/Projetos/        ← repositório único de project-spaces
   - Mergear quando pronto
 
 ### Ao finalizar sessão:
-1. Commit final na branch
-2. Checkout main
-3. Merge da branch de sessão
-4. Push
+1. **Atualizar project-state.yaml** com:
+   - branch atual da sessão
+   - últimas decisões tomadas
+   - status atualizado
+   - última atualização (timestamp)
+2. Commit final na branch com msg: `sessao: {slug} — {n} decisões`
+3. Checkout main
+4. Merge da branch de sessão
+5. Push
+
+## Sincronização Obrigatória do Project State
+
+Toda sessão DEVE garantir que o `project-state.yaml` reflita o estado atual:
+
+| Campo | Como atualizar |
+|-------|----------------|
+| `status` | Se houve avanço significativo, mudar para "Em andamento" |
+| `branch_atual` | Slug da branch da sessão (`sessao/{slug}`) |
+| `ultima_sessao` | Slug, título e data da sessão atual |
+| `decisoes_acumuladas` | Adicionar decisões tomadas durante a sessão |
+| `proximos_passos` | Atualizar com base no que ficou pendente |
+| `fontes.{videos, leituras, artigos}` | Incrementar se novas fontes foram adicionadas |
+| `ultima_atualizacao` | Data ISO atual |
+
+### Regra: project-state sempre espelha a branch
+
+Se a sessão criou uma branch nova (`sessao/{slug}`), o project-state DEVE conter:
+```yaml
+branch_atual: "sessao/calm-canyon"
+ultima_sessao:
+  slug: calm-canyon
+  titulo: "Implementar feature X"
+  data: 2026-07-14
+```
+
+Isso garante que o Project Manager (PM) no DeepTutor veja sempre a branch correta.
 
 ## Formatos
 
