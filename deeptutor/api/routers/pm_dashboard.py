@@ -465,9 +465,71 @@ def _resolve_session_file(slug: str) -> tuple[dict, Path, str]:
 
 @router.get("/api/v1/pm/sessions/{slug}/live-doc")
 async def pm_session_live_doc(slug: str):
-    """Serve a session live doc as raw markdown content."""
-    _, session_file, _ = _resolve_session_file(slug)
-    content = session_file.read_text(encoding="utf-8")
+    """Serve clean markdown generated from opencode DB."""
+    try:
+        export = await pm_session_export(slug)
+    except HTTPException:
+        # Fallback to file with corruption fix
+        _, session_file, _ = _resolve_session_file(slug)
+        raw = session_file.read_bytes()
+        # Remove E2 94 9C prefix before C3 bytes
+        raw = raw.replace(b"\xe2\x94\x9c\xc3", b"\xc3")
+        # Remove E2 94 9C prefix before C2 bytes (double corruption)
+        raw = raw.replace(b"\xe2\x94\x9c\xc2", b"\xc2")
+        # Remove remaining lone E2 94 9C
+        raw = raw.replace(b"\xe2\x94\x9c", b"")
+        content = raw.decode("utf-8", errors="replace")
+        return Response(content=content, media_type="text/markdown")
+
+    # Build clean markdown from export data
+    lines = [f"# Sessão: {slug}", "", f"**Total de mensagens:** {export.get('total_messages', 0)}", ""]
+    for msg in export.get("messages", []):
+        role = msg.get("role", "")
+        agent = msg.get("agent", "")
+        ts = ""
+        t = msg.get("time", {}) or {}
+        if t.get("created"):
+            from datetime import datetime
+            ts = datetime.fromtimestamp(t["created"] / 1000).strftime(" (%d/%m %H:%M)")
+
+        icon = "👤" if role == "user" else "🤖"
+        lines.append(f"## {icon} {'Você' if role == 'user' else 'Assistente'}{ts}")
+        lines.append("")
+
+        for p in msg.get("parts", []):
+            ptype = p.get("type", "")
+            if ptype in ("step-start", "step-finish", "compaction"):
+                continue
+            if ptype == "reasoning":
+                continue  # skip reasoning
+            if ptype == "text":
+                text = (p.get("text") or "").strip()
+                if text:
+                    # Escape markdown special chars? No, render as-is
+                    lines.append(text)
+                    lines.append("")
+            elif ptype == "tool":
+                tool_name = p.get("tool", "")
+                state = p.get("state", {}) or {}
+                status = state.get("status", "")
+                inp = state.get("input", {}) or {}
+                out = (state.get("output") or "")[:500]
+
+                if tool_name in ("bash", "powershell"):
+                    cmd = inp.get("command", "") if isinstance(inp, dict) else ""
+                    if cmd:
+                        lines.append(f"```bash\n{cmd}\n```")
+                    if out:
+                        lines.append(f"```\n{out}\n```")
+                elif tool_name == "task":
+                    desc = inp.get("description", "") if isinstance(inp, dict) else str(inp)
+                    if desc:
+                        lines.append(f"> 🧠 Subagente: {desc}")
+                    if status == "error" and out:
+                        lines.append(f"> ❌ Erro: {out[:200]}")
+                lines.append("")
+
+    content = "\n".join(lines)
     return Response(content=content, media_type="text/markdown")
 
 
