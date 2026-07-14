@@ -8,7 +8,10 @@ export type MindMapNodeType =
   | "decision"
   | "todo"
   | "module"
-  | "kp";
+  | "kp"
+  | "kb"
+  | "note"
+  | "issue";
 
 export interface MindMapNodeData extends Record<string, unknown> {
   label: string;
@@ -23,11 +26,18 @@ export type MindMapNode = Node<MindMapNodeData, MindMapNodeType>;
 export type MindMapEdge = Edge;
 
 export interface MindMapMeta {
-  project: string;
-  branch: string;
-  last_commit: string;
-  last_updated: string;
-  path_id: string;
+  project?: string;
+  branch?: string;
+  last_commit?: string;
+  last_updated?: string;
+  path_id?: string;
+  /* Space endpoint fields */
+  sessions?: number;
+  total_cost?: number;
+  kbs?: number;
+  notes?: number;
+  modules?: number;
+  session_stats?: Record<string, unknown>;
 }
 
 export interface MindMapResponse {
@@ -45,6 +55,9 @@ export const NODE_COLORS: Record<string, string> = {
   todo: "#ef4444",
   module: "#a855f7",
   kp: "#6b7280",
+  kb: "#14b8a6",
+  note: "#f97316",
+  issue: "#dc2626",
 };
 
 export const NODE_LABELS: Record<string, string> = {
@@ -56,4 +69,7 @@ export const NODE_LABELS: Record<string, string> = {
   todo: "Next Step",
   module: "Module",
   kp: "Knowledge Point",
+  kb: "Knowledge Base",
+  note: "Note",
+  issue: "Issue",
 };

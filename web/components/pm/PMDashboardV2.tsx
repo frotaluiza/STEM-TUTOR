@@ -221,8 +221,8 @@ export default function PMDashboardV2() {
 
       {activeView === "mindmap" ? (
         /* Mind Map view */
-        <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] overflow-hidden min-h-[500px] relative">
-          <ProjectMindMap />
+        <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] h-[calc(100vh-220px)] relative">
+          <ProjectMindMap slug={selectedSlug || defaultSlug || undefined} />
         </div>
       ) : (
         /* Dashboard view */
