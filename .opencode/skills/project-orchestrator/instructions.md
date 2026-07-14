@@ -174,6 +174,22 @@ Objetivo: {objetivo da sessão}
 
 **Sempre perguntar ao usuário após uma ação relevante se ele quer gerar um artefato.**
 
+## Trabalhando em Múltiplas Branches Simultaneamente
+
+Use `git worktree` para manter a API rodando em branches diferentes ao mesmo tempo.
+
+```powershell
+# Setup rápido (cria worktree da main + inicia APIs)
+.\scripts\kb\worktree-setup.ps1 -Branches "main" -StartAPIs
+
+# Resultado:
+#   STEM-TUTOR/           → ps/mindmap-v2  → :8080
+#   STEM-TUTOR-main/      → main           → :8081
+```
+
+Cada pasta tem seu próprio checkout e sua própria API. Úteis para comparar
+comportamento entre branches sem precisar ficar trocando.
+
 ## Perfil Frota
 
 O perfil "Frota" dá acesso ao repositório Projetos/.
