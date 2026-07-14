@@ -4,10 +4,8 @@ on:
   push:
     branches:
       - main
-      - feature/mind-map-module
     paths:
-      - 'kb/**'
-      - 'project-state/**'
+      - 'Projetos/**'
       - 'scripts/kb/**'
   workflow_dispatch:
     inputs:
@@ -15,9 +13,14 @@ on:
         description: 'Specific session slug to sync (optional)'
         required: false
         type: string
+  schedule:
+    # Pull from Notion every 30 minutes
+    - cron: '*/30 * * * *'
 
 jobs:
-  sync-notion:
+  # ── Push: GitHub → Notion ──────────────────────────────────────────
+  push-to-notion:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install httpx python-dotenv
+          pip install httpx pyyaml
 
       - name: Detect changed files
         id: changes
@@ -42,13 +45,12 @@ jobs:
             echo "slug=${{ inputs.slug }}" >> $GITHUB_OUTPUT
             echo "mode=single" >> $GITHUB_OUTPUT
           else
-            CHANGED=$(git diff --name-only HEAD~1 -- 'kb/sessoes/' 2>/dev/null || echo "")
+            CHANGED=$(git diff --name-only HEAD~1 -- 'Projetos/*/sessoes/' 2>/dev/null || echo "")
             if [ -z "$CHANGED" ]; then
-              CHANGED=$(git diff --name-only HEAD~2 -- 'kb/sessoes/' 2>/dev/null | sed 's|kb/sessoes/||;s|\.md||' | tr '\n' ',' | sed 's/,$//')
-            else
-              CHANGED=$(echo "$CHANGED" | sed 's|kb/sessoes/||;s|\.md||' | tr '\n' ',' | sed 's/,$//')
+              CHANGED=$(git diff --name-only HEAD~2 -- 'Projetos/*/sessoes/' 2>/dev/null || echo "")
             fi
-            echo "slug=$CHANGED" >> $GITHUB_OUTPUT
+            SLUGS=$(echo "$CHANGED" | sed -n 's|Projetos/[^/]*/sessoes/\(.*\)\.md|\1|p' | tr '\n' ',' | sed 's/,$//')
+            echo "slug=$SLUGS" >> $GITHUB_OUTPUT
             echo "mode=batch" >> $GITHUB_OUTPUT
           fi
 
@@ -61,3 +63,37 @@ jobs:
           python scripts/kb/gh-sync-notion.py \
             --slugs "${{ steps.changes.outputs.slug }}" \
             --mode "${{ steps.changes.outputs.mode }}"
+
+  # ── Pull: Notion → GitHub ─────────────────────────────────────────
+  pull-from-notion:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install httpx pyyaml
+
+      - name: Pull from Notion
+        env:
+          NOTION_API_KEY: ${{ secrets.OPENCODE_WATCHER }}
+          SESSOES_DB_ID: "372191ce-57f9-810c-99aa-d5fa31deb926"
+          PROJETOS_DB_ID: "9172be34-0056-4f38-aa2a-093339bb5790"
+        run: |
+          python scripts/kb/notion-pull.py --commit
+
+      - name: Push changes
+        run: |
+          git config user.name "opencode-bot"
+          git config user.email "bot@opencode.ai"
+          git push origin main

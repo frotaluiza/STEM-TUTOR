@@ -1,0 +1,19 @@
+projeto: "Curso de Bateria — metodologia + planos de aula"
+slug: curso-bateria
+perfil: Frota
+area: Musica
+status: "Ideia"
+objetivo: "Organizar aulas, metodologia e planos de aula para curso de bateria"
+
+caminho:
+  - fase: "Planejamento"
+    descricao: "Definir metodologia e estrutura do curso"
+  - fase: "Conteúdo"
+    descricao: "Criar planos de aula e material didático"
+
+decisoes_acumuladas: []
+proximos_passos:
+  - descricao: "Definir metodologia de ensino"
+    prioridade: media
+
+ultima_atualizacao: 2026-07-14

@@ -1,0 +1,24 @@
+projeto: "TCC — Destilação de Membranas"
+slug: tcc
+perfil: Frota
+area: Academico
+status: "Em andamento"
+objetivo: "Trabalho de Conclusão de Curso sobre Destilação de Membranas"
+repositorio_codigo: "frotaluiza/TCC---Distila-o-de-Membranas"
+
+caminho:
+  - fase: "Pesquisa"
+    descricao: "Revisão bibliográfica e fundamentação teórica"
+  - fase: "Desenvolvimento"
+    descricao: "Modelagem e simulação"
+  - fase: "Escrita"
+    descricao: "Redação do TCC e preparação dos slides"
+
+decisoes_acumuladas: []
+proximos_passos:
+  - descricao: "Revisar último capítulo"
+    prioridade: alta
+  - descricao: "Preparar apresentação final"
+    prioridade: alta
+
+ultima_atualizacao: 2026-07-14

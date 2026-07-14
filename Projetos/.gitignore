@@ -1,0 +1,16 @@
+# Project-spaces
+**/.DS_Store
+**/Thumbs.db
+*.log
+*.tmp
+conflitos/*.conflito.md
+
+# Secrets
+.env
+secrets.json
+*.key
+
+# Python
+__pycache__/
+*.pyc
+*.pyo

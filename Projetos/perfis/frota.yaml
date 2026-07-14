@@ -1,0 +1,34 @@
+perfil: Frota
+usuario: LuizaF
+github: frotaluiza
+email: luiza.frota2912@gmail.com
+data_criacao: 2026-07-14
+descricao: "Perfil principal — acesso total ao repositório Projetos/"
+
+projetos:
+  - slug: ai-stem-tutor
+    nome: "Mar da Elétrica: AI STEM Tutor"
+    repositorio_codigo: "frotaluiza/STEM-TUTOR"
+    area: IA
+    status: "Em andamento"
+  - slug: tcc
+    nome: "TCC — Destilação de Membranas"
+    repositorio_codigo: "frotaluiza/TCC---Distila-o-de-Membranas"
+    area: Academico
+    status: "Em andamento"
+  - slug: curso-bateria
+    nome: "Curso de Bateria — metodologia + planos de aula"
+    area: Musica
+    status: "Ideia"
+  - slug: pc-windows
+    nome: "PC Windows — diagnóstico + performance"
+    area: Pessoal
+    status: "Em andamento"
+
+permissoes:
+  - recurso: Projetos/
+    acesso: leitura_escrita
+  - recurso: scripts/
+    acesso: leitura_escrita
+  - recurso: .github/workflows/
+    acesso: leitura

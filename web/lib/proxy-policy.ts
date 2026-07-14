@@ -17,6 +17,10 @@ export function isBackendPath(pathname: string): boolean {
   return pathname.startsWith("/api/") || pathname.startsWith("/ws/");
 }
 
+export function isOrchestratorPath(pathname: string): boolean {
+  return pathname.startsWith("/orchestrator/");
+}
+
 // Static assets served straight out of `web/public` (logos, favicons, fonts,
 // provider icons, …). These must bypass the auth gate even in multi-user mode:
 // the Next image optimizer re-fetches a referenced public image over a
