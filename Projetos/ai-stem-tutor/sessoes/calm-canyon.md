@@ -1,7 +1,7 @@
 ﻿---
-title: "Mind Maps + DebugAgent + Infra de Testes — AI STEM Tutor"
-slug: calm-canyon
-date: 2026-07-12
+title: "calm-canyon"
+slug: "calm-canyon"
+date: "2026-07-12"
 origem: opencode
 projeto_slug: ai-stem-tutor
 ---

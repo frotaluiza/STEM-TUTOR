@@ -45,10 +45,23 @@ proximos_passos:
   - descricao: "API estruturada dos project-states"
     prioridade: media
 
+mastery_paths:
+  - nome: "Fundamentos de Engenharia"
+    topicos: 12
+    concluidos: 5
+    status: "Em andamento"
+    descricao: "Conceitos básicos de engenharia elétrica"
+  - nome: "Circuitos Elétricos"
+    topicos: 8
+    concluidos: 2
+    status: "Em andamento"
+    descricao: "Análise de circuitos CC e CA"
+
 fontes:
   videos: 12
   leituras: 8
   artigos: 5
   anotacoes: 3
+  sessoes: 240
 
 ultima_atualizacao: 2026-07-14

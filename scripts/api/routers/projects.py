@@ -101,6 +101,16 @@ def get_project_state(slug: str):
     return state
 
 
+@router.get("/projects/{slug}/mastery-paths")
+def get_mastery_paths(slug: str):
+    project_dir = PROJETOS_DIR / slug
+    if not project_dir.exists():
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
+    state = _load_yaml(project_dir / "project-state.yaml")
+    paths = state.get("mastery_paths", []) if state else []
+    return {"mastery_paths": paths, "count": len(paths)}
+
+
 @router.get("/projects/{slug}/{database}")
 def get_project_database(slug: str, database: str):
     project_dir = PROJETOS_DIR / slug

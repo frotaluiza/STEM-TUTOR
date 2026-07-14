@@ -1,7 +1,7 @@
 ﻿---
-title: "MCP Sci-Hub + Mermaid + Mind Map"
-slug: shiny-wolf
-date: 2026-07-12
+title: "shiny-wolf"
+slug: "shiny-wolf"
+date: "2026-07-12"
 origem: opencode
 projeto_slug: ai-stem-tutor
 ---
