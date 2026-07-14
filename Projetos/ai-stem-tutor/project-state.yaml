@@ -5,7 +5,7 @@ area: IA
 status: "Em andamento"
 objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
 repositorio_codigo: "frotaluiza/STEM-TUTOR"
-branch_atual: "main"
+branch_atual: "ps/mindmap-v2"
 ultima_sessao:
   slug: continuacao-sessao
   titulo: "Project Orchestrator — implementação completa + merge"
