@@ -11,7 +11,7 @@ import type { Column } from "./PMTable";
 import { usePMData } from "./usePMData";
 import type { Decision, SessionBrief } from "./types";
 
-const ProjectMindMap = dynamic(() => import("@/components/project/ProjectMindMap"), { ssr: false });
+const ProjectMindMap = dynamic(() => import("@/components/mindmap/UnifiedMindMap"), { ssr: false });
 
 function StatCard({ label, value, icon: Icon }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }> }) {
   return (
