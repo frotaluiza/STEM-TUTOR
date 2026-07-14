@@ -974,15 +974,16 @@ async def pm_project_space(slug: str):
         "id": f"project-{slug}", "label": slug, "type": "project", "color": "#6366f1"
     })
 
-    # Branches / commits
+    ei = 0  # edge index for unique IDs
+
     branch = detail.get("branch")
     if branch:
         nodes.append({
             "id": f"branch-{slug}", "label": str(branch)[:30], "type": "branch", "color": "#8b5cf6"
         })
-        edges.append({"source": f"project-{slug}", "target": f"branch-{slug}", "label": "branch"})
+        edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": f"branch-{slug}", "label": "branch"})
+        ei += 1
 
-    # Sessions
     for i, s in enumerate(detail.get("recent_sessions", [])[:10]):
         sid = s.get("slug", f"session-{i}")
         nodes.append({
@@ -990,18 +991,18 @@ async def pm_project_space(slug: str):
             "type": "session", "color": "#3b82f6",
             "subtitle": s.get("date", ""),
         })
-        edges.append({"source": f"project-{slug}", "target": sid, "label": "session"})
+        edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": sid, "label": "session"})
+        ei += 1
 
-        # Decisions within this session
         for j, dec in enumerate(detail.get("decisions", [])[:3]):
             did = f"decision-{i}-{j}"
             nodes.append({
                 "id": did, "label": (dec.get("text") if isinstance(dec, dict) else str(dec))[:50],
                 "type": "decision", "color": "#f59e0b",
             })
-            edges.append({"source": sid, "target": did, "label": "decision"})
+            edges.append({"id": f"e-{ei}", "source": sid, "target": did, "label": "decision"})
+            ei += 1
 
-    # Knowledge bases
     for kb in kbs[:8]:
         kb_id = f"kb-{kb['name']}"
         nodes.append({
@@ -1009,9 +1010,9 @@ async def pm_project_space(slug: str):
             "type": "kb", "color": "#14b8a6",
             "subtitle": f"{kb['type']} · {kb['size']}B",
         })
-        edges.append({"source": f"project-{slug}", "target": kb_id, "label": "kb"})
+        edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": kb_id, "label": "kb"})
+        ei += 1
 
-    # Notes
     for n in notes[:8]:
         note_id = f"note-{n['id']}"
         nodes.append({
@@ -1019,16 +1020,17 @@ async def pm_project_space(slug: str):
             "type": "note", "color": "#f97316",
             "subtitle": f"{(n.get('blocks') or [])} blocks" if n.get("blocks") else "",
         })
-        edges.append({"source": f"project-{slug}", "target": note_id, "label": "note"})
+        edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": note_id, "label": "note"})
+        ei += 1
 
-    # Learning modules
     for mod_name in list(learning.keys())[:5]:
         mod_id = f"module-{mod_name}"
         nodes.append({
             "id": mod_id, "label": mod_name[:30],
             "type": "module", "color": "#a855f7",
         })
-        edges.append({"source": f"project-{slug}", "target": mod_id, "label": "learning"})
+        edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": mod_id, "label": "learning"})
+        ei += 1
 
     return {
         "project": slug,
