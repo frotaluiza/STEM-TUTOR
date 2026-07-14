@@ -1,0 +1,88 @@
+{
+  "project": "AI STEM Tutor",
+  "slug": "ai-stem-tutor",
+  "created": "2026-07-11T21:11:50Z",
+  "last_updated": "2026-07-14T05:55:57Z",
+  "branch": "feature/pm-dashboard-v2",
+  "last_commit": "94e39bb0 fix: live-doc gerado do opencode DB (limpo, sem corrupcao de encoding)",
+  "git_log": "94e39bb0 fix: live-doc gerado do opencode DB (limpo, sem corrupcao de encoding)\n35ebae21 fix: encoding project names + auto-select recent project + URL persistence\nc3941025 feat: fork session (opencode --fork) via botao no SessionViewer\n40f6759a fix: live-doc endpoint fallback para opencode docs dir\n6e8c9bbc feat: SessionViewer com aba Live Doc (markdown formatado)\n13a9c416 fix: LevelingModal so para Mastery Path; bg-black opaco\n0c49d0fb feat: NoteBlocks aba Live Doc com visualizador markdown + import\n83ba61e1 fix: React 19 script warning - add suppressHydrationWarning\n88b2b1f3 feat: drag-and-drop para reordenar blocos no NoteEditor\n012c937c feat: MarkdownBlock preview-first estilo Notion (click-to-edit)\n344feb05 fix: InternalGroup nao-funcional -> indicador estatico; toggle showInternals funcional\nb4874ca6 feat: MarkdownBlock type - edit/preview toggle with MarkdownRenderer\n479dd960 fix: restore kb/ + project-state from stash, PM fallback to opencode DB\n3c083ddf fix: resolve merge conflict in learning page - keep main MapView\nd068ade9 fix: replace deleted ProjectMindMap import with UnifiedMindMap",
+  "sessions": [
+    {
+      "id": "jolly-knight",
+      "title": "PM Dashboard v2 + NoteBlocks multi-modal",
+      "date": "2026-07-14",
+      "decisions": [
+        "PM Dashboard como pagina dedicada no DeepTutor (/pm)",
+        "SessionViewer com abas Chat + Live Doc + Terminal",
+        "Filtro de processamento interno baseado em is_internal flag",
+        "MarkdownBlock com toggle edit/preview estilo Notion",
+        "Drag-and-drop nativo (HTML5) para reordenar blocos",
+        "Live Doc gerado do opencode DB (evitando corrupcao de encoding)",
+        "Fork de sessoes via opencode --fork em nova janela",
+        "LevelingModal so para Mastery Path, opaco (bg-black)",
+        "Projeto auto-select pelo mais recente + URL persistence"
+      ],
+      "files": [
+        "deeptutor/api/routers/pm_dashboard.py",
+        "web/components/pm/PMDashboardV2.tsx",
+        "web/components/pm/SessionViewer.tsx",
+        "web/features/noteblocks/components/NoteBlocksView.tsx",
+        "web/features/noteblocks/components/Editor/NoteEditor.tsx",
+        "web/features/noteblocks/components/Editor/MarkdownBlock.tsx"
+      ]
+    }
+  ],
+  "decisions": [
+    "**Contexto**: Editor de blocos estilo Notion para anotacoes conectadas com agente",
+    "**Escolha**: Implementar como nova surface acessivel pelo menu lateral (`/noteblocks`), sem substituir o chat existente",
+    "**Stack**: Slate.js (editor), xterm.js (terminal), FastAPI + WebSocket (backend), .md + frontmatter (storage)",
+    "**Sync**: Notion API via notion-client Python",
+    "**Contexto**: Mini-game 2D estilo Dino Chrome para remediacao despretensiosa",
+    "**Escolha**: Canvas 2D puro (HTML5), boneco pixel art monocromatico, fisica simples",
+    "**Mecanica**: Frases sao obstaculos para pular — ordenadas por pre-requisito (escada logica Memphis)",
+    "**2 modos**: Recreativo (sem vidas) e Teste (3 vidas, threshold 90%)",
+    "**Cores das frases**: Azil (destaque do usuario), Laranja (precisa lembrar), Vermelho (nao domina), Verde (dominado), Cinza (fonte didatica)",
+    "**Professor 2D**: Barra de esperanca com expressoes faciais, animacao de queda ao errar",
+    "**Ciclo**: Runner → falha → sessao de estudo → QuestionBlock → Runner novamente",
+    "**Auto-declaracao**: Aluno informa nivel no inicio (ja implementado)",
+    "**Confianca do Tutor**: Score BKT interno que pode divergir da auto-declaracao",
+    "**Testes**: TOEFL-style (teorico + pratico) extraidos das fontes do aluno via KB",
+    "**Threshold 90%**: Metrica Memphis de expectation coverage ratio",
+    "**Teste de subtopico**: Ao final de cada sessao, teorico + pratico das fontes"
+  ],
+  "issues": [],
+  "todos": [],
+  "roadmap": {
+    "completed": [
+      "PM Dashboard v2 com tabelas sort/filter e dropdown de projetos",
+      "SessionViewer estilo chat com toggles (colapsar/expandir)",
+      "Filtro automatico de processamento interno (214/654 msg ocultas)",
+      "Terminal como aba integrada (PowerShell via WebSocket)",
+      "NoteBlocks multi-modal com abas (Nota + Live Doc + Terminal)",
+      "MarkdownBlock estilo Notion (preview-first, click-to-edit)",
+      "Drag-and-drop para reordenar blocos no NoteEditor",
+      "Live Doc com markdown renderizado e botao Importar",
+      "Fork de sessoes (opencode --fork) via botao no SessionViewer",
+      "Restauracao do classification.json + project-state historico",
+      "Fallback do backend para opencode DB (sem dependencia de classification.json)"
+    ],
+    "pending": [
+      {
+        "task": "Mind Map como Project Space visual (KBs, notas, learning, multi-projeto)",
+        "priority": "Alta"
+      },
+      {
+        "task": "SQLite storage unificado (migrar NoteBlocks de .md para SQLite)",
+        "priority": "Media"
+      },
+      {
+        "task": "Catalogar ferramentas STEM das sessoes de pesquisa",
+        "priority": "Media"
+      },
+      {
+        "task": "Integrar Wolfram Alpha MCP server + ferramentas no chat",
+        "priority": "Baixa"
+      }
+    ]
+  }
+}

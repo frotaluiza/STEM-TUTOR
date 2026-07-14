@@ -12,6 +12,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 
 import {
+  ArrowLeft,
   BarChart3,
   BrainCircuit,
   Clapperboard,
@@ -1830,6 +1831,14 @@ export default function ChatPage() {
               ) : null}
             </div>
             <div className="flex shrink-0 items-center gap-0.5">
+              {activeCap.value === "mastery_path" && (
+                <HeaderActionButton
+                  onClick={() => router.push("/space/learning")}
+                  icon={ArrowLeft}
+                  label={t("Back to Mastery Path")}
+                  title={t("Back to Mastery Path")}
+                />
+              )}
               <HeaderActionButton
                 onClick={() => setShowSaveModal(true)}
                 disabled={!chatSavePayload}

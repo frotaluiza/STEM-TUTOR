@@ -318,10 +318,13 @@ from deeptutor.api.routers import (
     mastery_path,
     mcp_settings,
     memory,
+    mindmap,
     notebook,
     partners,
     personas,
     plugins_api,
+    pm_dashboard,
+    project_state,
     question,
     question_notebook,
     quiz_judge,
@@ -337,6 +340,13 @@ from deeptutor.api.routers import (
     tools as tools_router,
 )
 from deeptutor.multi_user.router import router as multi_user_router  # noqa: E402
+from deeptutor.noteblocks.attachments import router as noteblocks_attachments_router
+from deeptutor.noteblocks.router import router as noteblocks_router
+from deeptutor.noteblocks.runner_game import router as noteblocks_runner_router
+from deeptutor.noteblocks.subtopic_test import router as noteblocks_subtopic_router
+from deeptutor.noteblocks.workspace_agent import router as noteblocks_agent_router
+from deeptutor.noteblocks.ws_note import router as noteblocks_ws_router
+from deeptutor.noteblocks.ws_terminal import router as noteblocks_terminal_router
 
 # Auth router is public — login/logout/register/status require no token
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
@@ -427,6 +437,42 @@ app.include_router(
     partners.router, prefix="/api/v1/partners", tags=["partners"], dependencies=_admin
 )
 app.include_router(
+    noteblocks_router,
+    tags=["noteblocks"],
+    dependencies=_auth,
+)
+app.include_router(
+    noteblocks_agent_router,
+    dependencies=_auth,
+)
+app.include_router(
+    noteblocks_attachments_router,
+    dependencies=_auth,
+)
+app.include_router(
+    noteblocks_runner_router,
+    dependencies=_auth,
+)
+app.include_router(
+    noteblocks_subtopic_router,
+    dependencies=_auth,
+)
+app.include_router(
+    mindmap.router,
+    tags=["mindmap"],
+    dependencies=_auth,
+)
+app.include_router(
+    project_state.router,
+    prefix="/api/v1/project",
+    tags=["project"],
+    dependencies=_auth,
+)
+app.include_router(
+    pm_dashboard.router,
+    tags=["pm"],
+)
+app.include_router(
     attachments.router,
     prefix="/api/attachments",
     tags=["attachments"],
@@ -440,6 +486,10 @@ app.include_router(unified_ws.router, prefix="/api/v1", tags=["unified-ws"])
 # Quiz AI-judge WebSocket — same caveat as unified_ws above; auth is checked
 # inside the handler so the WS upgrade isn't rejected by an HTTP-style dep.
 app.include_router(quiz_judge.router, prefix="/api/v1", tags=["quiz-judge"])
+
+# NoteBlocks WebSocket — same caveat as unified_ws
+app.include_router(noteblocks_ws_router)
+app.include_router(noteblocks_terminal_router)
 
 
 @app.get("/")
