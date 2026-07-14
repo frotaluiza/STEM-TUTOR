@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Activity, BarChart3, Database, ExternalLink, FileDown, Github, Layers, Loader2 } from "lucide-react";
+import { Activity, BarChart3, CheckSquare, Database, ExternalLink, FileDown, Github, Layers, Loader2, Plus, Trash2 } from "lucide-react";
 import PMProjectSelector from "./PMProjectSelector";
 import PMReportSection from "./PMReportSection";
 import PMTable from "./PMTable";
@@ -55,6 +55,59 @@ export default function PMDashboardV2() {
     );
     return sorted[0]?.slug || projects[0]?.slug || null;
   }, [projects, selectedSlug, searchParams]);
+
+  // --- Tarefas ---
+  const [tarefas, setTarefas] = useState<{ id: string; text: string; feito: boolean; prioridade: string; session_slug?: string }[]>([]);
+  const [novoTarefa, setNovoTarefa] = useState("");
+  const [showTarefasPanel, setShowTarefasPanel] = useState(false);
+
+  // Load tasks
+  useEffect(() => {
+    const branch = selectedSlug || defaultSlug || "main";
+    if (!branch) return;
+    fetch(`/api/v1/pm/tarefas?branch=${branch}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (d) setTarefas(d.tarefas || []); })
+      .catch(() => {});
+  }, [selectedSlug, defaultSlug]);
+
+  const addTarefa = useCallback(async () => {
+    const text = novoTarefa.trim();
+    if (!text) return;
+    const branch = selectedSlug || defaultSlug || "main";
+    try {
+      const res = await fetch("/api/v1/pm/tarefas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, branch }),
+      });
+      if (res.ok) {
+        const task = await res.json();
+        setTarefas((prev) => [task, ...prev]);
+        setNovoTarefa("");
+      }
+    } catch {}
+  }, [novoTarefa, selectedSlug, defaultSlug]);
+
+  const toggleTarefa = useCallback(async (id: string, feito: boolean) => {
+    setTarefas((prev) => prev.map((t) => (t.id === id ? { ...t, feito: !feito } : t)));
+    const branch = selectedSlug || defaultSlug || "main";
+    try {
+      await fetch(`/api/v1/pm/tarefas/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ feito: !feito, branch }),
+      });
+    } catch {}
+  }, [selectedSlug, defaultSlug]);
+
+  const deleteTarefa = useCallback(async (id: string) => {
+    setTarefas((prev) => prev.filter((t) => t.id !== id));
+    const branch = selectedSlug || defaultSlug || "main";
+    try {
+      await fetch(`/api/v1/pm/tarefas/${id}?branch=${branch}`, { method: "DELETE" });
+    } catch {}
+  }, [selectedSlug, defaultSlug]);
 
   // Select default on first load
   const [initialized, setInitialized] = useState(false);
@@ -217,6 +270,90 @@ export default function PMDashboardV2() {
         <StatCard label="Custo total" value={stats ? `$${stats.total_cost.toFixed(2)}` : totalCost ? `$${totalCost.toFixed(2)}` : "..."} icon={BarChart3} />
         <StatCard label="Live docs" value={stats?.total_live_docs ?? "..."} icon={Layers} />
         <StatCard label="Projetos" value={stats?.total_projects ?? projects.length ?? "..."} icon={Github} />
+      </div>
+
+      {/* Tarefas — collapsed panel */}
+      <div className="bg-[var(--card)] rounded-lg border border-[var(--border)]">
+        <button
+          type="button"
+          onClick={() => setShowTarefasPanel(!showTarefasPanel)}
+          className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm font-medium text-[var(--foreground)] hover:bg-[var(--accent)]/20 transition-colors"
+        >
+          <CheckSquare size={15} strokeWidth={1.7} />
+          Tarefas
+          <span className="text-[11px] text-[var(--muted-foreground)] ml-auto bg-[var(--muted)]/30 px-1.5 py-0.5 rounded">
+            {tarefas.filter((t) => !t.feito).length} pendentes
+          </span>
+        </button>
+
+        {showTarefasPanel && (
+          <div className="border-t border-[var(--border)]/20 px-4 py-3 space-y-2">
+            {/* Add task */}
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={novoTarefa}
+                onChange={(e) => setNovoTarefa(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") addTarefa(); }}
+                placeholder="Nova tarefa..."
+                className="flex-1 bg-transparent text-[13px] text-[var(--foreground)] outline-none placeholder-[var(--muted-foreground)]/50 border-b border-transparent focus:border-[var(--primary)]/40 pb-1 transition-colors"
+              />
+              <button
+                type="button"
+                onClick={addTarefa}
+                disabled={!novoTarefa.trim()}
+                className="inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-medium text-[var(--primary)] hover:bg-[var(--accent)]/30 disabled:opacity-30 transition-colors"
+              >
+                <Plus size={12} />
+                Add
+              </button>
+            </div>
+
+            {/* Task list */}
+            <div className="space-y-0.5 max-h-48 overflow-y-auto">
+              {tarefas.length === 0 && (
+                <p className="text-[12px] text-[var(--muted-foreground)]/50 italic py-2">
+                  Nenhuma tarefa ainda
+                </p>
+              )}
+              {tarefas.map((t) => (
+                <div key={t.id} className="flex items-center gap-2 py-1 group">
+                  <button
+                    type="button"
+                    onClick={() => toggleTarefa(t.id, t.feito)}
+                    className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
+                      t.feito
+                        ? "bg-green-500/20 border-green-500 text-green-500"
+                        : "border-[var(--border)] hover:border-[var(--primary)]"
+                    }`}
+                  >
+                    {t.feito && <CheckSquare size={10} strokeWidth={3} />}
+                  </button>
+                  <span
+                    className={`flex-1 text-[13px] transition-all ${
+                      t.feito ? "line-through text-[var(--muted-foreground)]/40" : "text-[var(--foreground)]"
+                    }`}
+                  >
+                    {t.text}
+                  </span>
+                  {t.prioridade === "alta" && (
+                    <span className="text-[10px] text-red-400/70 font-medium">!!</span>
+                  )}
+                  {t.session_slug && (
+                    <span className="text-[10px] text-[var(--muted-foreground)]/40 font-mono">{t.session_slug}</span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => deleteTarefa(t.id)}
+                    className="opacity-0 group-hover:opacity-40 hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 size={11} strokeWidth={1.5} className="text-red-400" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {activeView === "mindmap" ? (

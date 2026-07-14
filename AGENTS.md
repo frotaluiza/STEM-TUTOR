@@ -63,7 +63,49 @@ Projetos/ai-stem-tutor/
    c. Gerar `relatorio.md` com resultados
    d. Atualizar `project-state.yaml` (orquestrador)
    e. Atualizar `project-state/` (branch atual)
-   f. Commitar artefatos junto com o código
+    f. Commitar artefatos junto com o código
+
+## ✅ Tarefas de Sessão — Registro Obrigatório
+
+**Toda ideia, tarefa pendente, ou próximo passo identificado durante uma conversa DEVE ser registrado como tarefa no PM.**
+
+### Como registrar
+
+Via API REST:
+
+```bash
+curl -X POST http://localhost:8001/api/v1/pm/tarefas \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Implementar feature X", "branch": "feature/y", "session_slug": "calm-canyon", "prioridade": "alta"}'
+```
+
+Ou diretamente pelo **PM Dashboard** → painel **Tarefas** → campo "Nova tarefa".
+
+### Campos
+
+| Campo | Tipo | Obrigatório | Descrição |
+|-------|------|-------------|-----------|
+| `text` | string | ✅ | Descrição da tarefa |
+| `feito` | boolean | — | `false` por padrão |
+| `prioridade` | string | — | `alta`, `media` (default), `baixa` |
+| `session_slug` | string | — | Slug da sessão opencode que gerou a tarefa |
+| `branch` | string | — | Branch do projeto (default: `main`) |
+| `tags` | string[] | — | Tags para categorização |
+
+### Endpoints
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/api/v1/pm/tarefas?branch=main` | Listar tarefas |
+| `POST` | `/api/v1/pm/tarefas` | Criar tarefa |
+| `PATCH` | `/api/v1/pm/tarefas/{id}` | Atualizar (toggle feito, texto, prioridade) |
+| `DELETE` | `/api/v1/pm/tarefas/{id}?branch=main` | Excluir tarefa |
+
+### Ciclo
+
+1. ⚡ Durante a conversa, ao identificar uma tarefa → **registrar imediatamente** via `POST /api/v1/pm/tarefas`
+2. 🔄 Ao concluir → toggle `feito: true` via PM Dashboard ou `PATCH`
+3. 📋 O PM mostra em tempo real o painel **Tarefas** com contagem de pendentes
 
 ## Guidelines Pedagógicas — Aplicável a TODOS os Agentes
 

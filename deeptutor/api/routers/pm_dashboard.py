@@ -1113,3 +1113,88 @@ async def pm_project_space(slug: str, branch: str | None = None):
             "features_count": len((ps_data or {}).get("features", [])),
         },
     }
+
+
+TAREFAS_DIR = PROJECT_DIR / "project-state"
+
+
+def _tarefas_file(branch: str = "main") -> Path:
+    """Path to the tarefas JSON file for a given branch."""
+    f = TAREFAS_DIR / "branches" if branch != "main" else TAREFAS_DIR
+    f = f / f"tarefas-{branch.replace('/', '-')}.json"
+    f.parent.mkdir(parents=True, exist_ok=True)
+    return f
+
+
+def _load_tarefas(branch: str = "main") -> list:
+    p = _tarefas_file(branch)
+    if not p.exists():
+        return []
+    try:
+        return json.loads(p.read_text(encoding="utf-8-sig"))
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
+def _save_tarefas(tarefas: list, branch: str = "main"):
+    _tarefas_file(branch).write_text(
+        json.dumps(tarefas, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+
+
+@router.get("/api/v1/pm/tarefas")
+async def pm_list_tarefas(branch: str = "main", session_slug: str | None = None):
+    """List tasks, optionally filtered by branch or session."""
+    tarefas = _load_tarefas(branch)
+    if session_slug:
+        tarefas = [t for t in tarefas if t.get("session_slug") == session_slug]
+    return {"tarefas": tarefas, "count": len(tarefas), "branch": branch}
+
+
+@router.post("/api/v1/pm/tarefas", status_code=201)
+async def pm_create_tarefa(body: dict):
+    """Create a new task."""
+    tarefas = _load_tarefas(body.get("branch", "main"))
+    task = {
+        "id": uuid.uuid4().hex[:12],
+        "text": body.get("text", ""),
+        "feito": False,
+        "session_slug": body.get("session_slug", ""),
+        "prioridade": body.get("prioridade", "media"),
+        "tags": body.get("tags", []),
+        "created": datetime.now(timezone.utc).isoformat(),
+        "updated": datetime.now(timezone.utc).isoformat(),
+    }
+    if not task["text"]:
+        raise HTTPException(status_code=400, detail="text is required")
+    tarefas.insert(0, task)
+    _save_tarefas(tarefas, body.get("branch", "main"))
+    return task
+
+
+@router.patch("/api/v1/pm/tarefas/{task_id}")
+async def pm_update_tarefa(task_id: str, body: dict):
+    """Toggle task status or update fields."""
+    branch = body.get("branch", "main")
+    tarefas = _load_tarefas(branch)
+    for t in tarefas:
+        if t["id"] == task_id:
+            if "feito" in body:
+                t["feito"] = body["feito"]
+            if "text" in body:
+                t["text"] = body["text"]
+            if "prioridade" in body:
+                t["prioridade"] = body["prioridade"]
+            t["updated"] = datetime.now(timezone.utc).isoformat()
+            _save_tarefas(tarefas, branch)
+            return t
+    raise HTTPException(status_code=404, detail="Task not found")
+
+
+@router.delete("/api/v1/pm/tarefas/{task_id}")
+async def pm_delete_tarefa(task_id: str, branch: str = "main"):
+    """Delete a task."""
+    tarefas = _load_tarefas(branch)
+    tarefas = [t for t in tarefas if t["id"] != task_id]
+    _save_tarefas(tarefas, branch)
+    return {"deleted": True, "task_id": task_id}
