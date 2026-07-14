@@ -44,13 +44,11 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${fontSans.variable} ${fontSerif.variable}`}
     >
-      <head>
-        <ThemeScript />
-      </head>
       <body
         className="font-sans bg-[var(--background)] text-[var(--foreground)]"
         suppressHydrationWarning
       >
+        <ThemeScript />
         <AppShellProvider>
           <I18nClientBridge>{children}</I18nClientBridge>
           <ToastViewport />

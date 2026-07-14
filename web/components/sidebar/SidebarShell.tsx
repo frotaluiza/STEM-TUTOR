@@ -11,6 +11,7 @@ import {
   Bot,
   Brain,
   ChevronDown,
+  FileText,
   Github,
   HeartHandshake,
   House,
@@ -21,6 +22,7 @@ import {
   PanelLeftOpen,
   PenLine,
   Settings,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -85,6 +87,12 @@ const PRIMARY_NAV: NavEntry[] = [
     icon: LayoutGrid,
     tooltipKey: "Space tooltip",
   },
+  {
+    href: "/noteblocks",
+    label: "NoteBlocks",
+    icon: FileText,
+    tooltipKey: "NoteBlocks tooltip",
+  },
 ];
 
 const SECONDARY_NAV: NavEntry[] = [
@@ -105,6 +113,12 @@ const SECONDARY_NAV: NavEntry[] = [
     label: "Knowledge Center",
     icon: BookOpen,
     tooltipKey: "Knowledge tooltip",
+  },
+  {
+    href: "/pm",
+    label: "Project Manager",
+    icon: Activity,
+    tooltipKey: "Project Manager tooltip",
   },
   { href: "/settings", label: "Settings", icon: Settings },
 ];

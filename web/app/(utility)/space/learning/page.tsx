@@ -23,6 +23,17 @@ import {
   type MasteryMapResult,
   type ObjectiveStatus,
 } from "@/lib/learning-api";
+<<<<<<< Updated upstream
+=======
+import dynamic from "next/dynamic";
+import ModuleMap from "@/components/learning/ModuleMap";
+import { masteryMapToMindMap } from "@/components/mindmap/converters";
+
+const UnifiedMindMap = dynamic(() => import("@/components/mindmap/UnifiedMindMap"), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-full text-[var(--muted-foreground)] text-sm">Loading graph...</div>,
+});
+>>>>>>> Stashed changes
 
 /**
  * Mastery Path dashboard — the persistent "screen" of the mastery experience.
@@ -185,13 +196,13 @@ export default function MasteryPathPage() {
       </aside>
 
       {/* Selected path map */}
-      <section className="flex-1 overflow-y-auto">
+      <section className="flex-1 flex flex-col overflow-hidden">
         {loadingDetail ? (
-          <div className="flex items-center justify-center h-full text-[var(--muted-foreground)]">
+          <div className="flex items-center justify-center flex-1 text-[var(--muted-foreground)]">
             <Loader2 className="w-5 h-5 animate-spin" />
           </div>
         ) : !detail ? (
-          <div className="flex flex-col items-center justify-center h-full text-center px-6 text-[var(--muted-foreground)]">
+          <div className="flex flex-col items-center justify-center flex-1 text-center px-6 text-[var(--muted-foreground)]">
             <GraduationCap className="w-10 h-10 mb-3 opacity-40" />
             <p className="text-sm max-w-sm leading-relaxed">
               {tr(
@@ -201,6 +212,7 @@ export default function MasteryPathPage() {
             </p>
           </div>
         ) : (
+<<<<<<< Updated upstream
           <MapView
             result={detail}
             zh={!!zh}
@@ -211,6 +223,67 @@ export default function MasteryPathPage() {
             onRedo={() => selected && handleRedo(selected)}
             onDelete={() => selected && handleDelete(selected)}
           />
+=======
+          <>
+            <div className="flex items-center justify-between px-6 pt-3 pb-1 shrink-0">
+              <div className="flex items-center gap-1 rounded-lg border border-[var(--border)] p-0.5">
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors cursor-pointer ${
+                    viewMode === "list"
+                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                  List
+                </button>
+                <button
+                  onClick={() => setViewMode("graph")}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors cursor-pointer ${
+                    viewMode === "graph"
+                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  <Network className="w-3.5 h-3.5" />
+                  Graph
+                </button>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => selected && handleRedo(selected)}
+                  title={tr("重置进度", "Reset progress")}
+                  className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-[var(--accent)] cursor-pointer"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => selected && handleDelete(selected)}
+                  title={tr("删除", "Delete")}
+                  className="p-1.5 rounded-md text-[var(--muted-foreground)] hover:bg-red-500/10 hover:text-red-500 cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 min-h-0">
+              {viewMode === "list" ? (
+                <ModuleMap
+                  result={detail}
+                  onContinue={() =>
+                    selected && router.push(`/home/${encodeURIComponent(selected)}`)
+                  }
+                />
+              ) : detail ? (
+                <UnifiedMindMap
+                  pathId={selected || "default"}
+                  initialData={masteryMapToMindMap(detail, selected || "default")}
+                />
+              ) : null}
+            </div>
+          </>
+>>>>>>> Stashed changes
         )}
       </section>
     </div>

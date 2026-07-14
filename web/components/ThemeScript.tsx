@@ -2,19 +2,23 @@
  * ThemeScript - Initializes theme from localStorage before React hydration
  * This prevents the flash of wrong theme on page load.
  *
- * Must be a Server Component: in Next.js / React 19, <script> tags rendered
- * by Client Components are inert on the client. Rendering it from the server
- * inlines the snippet into the SSR HTML so the browser executes it before
- * hydration.
+ * Uses next/script with beforeInteractive so the script runs before hydration
+ * and avoids the React 19 warning about client-rendered <script> tags.
  */
+import Script from "next/script";
+
+const THEME_SCRIPT_ID = "deeptutor-theme-init";
+
 export default function ThemeScript() {
-  const themeScript = `
-    (function() {
+  return (
+    <Script
+      id={THEME_SCRIPT_ID}
+      strategy="beforeInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `
       try {
         const stored = localStorage.getItem('deeptutor-theme');
-
         document.documentElement.classList.remove('dark', 'theme-glass', 'theme-snow');
-
         if (stored === 'dark') {
           document.documentElement.classList.add('dark');
         } else if (stored === 'glass') {
@@ -24,8 +28,6 @@ export default function ThemeScript() {
         } else if (stored === 'light') {
           // already clean
         } else {
-          // No stored preference: Default (snow) for light systems,
-          // Dark for prefers-color-scheme: dark.
           if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
             localStorage.setItem('deeptutor-theme', 'dark');
@@ -34,16 +36,9 @@ export default function ThemeScript() {
             localStorage.setItem('deeptutor-theme', 'snow');
           }
         }
-      } catch (e) {
-        /* localStorage may be disabled */
-      }
-    })();
-  `;
-
-  return (
-    <script
-      dangerouslySetInnerHTML={{ __html: themeScript }}
-      suppressHydrationWarning
+      } catch (e) {}
+    `,
+      }}
     />
   );
 }
