@@ -775,3 +775,45 @@ async def pm_session_to_note(slug: str):
         "source": "opencode_db",
         "messages": len(messages),
     }
+
+
+@router.post("/api/v1/pm/sessions/{slug}/fork")
+async def pm_session_fork(slug: str):
+    """Fork a session — opens it in a new opencode TUI window."""
+    sessions = _query_opencode(
+        "SELECT id, slug, title, directory FROM session WHERE slug = ?",
+        (slug,)
+    )
+    if not sessions:
+        raise HTTPException(status_code=404, detail=f"Session '{slug}' not found in opencode DB")
+
+    sess = sessions[0]
+    session_id = sess["id"]
+    directory = sess["directory"] or str(Path.home())
+
+    # Build the fork command
+    cmd = f'opencode --fork --session {session_id}'
+
+    try:
+        import subprocess
+        subprocess.Popen(
+            ["powershell", "-NoExit", "-Command", cmd],
+            cwd=directory,
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+        return {
+            "forked": True,
+            "session_id": session_id,
+            "slug": slug,
+            "title": sess["title"],
+            "command": cmd,
+        }
+    except Exception as e:
+        return {
+            "forked": False,
+            "session_id": session_id,
+            "slug": slug,
+            "command": cmd,
+            "error": str(e),
+            "manual": f"Execute no terminal: {cmd}",
+        }

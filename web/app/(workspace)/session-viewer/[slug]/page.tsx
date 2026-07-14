@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { BookOpen, Loader2, MessageSquare, Terminal } from "lucide-react";
-import { useEffect, useState } from "react";
+import { BookOpen, GitBranch, Loader2, MessageSquare, Terminal } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import SessionViewer from "@/components/pm/SessionViewer";
 import { TerminalPane } from "@/features/noteblocks";
 
@@ -65,8 +65,27 @@ function LiveDocPanel({ slug }: { slug: string }) {
 export default function SessionViewerPage({ params }: { params: Promise<{ slug: string }> }) {
   const [slug, setSlug] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("chat");
+  const [forking, setForking] = useState(false);
 
   useEffect(() => { params.then((p) => setSlug(p.slug)); }, [params]);
+
+  const handleFork = useCallback(async () => {
+    if (!slug || forking) return;
+    setForking(true);
+    try {
+      const res = await fetch(`/api/v1/pm/sessions/${slug}/fork`, { method: "POST" });
+      const data = await res.json();
+      if (data.forked) {
+        alert(`Sessão forkada! Nova sessão aberta no terminal.\n\nID: ${data.session_id}`);
+      } else {
+        alert(`Não foi possível abrir automaticamente.\n\nExecute no terminal:\n${data.command}`);
+      }
+    } catch {
+      alert("Erro ao forkear sessão.");
+    } finally {
+      setForking(false);
+    }
+  }, [slug, forking]);
 
   if (!slug) {
     return (
@@ -88,6 +107,14 @@ export default function SessionViewerPage({ params }: { params: Promise<{ slug: 
         >
           <MessageSquare size={13} strokeWidth={1.7} />
           Chat
+        </button>
+        <div className="flex-1" />
+        <button type="button" onClick={handleFork} disabled={forking}
+          className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--accent)]/30 rounded transition-colors disabled:opacity-40"
+          title="Forkear esta sessão (abre novo terminal)"
+        >
+          <GitBranch size={12} strokeWidth={1.7} />
+          {forking ? "Forkando..." : "Fork"}
         </button>
         <button type="button" onClick={() => setTab("live-doc")}
           className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium rounded-t-md transition-colors ${
