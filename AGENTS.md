@@ -1,5 +1,70 @@
 # DeepTutor — Agent-Native Architecture
 
+## ⚠️ Ciclo Obrigatório de Artefatos — Aplicável a TODOS os Agentes
+
+**Toda alteração de código, decisão arquitetural, ou finalização de sessão DEVE gerar artefatos markdown no diretório `Projetos/{slug}/artefatos/`.**
+
+### Estrutura Obrigatória
+
+```
+Projetos/ai-stem-tutor/
+├── artefatos/
+│   ├── YYYY-MM-DD--{slug-da-sessao}--changelog.md   ← log de alterações
+│   └── YYYY-MM-DD--{slug-da-sessao}--relatorio.md   ← relatório de testes/erros
+├── relatorios/                                       ← relatórios periódicos
+├── sessoes/                                          ← live docs (watcher)
+└── project-state.yaml                                ← orchestrator
+```
+
+### Formato do Changelog
+
+```markdown
+# Changelog — {Título da Sessão}
+**Data:** YYYY-MM-DD | **Branch:** {branch} | **Sessão:** {slug}
+
+## Alterações Realizadas
+- {arquivo}: {descrição da mudança}
+- ...
+
+## Decisões
+- {decisão}
+
+## Arquivos Modificados
+- `{caminho/do/arquivo}` (criação/modificação)
+```
+
+### Formato do Relatório
+
+```markdown
+# Relatório — {Título da Sessão}
+**Data:** YYYY-MM-DD | **Branch:** {branch}
+
+## Testes Executados
+| Framework | Comando | Resultado | Duração |
+|-----------|---------|-----------|---------|
+| tsc --noEmit | `npx tsc --noEmit` | Aprovado/Falhou | Xs |
+
+## Erros Encontrados
+```
+{log de erros, se houver}
+```
+
+## Observações
+- {notas relevantes}
+```
+
+### Ciclo Obrigatório
+
+1. **Antes de codar**: Planejar artefatos que serão gerados
+2. **Durante**: Manter changelog mental
+3. **Ao final da sessão (OU a cada commit significativo)**:
+   a. Gerar `changelog.md` com todas as alterações
+   b. Executar testes (tsc --noEmit, pytest, etc.)
+   c. Gerar `relatorio.md` com resultados
+   d. Atualizar `project-state.yaml` (orquestrador)
+   e. Atualizar `project-state/` (branch atual)
+   f. Commitar artefatos junto com o código
+
 ## Guidelines Pedagógicas — Aplicável a TODOS os Agentes
 
 Sempre que um agente estiver explicando ou conduzindo um aluno por um conceito, módulo ou seção de estudo, ele DEVE:
