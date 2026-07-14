@@ -16,6 +16,8 @@ import {
 const API_BASE_URL =
   process.env.DEEPTUTOR_API_BASE_URL ?? "http://localhost:8001";
 
+const ORCHESTRATOR_BASE_URL = "http://localhost:8080";
+
 const AUTH_ENABLED = parseAuthEnabled(process.env.DEEPTUTOR_AUTH_ENABLED);
 
 // Redirect to the login page, preserving the intended destination in `next`.
@@ -41,6 +43,12 @@ export function proxy(req: NextRequest): NextResponse {
   //    rather than baked into the frontend bundle.
   if (isBackendPath(pathname)) {
     return NextResponse.rewrite(new URL(pathname + search, API_BASE_URL));
+  }
+
+  // 1b. Forward orchestrator API paths to the orchestrator server (strip prefix).
+  if (pathname.startsWith("/orchestrator/")) {
+    const stripped = pathname.replace("/orchestrator", "");
+    return NextResponse.rewrite(new URL(stripped + search, ORCHESTRATOR_BASE_URL));
   }
 
   // 2. Auth gate — multi-user mode only. Disabled by default, and never blocks
