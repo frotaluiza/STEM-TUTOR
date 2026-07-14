@@ -5,6 +5,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Activity, BarChart3, CheckSquare, Database, ExternalLink, FileDown, Github, Layers, Loader2, Plus, Trash2 } from "lucide-react";
 import PMProjectSelector from "./PMProjectSelector";
+import PMBranchSelector from "./PMBranchSelector";
+import PMSyncStatus from "./PMSyncStatus";
 import PMReportSection from "./PMReportSection";
 import PMTable from "./PMTable";
 import type { Column } from "./PMTable";
@@ -44,6 +46,8 @@ export default function PMDashboardV2() {
   } = usePMData();
 
   const [activeView, setActiveView] = useState<"dashboard" | "mindmap">("dashboard");
+  const [currentBranch, setCurrentBranch] = useState<string | null>(null);
+  const [showEncerradas, setShowEncerradas] = useState(false);
 
   // Auto-select: URL param > most recent > first
   const defaultSlug = useMemo(() => {
@@ -231,12 +235,17 @@ export default function PMDashboardV2() {
             Gerenciamento de todos os projetos
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 flex-wrap">
           <PMProjectSelector
             projects={projects}
             selectedSlug={selectedSlug || defaultSlug}
             onSelect={handleProjectSelect}
           />
+          <PMBranchSelector
+            currentBranch={currentBranch}
+            onSelect={setCurrentBranch}
+          />
+          <PMSyncStatus branch={currentBranch || undefined} />
           <div className="flex rounded-lg border border-[var(--border)] overflow-hidden">
             <button
               type="button"

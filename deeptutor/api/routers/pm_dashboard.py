@@ -968,22 +968,20 @@ async def pm_project_space(slug: str, branch: str | None = None):
                 pass
 
     # Also check youtube video DB from session search results
-    if not videos:
-        try:
-            share_videos = _query_opencode(
-                "SELECT DISTINCT s.title, s_share.url FROM session s "
-                "LEFT JOIN session_share s_share ON s.id = s_share.session_id "
-                "WHERE LOWER(s.title) LIKE '%youtube%' OR LOWER(s.title) LIKE '%wolfram%' "
-                "OR LOWER(s.title) LIKE '%video%' LIMIT 10"
-            )
-            for v in share_videos:
-                videos.append({
-                    "title": v.get("title", "")[:80],
-                    "url": v.get("url", ""),
-                    "source": "opencode_session",
-                })
-        except Exception:
-            pass
+    try:
+        share_videos = _query_opencode(
+            "SELECT DISTINCT slug, title FROM session "
+            "WHERE (LOWER(title) LIKE '%youtube%' OR LOWER(title) LIKE '%wolfram%' "
+            "OR LOWER(title) LIKE '%video%') AND title NOT LIKE 'New session%' LIMIT 10"
+        )
+        for v in share_videos:
+            videos.append({
+                "title": (v.get("title") or "")[:80],
+                "url": f"/session-viewer/{v.get('slug', '')}",
+                "source": "opencode_session",
+            })
+    except Exception:
+        pass
 
     # 5. Active sessions from opencode DB
     active_sessions = []
@@ -1013,7 +1011,10 @@ async def pm_project_space(slug: str, branch: str | None = None):
     except Exception:
         pass
 
-    # 6. Session stats
+    # 4b. Learning modules (placeholder)
+    learning = {}
+
+    # 5. Session stats
     session_stats = {
         "ativas": len(active_sessions),
         "encerradas": len(closed_sessions),
@@ -1061,7 +1062,7 @@ async def pm_project_space(slug: str, branch: str | None = None):
         nodes.append({
             "id": kb_id, "label": kb["name"][:30],
             "type": "kb", "color": "#14b8a6",
-            "subtitle": f"{kb['type']} · {kb['size']}B",
+            "subtitle": f"{kb.get('documents', 0)} documentos",
         })
         edges.append({"id": f"e-{ei}", "source": f"project-{slug}", "target": kb_id, "label": "kb"})
         ei += 1
@@ -1198,3 +1199,118 @@ async def pm_delete_tarefa(task_id: str, branch: str = "main"):
     tarefas = [t for t in tarefas if t["id"] != task_id]
     _save_tarefas(tarefas, branch)
     return {"deleted": True, "task_id": task_id}
+
+
+# ---------------------------------------------------------------------------
+# Branches + Sync Status
+# ---------------------------------------------------------------------------
+
+
+def _run_git(args: list[str]) -> str:
+    """Run a git command in the project directory and return stdout."""
+    try:
+        result = subprocess.run(
+            ["git"] + args,
+            capture_output=True, text=True, timeout=15,
+            cwd=PROJECT_DIR,
+        )
+        return result.stdout.strip()
+    except Exception:
+        return ""
+
+
+@router.get("/api/v1/pm/branches")
+async def pm_list_branches(slug: str = "ai-stem-tutor"):
+    """List all branches with their project state files."""
+    # Git branches
+    git_branches = _run_git(["branch", "--list"]).split("\n")
+    branches = []
+    for b in git_branches:
+        name = b.replace("*", "").strip()
+        if name:
+            branches.append({"name": name, "current": "*" in b})
+
+    # Project state files in branches dir
+    ps_files = []
+    ps_dir = PROJECT_DIR / "project-state" / "branches"
+    if ps_dir.exists():
+        for f in sorted(ps_dir.glob("*.json")):
+            ps_files.append(f.stem.replace("-", "/", 1).replace("--", "/"))
+
+    return {
+        "branches": branches,
+        "project_state_files": ps_files,
+        "current": _run_git(["branch", "--show-current"]),
+    }
+
+
+@router.get("/api/v1/pm/sync-status")
+async def pm_sync_status(branch: str | None = None):
+    """Git sync status: ahead/behind/uncommitted for project and repo."""
+    if not branch:
+        branch = _run_git(["branch", "--show-current"])
+    if not branch:
+        return {"status": "no-branch", "branch": ""}
+
+    remote = "personal"
+
+    # Check if remote exists for this branch
+    has_remote = False
+    remote_ref = _run_git(["ls-remote", "--exit-code", remote, branch])
+    has_remote = bool(remote_ref) or _run_git(["rev-parse", f"{remote}/{branch}"]) != ""
+
+    # Count ahead/behind
+    ahead = _run_git(["rev-list", "--count", f"{remote}/{branch}..HEAD"]) if has_remote else "0"
+    behind = _run_git(["rev-list", "--count", f"HEAD..{remote}/{branch}"]) if has_remote else "0"
+
+    # Uncommitted changes
+    uncommitted_raw = _run_git(["status", "--porcelain"])
+    uncommitted = len([l for l in uncommitted_raw.split("\n") if l.strip()]) if uncommitted_raw else 0
+
+    # Last commits
+    last_commit = _run_git(["log", "-1", "--oneline"])
+    last_remote = _run_git(["log", "-1", "--oneline", f"{remote}/{branch}"]) if has_remote else ""
+
+    # Determine status label
+    try:
+        a = int(ahead)
+        b = int(behind)
+    except ValueError:
+        a = b = 0
+
+    if not has_remote:
+        status = "no-remote"
+    elif uncommitted > 0:
+        status = "uncommitted"
+    elif a > 0 and b > 0:
+        status = "diverged"
+    elif a > 0:
+        status = "ahead"
+    elif b > 0:
+        status = "behind"
+    else:
+        status = "synced"
+
+    # Repo info
+    repo_slug = _run_git(["remote", "get-url", remote]).replace("https://github.com/", "").replace(".git", "")
+
+    return {
+        "branch": branch,
+        "remote": remote,
+        "status": status,
+        "ahead": a,
+        "behind": b,
+        "uncommitted": uncommitted,
+        "has_remote": has_remote,
+        "last_commit": last_commit,
+        "last_remote_commit": last_remote,
+        "repositorio": {
+            "slug": repo_slug or "",
+            "ahead": a,
+            "behind": b,
+            "uncommitted": uncommitted,
+            "last_commit": last_commit,
+            "has_remote": has_remote,
+            "status": status,
+        },
+    }
