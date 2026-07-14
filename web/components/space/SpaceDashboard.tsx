@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
   ClipboardList,
+  GitBranch,
   GraduationCap,
   History,
   NotebookPen,
@@ -35,6 +36,7 @@ type DashKey =
   | "chat_history"
   | "notebooks"
   | "question_bank"
+  | "project_mindmap"
   | "personas"
   | "skills"
   | "mastery_path";
@@ -99,6 +101,19 @@ const GROUPS: DashboardGroup[] = [
         unit: { zh: "道题", en: "questions" },
         tile: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
         load: async () => (await listNotebookEntries({ limit: 1 })).total,
+      },
+      {
+        key: "project_mindmap",
+        href: "/space/project",
+        icon: GitBranch,
+        title: { zh: "项目思维导图", en: "Project Mind Map" },
+        blurb: {
+          zh: "可视化项目状态：分支、会话、决策和下一步。",
+          en: "Visualize project state: branches, sessions, decisions, and next steps.",
+        },
+        unit: { zh: "个项目", en: "states" },
+        tile: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+        load: async () => 1,
       },
     ],
   },

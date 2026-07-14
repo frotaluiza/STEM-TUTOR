@@ -1,0 +1,79 @@
+# Platform-level messages for the learning UI
+# These strings are consumed by the frontend (i18next) and by the LLM
+# when generating curriculum summaries.
+
+labels:
+  course: "Course"
+  module: "Module"
+  objective: "Objective"
+  path: "Learning path"
+  progress: "Progress"
+
+onboarding:
+  welcome: |-
+    Welcome to your learning path! Select a course below to begin,
+    or open Chat and ask the tutor to build a new one from your materials.
+  no_paths: |-
+    No paths yet. Open Chat, pick Mastery Path mode, and ask the tutor
+    to build one from your materials.
+  pick_path: |-
+    Select a path to see its progress, or start one in Chat with
+    Mastery Path mode.
+
+status_labels:
+  new: "Not started"
+  learning: "In progress"
+  mastered: "Mastered"
+  due_review: "Due for review"
+  complete: "All complete"
+
+actions:
+  continue: "Continue"
+  reset: "Reset progress"
+  delete: "Delete"
+  new_path: "New path"
+  open_chat: "Open in Chat"
+
+progress_bar:
+  label: "{mastered}/{total} mastered"
+  percent: "{pct}% complete"
+
+next_step:
+  label: "Next"
+  probe: "Probe — test out first"
+  practice: "Practice until the gate clears"
+  assess: "Explain it in your own words"
+  review: "Review session due"
+  complete: "All mastered! 🎉"
+  continue_in_chat: "Continue tutoring in Chat →"
+
+module:
+  header: "{name} ({mastered}/{total})"
+  empty: "No objectives defined yet."
+
+objective:
+  icon_new: "○"
+  icon_learning: "◉"
+  icon_mastered: "●"
+  type_label: "{type}"
+
+graph:
+  title: "Concept graph"
+  description: "Interactive graph of all objectives in this path. Nodes show mastery status — green for mastered, amber for in progress, gray for not started."
+  zoom_in: "Zoom in"
+  zoom_out: "Zoom out"
+  fit: "Fit to screen"
+  legend_new: "Not started"
+  legend_learning: "In progress"
+  legend_mastered: "Mastered"
+  toggle_module: "Toggle module"
+
+summary:
+  suggest: |-
+    How about writing a short paragraph summarizing what you understood
+    about **{topic}**? Putting it in your own words helps solidify the
+    concept and reveals gaps you might not notice otherwise.
+  encourage: |-
+    That's a great summary! You've captured the key ideas about {topic}.
+    Would you like to move on to the next concept, or dive deeper into
+    any part that still feels fuzzy?

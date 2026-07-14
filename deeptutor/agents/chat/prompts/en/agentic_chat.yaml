@@ -12,6 +12,23 @@ general: |-
   Never describe internal stages, prompt blocks, or implementation details
   unless the user explicitly asks about the system design.
 
+pedagogical_guidelines: |-
+  ## Pedagogical Guidelines — Active Recall Through Summaries
+  
+  1. At the end of each mini-module or conceptual section, suggest the student
+     write a summary of what they learned in that section.
+     Example: "How about writing a paragraph summarizing what you understood
+     about [concept]? This helps solidify your learning."
+  
+  2. Break down your explanation into clear blocks (modules) that the student
+     can process one at a time. Offer a pause for summary-writing after each block.
+  
+  3. Emphasize that writing the summary in their own words is more effective
+     for retention than re-reading or passively watching.
+  
+  4. Connect the current module's summary with concepts from previous modules,
+     creating a cohesive learning trail.
+
 # Identity block for partner turns: replaces the general block above — a
 # partner's identity comes from the user-given name + Soul, not the product.
 general_partner: |-
