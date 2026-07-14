@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { useAppShell } from "@/context/AppShellContext";
 import {
+  Activity,
   BookOpen,
   BookText,
   Bot,
@@ -23,7 +24,6 @@ import {
   PanelLeftOpen,
   PenLine,
   Settings,
-  Activity,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -120,6 +120,12 @@ const SECONDARY_NAV: NavEntry[] = [
     label: "Knowledge Center",
     icon: BookOpen,
     tooltipKey: "Knowledge tooltip",
+  },
+  {
+    href: "/projects",
+    label: "Projects",
+    icon: FolderKanban,
+    tooltipKey: "Projects tooltip",
   },
   {
     href: "/pm",
