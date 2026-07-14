@@ -48,6 +48,7 @@ function layoutNodes(nodes: Node[], edges: Edge[], direction: "LR" | "TB" = "LR"
 interface UnifiedMindMapProps {
   pathId?: string;
   slug?: string;
+  branch?: string;
   apiBase?: string;
   initialData?: MindMapResponse | null;
   onSave?: (data: MindMapResponse) => void;
@@ -69,7 +70,7 @@ const nodeTypes: Record<string, any> = {
   issue: BaseNode,
 };
 
-function Flow({ pathId = "default", slug, apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
+function Flow({ pathId = "default", slug, branch, apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [loading, setLoading] = useState(true);
@@ -92,7 +93,7 @@ function Flow({ pathId = "default", slug, apiBase = "/api/v1/mindmap", initialDa
     setError(null);
 
     const url = slug
-      ? `/api/v1/pm/space/${encodeURIComponent(slug)}`
+      ? `/api/v1/pm/space/${encodeURIComponent(slug)}${branch ? `?branch=${encodeURIComponent(branch)}` : ""}`
       : pathId
         ? `${apiBase}/${encodeURIComponent(pathId)}`
         : null;
@@ -141,7 +142,7 @@ function Flow({ pathId = "default", slug, apiBase = "/api/v1/mindmap", initialDa
       });
 
     return () => { cancelled = true; };
-  }, [pathId, apiBase, initialData, setNodes, setEdges]);
+  }, [pathId, slug, branch, apiBase, initialData, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => {

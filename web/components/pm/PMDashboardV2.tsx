@@ -46,7 +46,7 @@ export default function PMDashboardV2() {
   } = usePMData();
 
   const [activeView, setActiveView] = useState<"dashboard" | "mindmap">("dashboard");
-  const [currentBranch, setCurrentBranch] = useState<string | null>(null);
+  const [currentBranch, setCurrentBranch] = useState<string | null>(() => searchParams.get("branch") || null);
   const [showEncerradas, setShowEncerradas] = useState(false);
 
   // Auto-select: URL param > most recent > first
@@ -243,7 +243,10 @@ export default function PMDashboardV2() {
           />
           <PMBranchSelector
             currentBranch={currentBranch}
-            onSelect={setCurrentBranch}
+            onSelect={(b) => {
+              setCurrentBranch(b);
+              router.replace(`/pm?project=${selectedSlug || defaultSlug}&branch=${b}`, { scroll: false });
+            }}
           />
           <PMSyncStatus branch={currentBranch || undefined} />
           <div className="flex rounded-lg border border-[var(--border)] overflow-hidden">
@@ -368,7 +371,7 @@ export default function PMDashboardV2() {
       {activeView === "mindmap" ? (
         /* Mind Map view */
         <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] h-[calc(100vh-220px)] relative">
-          <ProjectMindMap slug={selectedSlug || defaultSlug || undefined} />
+          <ProjectMindMap slug={selectedSlug || defaultSlug || undefined} branch={currentBranch || undefined} />
         </div>
       ) : (
         /* Dashboard view */
