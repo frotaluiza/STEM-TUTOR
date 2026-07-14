@@ -884,3 +884,163 @@ async def pm_session_fork(slug: str):
             "error": str(e),
             "manual": f"Execute no terminal: {cmd}",
         }
+
+
+KB_DIRS = [
+    PROJECT_DIR / "data" / "knowledge_bases",
+    Path.home() / ".local" / "share" / "opencode" / "docs",
+    PROJECT_DIR / "data" / "noteblocks" / "notes",
+]
+
+
+@router.get("/api/v1/pm/space/{slug}")
+async def pm_project_space(slug: str):
+    """Unified project space data: state + sessions + KBs + notes + learning."""
+    # 1. Project detail (sessions, decisions, branch, commits)
+    detail = await pm_project_detail(slug)
+
+    # 2. Knowledge bases
+    kbs = []
+    for kb_dir in KB_DIRS:
+        if not kb_dir.exists():
+            continue
+        for f in kb_dir.iterdir():
+            if f.suffix in (".md", ".json", ".yaml", ".yml"):
+                name = f.stem
+                ext = f.suffix
+                size = f.stat().st_size
+                kbs.append({"name": name, "type": ext.lstrip("."), "size": size, "path": str(f)})
+
+    # 3. NoteBlocks notes for this project
+    notes = []
+    noteblocks_dir = PROJECT_DIR / "data" / "noteblocks" / "notes"
+    if noteblocks_dir.exists():
+        for f in noteblocks_dir.glob("*.md"):
+            try:
+                content = f.read_text(encoding="utf-8")
+                note_data = yaml.safe_load(content.split("---\n", 2)[1]) if "---\n" in content else {}
+                if note_data.get("project") == slug or note_data.get("session"):
+                    notes.append({
+                        "id": f.stem,
+                        "title": note_data.get("title", f.stem),
+                        "project": note_data.get("project"),
+                        "session": note_data.get("session"),
+                        "tags": note_data.get("tags", []),
+                        "blocks": note_data.get("_blocks", []),
+                        "size": f.stat().st_size,
+                    })
+            except Exception:
+                pass
+
+    # 4. Learning progress (modules / knowledge points)
+    learning = {}
+    learning_dir = PROJECT_DIR / "data" / "modules"
+    if learning_dir.exists():
+        for mod_dir in learning_dir.iterdir():
+            if mod_dir.is_dir():
+                mod_name = mod_dir.name
+                state_file = mod_dir / "progress.json"
+                if state_file.exists():
+                    try:
+                        learning[mod_name] = json.loads(state_file.read_text(encoding="utf-8"))
+                    except Exception:
+                        pass
+
+    # 5. Session stats from opencode DB
+    session_stats = {"total": 0, "total_cost": 0.0, "by_agent": {}}
+    try:
+        rows = _query_opencode(
+            "SELECT agent, COUNT(*) as cnt, SUM(cost) as total_cost FROM session WHERE slug IN "
+            f"(SELECT slug FROM session WHERE directory LIKE '%{slug.replace('-', ' ')}%') "
+            "GROUP BY agent"
+        )
+        for r in rows:
+            agent = r.get("agent", "unknown")
+            session_stats["by_agent"][agent] = {
+                "count": r.get("cnt", 0),
+                "cost": round(r.get("total_cost", 0) or 0, 4),
+            }
+            session_stats["total"] += r.get("cnt", 0)
+            session_stats["total_cost"] += r.get("total_cost", 0) or 0
+    except Exception:
+        pass
+
+    # 6. Build graph nodes
+    nodes = []
+    edges = []
+
+    # Root project node
+    nodes.append({
+        "id": f"project-{slug}", "label": slug, "type": "project", "color": "#6366f1"
+    })
+
+    # Branches / commits
+    branch = detail.get("branch")
+    if branch:
+        nodes.append({
+            "id": f"branch-{slug}", "label": str(branch)[:30], "type": "branch", "color": "#8b5cf6"
+        })
+        edges.append({"source": f"project-{slug}", "target": f"branch-{slug}", "label": "branch"})
+
+    # Sessions
+    for i, s in enumerate(detail.get("recent_sessions", [])[:10]):
+        sid = s.get("slug", f"session-{i}")
+        nodes.append({
+            "id": sid, "label": (s.get("title") or sid)[:40],
+            "type": "session", "color": "#3b82f6",
+            "subtitle": s.get("date", ""),
+        })
+        edges.append({"source": f"project-{slug}", "target": sid, "label": "session"})
+
+        # Decisions within this session
+        for j, dec in enumerate(detail.get("decisions", [])[:3]):
+            did = f"decision-{i}-{j}"
+            nodes.append({
+                "id": did, "label": (dec.get("text") if isinstance(dec, dict) else str(dec))[:50],
+                "type": "decision", "color": "#f59e0b",
+            })
+            edges.append({"source": sid, "target": did, "label": "decision"})
+
+    # Knowledge bases
+    for kb in kbs[:8]:
+        kb_id = f"kb-{kb['name']}"
+        nodes.append({
+            "id": kb_id, "label": kb["name"][:30],
+            "type": "kb", "color": "#14b8a6",
+            "subtitle": f"{kb['type']} · {kb['size']}B",
+        })
+        edges.append({"source": f"project-{slug}", "target": kb_id, "label": "kb"})
+
+    # Notes
+    for n in notes[:8]:
+        note_id = f"note-{n['id']}"
+        nodes.append({
+            "id": note_id, "label": (n.get("title") or n["id"])[:30],
+            "type": "note", "color": "#f97316",
+            "subtitle": f"{(n.get('blocks') or [])} blocks" if n.get("blocks") else "",
+        })
+        edges.append({"source": f"project-{slug}", "target": note_id, "label": "note"})
+
+    # Learning modules
+    for mod_name in list(learning.keys())[:5]:
+        mod_id = f"module-{mod_name}"
+        nodes.append({
+            "id": mod_id, "label": mod_name[:30],
+            "type": "module", "color": "#a855f7",
+        })
+        edges.append({"source": f"project-{slug}", "target": mod_id, "label": "learning"})
+
+    return {
+        "project": slug,
+        "nodes": nodes,
+        "edges": edges,
+        "meta": {
+            "sessions": detail.get("total_sessions", 0),
+            "total_cost": detail.get("total_cost", 0),
+            "branch": detail.get("branch"),
+            "kbs": len(kbs),
+            "notes": len(notes),
+            "modules": len(learning),
+            "session_stats": session_stats,
+        },
+    }
