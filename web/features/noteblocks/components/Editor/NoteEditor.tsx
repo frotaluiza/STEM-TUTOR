@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import type { Block, Note, BlockType, BlockOrigin } from "../../types";
 import { BLOCK_ORIGIN_LABELS } from "../../types";
 import { QuestionBlock } from "./QuestionBlock";
+import { MarkdownBlock } from "./MarkdownBlock";
 
 const STORAGE_KEY = "noteblocks_note";
 const SAVE_DELAY = 1500;
@@ -445,6 +446,8 @@ export function NoteEditor({ noteId }: NoteEditorProps) {
                     </pre>
                   ) : block.type === "question" ? (
                     <QuestionBlock block={block} onAnswer={handleQuestionAnswer} />
+                  ) : block.type === "markdown" ? (
+                    <MarkdownBlock content={block.content} onChange={(c) => updateBlock(block.id, c)} />
                   ) : (
                     <textarea value={block.content} onChange={(e) => updateBlock(block.id, e.target.value)}
                       className="w-full bg-transparent text-sm text-gray-300 outline-none resize-none placeholder-gray-700 min-h-[1.5em]"
@@ -470,6 +473,7 @@ export function NoteEditor({ noteId }: NoteEditorProps) {
           <button onClick={() => addBlock("heading")} className="text-xs text-gray-400 hover:text-gray-200 px-2 py-1 rounded hover:bg-[#151515]">+ heading</button>
           <button onClick={() => addBlock("ask")} className="text-xs text-gray-400 hover:text-gray-200 px-2 py-1 rounded hover:bg-[#151515]">+ @ask</button>
           <button onClick={() => addBlock("command")} className="text-xs text-gray-400 hover:text-gray-200 px-2 py-1 rounded hover:bg-[#151515]">+ /command</button>
+          <button onClick={() => addBlock("markdown")} className="text-xs text-purple-400 hover:text-purple-300 px-2 py-1 rounded hover:bg-purple-500/10">+ **md**</button>
           <span className="w-px h-4 bg-[#222] mx-1 self-center" />
           <button onClick={() => addBlock("text", "opencode")} className="text-xs text-cyan-500 hover:text-cyan-300 px-2 py-1 rounded hover:bg-cyan-500/10">+ 🤖 opencode</button>
           <button onClick={() => addBlock("text", "tutor")} className="text-xs text-emerald-500 hover:text-emerald-300 px-2 py-1 rounded hover:bg-emerald-500/10">+ 🎓 Tutor</button>

@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 class BlockType(str, Enum):
     TEXT = "text"
     HEADING = "heading"
+    MARKDOWN = "markdown"
     ASK = "ask"
     COMMAND = "command"
     OUTPUT = "output"

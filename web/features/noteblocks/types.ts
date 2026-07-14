@@ -1,4 +1,4 @@
-export type BlockType = "text" | "heading" | "ask" | "command" | "output" | "attachment" | "question" | "toggle";
+export type BlockType = "text" | "heading" | "markdown" | "ask" | "command" | "output" | "attachment" | "question" | "toggle";
 
 export type BlockOrigin = "human" | "opencode" | "tutor";
 

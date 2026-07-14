@@ -75,6 +75,8 @@ def note_to_markdown(note: Note) -> str:
             body_parts.append(f"/command {block.content}")
         elif block.type == BlockType.OUTPUT:
             body_parts.append(f"~~~output\n{block.content}\n~~~")
+        elif block.type == BlockType.MARKDOWN:
+            body_parts.append(f"~~~markdown\n{block.content}\n~~~")
         elif block.type == BlockType.ATTACHMENT:
             body_parts.append(f"📎 {block.content}")
         else:
@@ -94,8 +96,25 @@ def markdown_to_note(text: str) -> Note:
     body = parts[2].strip()
 
     blocks: list[Block] = []
+    in_markdown_block = False
+    markdown_buffer: list[str] = []
+
     for line in body.split("\n"):
         stripped = line.strip()
+
+        # Handle ~~~markdown ... ~~~ blocks
+        if stripped == "~~~markdown":
+            in_markdown_block = True
+            markdown_buffer = []
+            continue
+        if in_markdown_block:
+            if stripped == "~~~":
+                blocks.append(Block(type=BlockType.MARKDOWN, content="\n".join(markdown_buffer)))
+                in_markdown_block = False
+                continue
+            markdown_buffer.append(line)
+            continue
+
         if not stripped:
             continue
         if stripped.startswith("## "):
