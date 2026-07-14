@@ -6,6 +6,7 @@ import {
   classifyToken,
   isAuthExempt,
   isBackendPath,
+  isOrchestratorPath,
 } from "./lib/proxy-policy";
 
 // Backend base URL for `/api/*` and `/ws/*` rewrites. The container entrypoint
@@ -15,6 +16,9 @@ import {
 // defaults to `http://localhost:8001`.
 const API_BASE_URL =
   process.env.DEEPTUTOR_API_BASE_URL ?? "http://localhost:8001";
+
+// Project Orchestrator API — runs separately on port 8080
+const ORCHESTRATOR_BASE_URL = "http://127.0.0.1:8080";
 
 const AUTH_ENABLED = parseAuthEnabled(process.env.DEEPTUTOR_AUTH_ENABLED);
 
@@ -39,6 +43,13 @@ export function proxy(req: NextRequest): NextResponse {
   // 1. Bridge the origin gap: forward backend-relative paths to the API server.
   //    This keeps the URL knowledge in one place (the entrypoint + system.json)
   //    rather than baked into the frontend bundle.
+  if (isOrchestratorPath(pathname)) {
+    const orchestratorPath = pathname.replace(/^\/orchestrator/, "");
+    return NextResponse.rewrite(
+      new URL(orchestratorPath + search, ORCHESTRATOR_BASE_URL),
+    );
+  }
+
   if (isBackendPath(pathname)) {
     return NextResponse.rewrite(new URL(pathname + search, API_BASE_URL));
   }

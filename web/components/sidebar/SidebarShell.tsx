@@ -11,6 +11,7 @@ import {
   Bot,
   Brain,
   ChevronDown,
+  FolderKanban,
   Github,
   HeartHandshake,
   House,
@@ -78,6 +79,12 @@ const PRIMARY_NAV: NavEntry[] = [
     icon: Library,
     tooltipKey: "Book tooltip",
     requires: "llm",
+  },
+  {
+    href: "/projects",
+    label: "Projects",
+    icon: FolderKanban,
+    tooltipKey: "Projects tooltip",
   },
   {
     href: "/space",

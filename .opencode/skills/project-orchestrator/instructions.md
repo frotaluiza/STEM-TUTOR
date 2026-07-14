@@ -89,6 +89,47 @@ data: 2026-07-14
 - `@pull-notion` — Puxa alterações do Notion → local
 - `@generate-report` — Gera resumo diário do projeto
 
+## Formato de Decisões Rastreáveis (Live Doc)
+
+Toda sessão DEVE incluir uma seção `## Decisões` no live doc. Cada decisão no formato:
+
+```markdown
+## Decisões
+
+### YYYY-MM-DD HH:MM — Título da Decisão
+- **Contexto**: Problema ou necessidade
+- **Alternativas**: O que foi considerado
+- **Escolha**: Decisão tomada
+- **Stack**: Tecnologias envolvidas
+- **Origem**: opencode
+- **Arquivos**: Caminhos dos arquivos alterados
+```
+
+### Estrutura obrigatória do live doc
+
+```markdown
+## Contexto
+Projeto: {Nome do Projeto}
+Sessão: {slug}
+Objetivo: {objetivo da sessão}
+
+## Decisões
+{formato padronizado acima}
+
+## Arquivos Modificados
+- {caminho} (criação/modificação)
+
+## Próximos Passos
+- {ação pendente}
+```
+
+### Live Doc vs Artefato
+
+- **Live doc**: registro temporário da sessão (`docs/{slug}.md`)
+- **Artefato**: documento persistente no repositório (`Projetos/{slug}/arquitetura/`)
+
+**Sempre perguntar ao usuário após uma ação relevante se ele quer gerar um artefato.**
+
 ## Perfil Frota
 
 O perfil "Frota" dá acesso ao repositório Projetos/.
