@@ -246,6 +246,57 @@ export function WorkspaceLayout({ sessionMode, hasSession, noteId, pathId, sessi
   // ── Render ──
 
   const cols = Math.min(layout.columns, Math.max(layout.panels.length, 1));
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [colFractions, setColFractions] = useState<number[]>([]);
+  const draggingRef = useRef<{ index: number; startX: number; starts: number[] } | null>(null);
+
+  // Init col fractions when panels change
+  useEffect(() => {
+    if (layout.panels.length === 0) { setColFractions([]); return; }
+    const n = Math.min(layout.panels.length, cols);
+    setColFractions(new Array(n).fill(100 / n));
+  }, [layout.panels.length, cols]);
+
+  const handleResizeStart = useCallback(
+    (e: React.MouseEvent | React.TouchEvent, index: number) => {
+      e.preventDefault();
+      const grid = gridRef.current;
+      if (!grid) return;
+      const rect = grid.getBoundingClientRect();
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      draggingRef.current = { index, startX: clientX, starts: [...colFractions] };
+
+      const onMove = (ev: MouseEvent | TouchEvent) => {
+        const dr = draggingRef.current;
+        if (!dr) return;
+        const cx = "touches" in ev ? (ev as TouchEvent).touches[0].clientX : (ev as MouseEvent).clientX;
+        const delta = ((cx - dr.startX) / rect.width) * 100;
+        const newFractions = [...dr.starts];
+        const left = Math.max(10, dr.starts[dr.index] + delta);
+        const right = Math.max(10, dr.starts[dr.index + 1] - delta);
+        const total = left + right;
+        newFractions[dr.index] = (left / total) * 100;
+        newFractions[dr.index + 1] = (right / total) * 100;
+        setColFractions(newFractions);
+      };
+
+      const onUp = () => {
+        draggingRef.current = null;
+        document.removeEventListener("mousemove", onMove);
+        document.removeEventListener("mouseup", onUp);
+        document.removeEventListener("touchmove", onMove);
+        document.removeEventListener("touchend", onUp);
+      };
+
+      document.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseup", onUp);
+      document.addEventListener("touchmove", onMove);
+      document.addEventListener("touchend", onUp);
+    },
+    [colFractions],
+  );
+
+  const fracSum = colFractions.reduce((a, b) => a + b, 0) || 100;
 
   return (
     <div className="flex flex-col h-full w-full bg-[#0a0a0a] text-gray-100">
@@ -314,10 +365,11 @@ export function WorkspaceLayout({ sessionMode, hasSession, noteId, pathId, sessi
           </div>
         ) : (
           <div
-            className="h-full"
+            ref={gridRef}
+            className="h-full relative select-none"
             style={{
               display: "grid",
-              gridTemplateColumns: `repeat(${cols}, 1fr)`,
+              gridTemplateColumns: colFractions.map((f) => `${(f / fracSum) * 100}%`).join(" "),
               gridAutoRows: "100%",
             }}
           >
@@ -325,20 +377,31 @@ export function WorkspaceLayout({ sessionMode, hasSession, noteId, pathId, sessi
               const tab = ALL_TABS.find((t) => t.id === panel.tabId);
               if (!tab) return null;
               return (
-                <Panel
-                  key={panel.id}
-                  tab={tab}
-                  onClose={() => closePanel(panel.id)}
-                  onDragOver={handleDragOver}
-                  onDrop={handlePanelDrop}
-                >
-                  <PanelContent
-                    tabId={panel.tabId}
-                    noteId={noteId}
-                    pathId={pathId}
-                    sessionSlug={sessionSlug}
-                  />
-                </Panel>
+                <div key={panel.id} className="flex flex-col min-w-0 relative">
+                  <Panel
+                    tab={tab}
+                    onClose={() => closePanel(panel.id)}
+                    onDragOver={handleDragOver}
+                    onDrop={handlePanelDrop}
+                  >
+                    <PanelContent
+                      tabId={panel.tabId}
+                      noteId={noteId}
+                      pathId={pathId}
+                      sessionSlug={sessionSlug}
+                    />
+                  </Panel>
+                  {/* Resize handle between panels */}
+                  {i < layout.panels.length - 1 && (
+                    <div
+                      className="absolute top-0 right-0 w-1.5 h-full cursor-col-resize z-10 group"
+                      onMouseDown={(e) => handleResizeStart(e, i)}
+                      onTouchStart={(e) => handleResizeStart(e, i)}
+                    >
+                      <div className="w-0.5 h-full mx-auto bg-[#1a1a1a] group-hover:bg-emerald-500/50 group-active:bg-emerald-400 transition-colors" />
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -369,7 +432,7 @@ function Panel({
 
   return (
     <div
-      className="flex flex-col min-w-0 border-r border-[#1a1a1a] last:border-r-0"
+      className="flex flex-col min-w-0 h-full"
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
