@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
@@ -7,34 +6,19 @@ import yaml
 router = APIRouter()
 
 PROJETOS_DIR = Path(__file__).resolve().parents[3] / "Projetos"
-KB_DIR = Path(__file__).resolve().parents[3] / "kb"
-CLASSIFICATION_FILE = KB_DIR / "sessoes" / "classification.json"
 
 
 def _session_counts() -> dict[str, int]:
-    """Return {slug: count} from classification.json, with fallback to opencode DB."""
+    """Return {slug: count} from Projetos/{slug}/sessoes/ directories."""
     counts: dict[str, int] = {}
-
-    # Try classification.json first
-    if CLASSIFICATION_FILE.exists():
-        raw = json.loads(CLASSIFICATION_FILE.read_text(encoding="utf-8-sig"))
-        for info in raw.get("classification", {}).values():
-            slug = info.get("project_slug", "")
-            if slug:
-                counts[slug] = counts.get(slug, 0) + 1
-
-    # Fallback: query opencode DB
-    if not counts:
-        import sqlite3
-        op_db = Path.home() / ".local" / "share" / "opencode" / "opencode.db"
-        if op_db.exists():
-            conn = sqlite3.connect(str(op_db))
-            rows = conn.execute(
-                "SELECT s.directory, COUNT(*) FROM session s GROUP BY s.directory"
-            ).fetchall()
-            conn.close()
-            counts["ai-stem-tutor"] = sum(r[1] for r in rows if "ai tutor" in (r[0] or "").lower() or "deep" in (r[0] or "").lower())
-
+    if not PROJETOS_DIR.exists():
+        return counts
+    for d in PROJETOS_DIR.iterdir():
+        if not d.is_dir() or not (d / "project-state.yaml").exists():
+            continue
+        sessoes_dir = d / "sessoes"
+        if sessoes_dir.exists():
+            counts[d.name] = len(list(sessoes_dir.glob("*.md")))
     return counts
 
 
