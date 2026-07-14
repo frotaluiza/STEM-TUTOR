@@ -83,12 +83,6 @@ const PRIMARY_NAV: NavEntry[] = [
     requires: "llm",
   },
   {
-    href: "/projects",
-    label: "Projects",
-    icon: FolderKanban,
-    tooltipKey: "Projects tooltip",
-  },
-  {
     href: "/space",
     label: "Learning Space",
     icon: LayoutGrid,
