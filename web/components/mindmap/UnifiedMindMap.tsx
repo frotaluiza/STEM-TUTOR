@@ -48,7 +48,7 @@ const nodeTypes: Record<string, any> = {
   issue: BaseNode,
 };
 
-function Flow({ pathId, slug, apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
+function Flow({ pathId = "default", slug, apiBase = "/api/v1/mindmap", initialData, onSave, readOnly = false }: UnifiedMindMapProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [loading, setLoading] = useState(true);
