@@ -2,11 +2,38 @@
   "project": "AI STEM Tutor",
   "slug": "ai-stem-tutor",
   "created": "2026-07-11T21:11:50Z",
-  "last_updated": "2026-07-14T05:55:57Z",
-  "branch": "main",
-  "last_commit": "ac28b93e Merge branch 'feature/pm-dashboard-v2'",
-  "git_log": "94e39bb0 fix: live-doc gerado do opencode DB (limpo, sem corrupcao de encoding)\n35ebae21 fix: encoding project names + auto-select recent project + URL persistence\nc3941025 feat: fork session (opencode --fork) via botao no SessionViewer\n40f6759a fix: live-doc endpoint fallback para opencode docs dir\n6e8c9bbc feat: SessionViewer com aba Live Doc (markdown formatado)\n13a9c416 fix: LevelingModal so para Mastery Path; bg-black opaco\n0c49d0fb feat: NoteBlocks aba Live Doc com visualizador markdown + import\n83ba61e1 fix: React 19 script warning - add suppressHydrationWarning\n88b2b1f3 feat: drag-and-drop para reordenar blocos no NoteEditor\n012c937c feat: MarkdownBlock preview-first estilo Notion (click-to-edit)\n344feb05 fix: InternalGroup nao-funcional -> indicador estatico; toggle showInternals funcional\nb4874ca6 feat: MarkdownBlock type - edit/preview toggle with MarkdownRenderer\n479dd960 fix: restore kb/ + project-state from stash, PM fallback to opencode DB\n3c083ddf fix: resolve merge conflict in learning page - keep main MapView\nd068ade9 fix: replace deleted ProjectMindMap import with UnifiedMindMap",
+  "last_updated": "2026-07-14T15:30:00Z",
+  "branch": "ps/mindmap-v2",
+  "repo_branch": "ps/mindmap-v2",
+  "session_slug": "lucky-wizard",
+  "last_commit": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap",
+  "branching_strategy": {
+    "model": "session → project_state_branch → repo_branch",
+    "description": "Cada sessão opencode equivale a uma branch do project state. Dentro dela, pode-se criar uma branch do repositório do projeto. Decisões vão para a branch onde a sessão ativou. Project state mergeia para main ao final da sessão.",
+    "current_session": "lucky-wizard",
+    "ps_branch": "ps/mindmap-v2",
+    "repo_branches_created": [
+      "feature/source-providers-system"
+    ]
+  },
+  "git_log": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap\nce4028be Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n220ad923 feat: tarefas (tasks) system — backend API + PM panel + AGENTS.md guideline\n1b6f80b2 Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n57aa68c3 docs: atualiza project-state com decisoes da sessao e proximos passos",
   "sessions": [
+    {
+      "id": "lucky-wizard",
+      "title": "Zona da Elétrica e fontes de engenharia elétrica",
+      "date": "2026-07-14",
+      "decisions": [
+        "Source Providers System: modulo deeptutor/services/sources/ com provedores personalizaveis por projeto",
+        "Branching Strategy: sessao ≡ branch do project state, que pode conter branch do repo",
+        "Mar da Eletrica: projeto no sistema de fontes, mastery paths = futuro",
+        "Perplexity DeepSearch: util como camada de sintese sobre resultados brutos"
+      ],
+      "files": [
+        "deeptutor/services/sources/ (planejado — modulo novo a ser criado)",
+        "project-state/ai-stem-tutor.md (atualizado)",
+        "project-state/ai-stem-tutor.json (atualizado)"
+      ]
+    },
     {
       "id": "jolly-knight",
       "title": "PM Dashboard v2 + NoteBlocks multi-modal",
@@ -33,6 +60,9 @@
     }
   ],
   "decisions": [
+    "**Branching Strategy (2026-07-14)**: Sessao ≡ branch do project state. Dentro dela, pode-se criar branch do repo. Project state documenta associacao. Decisoes vao para a branch onde a sessao ativou.",
+    "**Source Providers System (2026-07-14)**: Criar modulo deeptutor/services/sources/ com provedores de fonte personalizaveis por projeto, database SQLite, sugestoes por area, e bridge para Search Providers existentes.",
+    "**Mar da Eletrica como Projeto (2026-07-14)**: Projeto no sistema de fontes com fontes sugeridas da area 'eletrica'. Mastery paths = implementacao futura.",
     "**Contexto**: Editor de blocos estilo Notion para anotacoes conectadas com agente",
     "**Escolha**: Implementar como nova surface acessivel pelo menu lateral (`/noteblocks`), sem substituir o chat existente",
     "**Stack**: Slate.js (editor), xterm.js (terminal), FastAPI + WebSocket (backend), .md + frontmatter (storage)",
@@ -51,7 +81,16 @@
     "**Teste de subtopico**: Ao final de cada sessao, teorico + pratico das fontes"
   ],
   "issues": [],
-  "todos": [],
+  "todos": [
+    {
+      "task": "Merge project state (ps/mindmap-v2) → main",
+      "priority": "Alta"
+    },
+    {
+      "task": "Criar branch feature/source-providers-system no STEM TUTOR",
+      "priority": "Alta"
+    }
+  ],
   "roadmap": {
     "completed": [
       "PM Dashboard v2 com tabelas sort/filter e dropdown de projetos",
@@ -64,12 +103,21 @@
       "Live Doc com markdown renderizado e botao Importar",
       "Fork de sessoes (opencode --fork) via botao no SessionViewer",
       "Restauracao do classification.json + project-state historico",
-      "Fallback do backend para opencode DB (sem dependencia de classification.json)"
+      "Fallback do backend para opencode DB (sem dependencia de classification.json)",
+      "Branching Strategy documentada: sessao → ps branch → repo branch"
     ],
     "pending": [
       {
-        "task": "Mind Map como Project Space visual (KBs, notas, learning, multi-projeto)",
+        "task": "Source Providers System — implementar modulo deeptutor/services/sources/ + providers + database + API",
         "priority": "Alta"
+      },
+      {
+        "task": "Mar da Eletrica — criar como projeto no sistema de fontes com mastery paths (futuro)",
+        "priority": "Alta"
+      },
+      {
+        "task": "Mind Map como Project Space visual (KBs, notas, learning, multi-projeto)",
+        "priority": "Media"
       },
       {
         "task": "SQLite storage unificado (migrar NoteBlocks de .md para SQLite)",
