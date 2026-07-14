@@ -228,20 +228,14 @@ function MessageBubble({ msg, index }: { msg: MessageData; index: number }) {
   );
 }
 
-function InternalGroup({ count }: { count: number }) {
-  const [open, setOpen] = useState(false);
+function InternalGroup({ count, visible }: { count: number; visible: boolean }) {
   return (
-    <div className="border border-[var(--border)]/20 rounded-lg bg-[var(--muted)]/10">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 w-full px-3 py-2 text-left text-[12px] text-[var(--muted-foreground)]/60 hover:text-[var(--muted-foreground)] transition-colors"
-      >
-        {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+    <div className="border border-[var(--border)]/20 rounded-lg bg-[var(--muted)]/10 px-3 py-2">
+      <div className="flex items-center gap-2 text-[12px] text-[var(--muted-foreground)]/50">
         <span className="text-[11px] px-1.5 py-0.5 rounded bg-[var(--muted)]/30">⚙️</span>
         Processamento interno ({count} mensagens)
-        {!open && <span className="text-[10px] text-[var(--muted-foreground)]/40 ml-auto">clique para ver</span>}
-      </button>
+        {visible && <span className="text-[10px] ml-auto">(exibindo)</span>}
+      </div>
     </div>
   );
 }
@@ -280,7 +274,7 @@ export default function SessionViewer({ slug }: SessionViewerProps) {
 
   // Group consecutive internal messages
   const groupedMessages = useMemo(() => {
-    const result: { type: "message"; msg: MessageData } | { type: "internal-group"; count: number; messages: MessageData[] }[] = [];
+    const result: ({ type: "message"; msg: MessageData } | { type: "internal-group"; count: number; messages: MessageData[] })[] = [];
     let internalBuffer: MessageData[] = [];
 
     for (const msg of messages) {
@@ -301,7 +295,7 @@ export default function SessionViewer({ slug }: SessionViewerProps) {
   }, [messages]);
 
   const userCount = messages.filter((m) => m.role === "user").length;
-  const visibleCount = groupedMessages.filter((g) => g.type === "message").length;
+  const visibleCount = groupedMessages.filter((g): g is { type: "message"; msg: MessageData } => g.type === "message").length;
 
   if (loading) {
     return (
@@ -342,13 +336,14 @@ export default function SessionViewer({ slug }: SessionViewerProps) {
         {groupedMessages.map((group, i) => {
           if (group.type === "internal-group") {
             if (!showInternals) {
-              return <InternalGroup key={`int-${i}`} count={group.count} />;
+              return <InternalGroup key={`int-${i}`} count={group.count} visible={showInternals} />;
             }
             return group.messages.map((msg, j) => (
               <MessageBubble key={msg.id || `${i}-${j}`} msg={msg} index={i + j} />
             ));
           }
-          return <MessageBubble key={group.msg.id || i} msg={group.msg} index={i} />;
+          const g = group as { type: "message"; msg: MessageData };
+          return <MessageBubble key={g.msg.id || i} msg={g.msg} index={i} />;
         })}
         <div ref={bottomRef} />
       </div>
