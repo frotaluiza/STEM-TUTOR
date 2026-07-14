@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { GripVertical } from "lucide-react";
 import type { Block, Note, BlockType, BlockOrigin } from "../../types";
 import { BLOCK_ORIGIN_LABELS } from "../../types";
 import { QuestionBlock } from "./QuestionBlock";
@@ -175,6 +176,21 @@ export function NoteEditor({ noteId }: NoteEditorProps) {
       blocks: prev.blocks.map((b) => b.id === blockId ? { ...b, pinned: !b.pinned } : b),
     }));
     markChanged();
+  }, [markChanged]);
+
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  const moveBlock = useCallback((from: number, to: number) => {
+    setNote((prev) => {
+      const blocks = [...prev.blocks];
+      const [moved] = blocks.splice(from, 1);
+      blocks.splice(to, 0, moved);
+      return { ...prev, blocks };
+    });
+    markChanged();
+    setDragIndex(null);
+    setDragOverIndex(null);
   }, [markChanged]);
 
   const runAsk = useCallback((blockId: string) => {
@@ -375,12 +391,72 @@ export function NoteEditor({ noteId }: NoteEditorProps) {
 
       {/* Blocks */}
       <div className="flex-1 px-8 pb-32 space-y-1">
-        {note.blocks.map((block) => {
+        {note.blocks.map((block, idx) => {
           const originLabel = BLOCK_ORIGIN_LABELS[block.origin];
           const isBot = block.origin !== "human";
+          const isDragging = dragIndex === idx;
+          const isDragOver = dragOverIndex === idx;
 
           return (
-            <div key={block.id} className="group">
+            <div
+              key={block.id}
+              className={`group relative transition-opacity ${isDragging ? "opacity-30" : ""}`}
+              draggable={dragIndex !== null || undefined}
+              onDragStart={(e) => {
+                e.dataTransfer.effectAllowed = "move";
+                e.dataTransfer.setData("text/plain", String(idx));
+                setDragIndex(idx);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "move";
+                setDragOverIndex(idx);
+              }}
+              onDragLeave={() => setDragOverIndex(null)}
+              onDrop={(e) => {
+                e.preventDefault();
+                const from = Number(e.dataTransfer.getData("text/plain"));
+                if (!isNaN(from) && from !== idx) moveBlock(from, idx);
+              }}
+              onDragEnd={() => {
+                setDragIndex(null);
+                setDragOverIndex(null);
+              }}
+            >
+              {/* Drop indicator */}
+              {isDragOver && dragIndex !== null && dragIndex !== idx && (
+                <div className="absolute -top-1 left-0 right-0 h-0.5 bg-purple-500 z-10" />
+              )}
+
+              {/* Drag handle + block header */}
+              {!isBot && (
+                <div className="flex items-start gap-1 pt-2 -ml-1">
+                  <div
+                    className="shrink-0 opacity-0 group-hover:opacity-40 hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing pt-0.5"
+                    draggable
+                    onDragStart={(e) => {
+                      e.dataTransfer.effectAllowed = "move";
+                      e.dataTransfer.setData("text/plain", String(idx));
+                      setDragIndex(idx);
+                    }}
+                  >
+                    <GripVertical size={13} strokeWidth={1.5} className="text-gray-500" />
+                  </div>
+                  <span className={`text-xs font-mono ${originLabel.color}`}>{originLabel.icon}</span>
+                </div>
+              )}
+              {isBot && (
+                <div className="flex items-center gap-1 -ml-1 opacity-0 group-hover:opacity-40 hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing pt-1"
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("text/plain", String(idx));
+                    setDragIndex(idx);
+                  }}
+                >
+                  <GripVertical size={13} strokeWidth={1.5} className="text-gray-500" />
+                </div>
+              )}
               {isBot && (
                 <div
                   onClick={() => toggleCollapse(block.id)}
@@ -411,12 +487,6 @@ export function NoteEditor({ noteId }: NoteEditorProps) {
                   />
                   <span onClick={() => addBlock("text")} className="text-xs text-gray-700 cursor-pointer hover:text-gray-300 mt-1">+</span>
                 </div>
-
-                {!isBot && (
-                  <div className="flex items-start pt-2 shrink-0">
-                    <span className={`text-xs font-mono ${originLabel.color}`}>{originLabel.icon}</span>
-                  </div>
-                )}
 
                 <div className="flex-1 min-w-0">
                   {block.type === "heading" ? (
