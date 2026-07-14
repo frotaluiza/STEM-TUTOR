@@ -894,31 +894,46 @@ KB_DIRS = [
 
 
 @router.get("/api/v1/pm/space/{slug}")
-async def pm_project_space(slug: str):
-    """Unified project space data: state + sessions + KBs + notes + learning."""
+async def pm_project_space(slug: str, branch: str | None = None):
+    """Unified project space data: state + sessions + KBs + notes + learning + videos."""
+    # 0. Load project state by branch
+    ps_data = None
+    if branch and branch != "main":
+        ps_file = PROJECT_DIR / "project-state" / "branches" / f"{branch.replace('/', '-')}.json"
+        if ps_file.exists():
+            ps_data = json.loads(ps_file.read_text(encoding="utf-8-sig"))
+    else:
+        ps_file = PROJECT_DIR / "project-state" / "ai-stem-tutor.json"
+        if ps_file.exists():
+            ps_data = json.loads(ps_file.read_text(encoding="utf-8-sig"))
+
+    resolved_branch = (ps_data or {}).get("branch", "main")
+
     # 1. Project detail (sessions, decisions, branch, commits)
     detail = await pm_project_detail(slug)
 
-    # 2. Knowledge bases
+    # 2. Knowledge bases from data dir
     kbs = []
-    for kb_dir in KB_DIRS:
-        if not kb_dir.exists():
-            continue
-        for f in kb_dir.iterdir():
-            if f.suffix in (".md", ".json", ".yaml", ".yml"):
-                name = f.stem
-                ext = f.suffix
-                size = f.stat().st_size
-                kbs.append({"name": name, "type": ext.lstrip("."), "size": size, "path": str(f)})
+    kb_data_dir = PROJECT_DIR / "data" / "knowledge_bases"
+    if kb_data_dir.exists():
+        for kb_dir in kb_data_dir.iterdir():
+            if kb_dir.is_dir():
+                doc_count = len(list(kb_dir.glob("*.md"))) + len(list(kb_dir.glob("*.pdf")))
+                kbs.append({
+                    "name": kb_dir.name,
+                    "documents": doc_count,
+                    "path": str(kb_dir),
+                })
 
-    # 3. NoteBlocks notes for this project
+    # 3. NoteBlocks notes
     notes = []
     noteblocks_dir = PROJECT_DIR / "data" / "noteblocks" / "notes"
     if noteblocks_dir.exists():
         for f in noteblocks_dir.glob("*.md"):
             try:
                 content = f.read_text(encoding="utf-8")
-                note_data = yaml.safe_load(content.split("---\n", 2)[1]) if "---\n" in content else {}
+                parts = content.split("---\n", 2)
+                note_data = yaml.safe_load(parts[1]) if len(parts) >= 3 and parts[0].strip() == "" else {}
                 if note_data.get("project") == slug or note_data.get("session"):
                     notes.append({
                         "id": f.stem,
@@ -926,46 +941,84 @@ async def pm_project_space(slug: str):
                         "project": note_data.get("project"),
                         "session": note_data.get("session"),
                         "tags": note_data.get("tags", []),
-                        "blocks": note_data.get("_blocks", []),
+                        "blocks": len(note_data.get("_blocks", [])),
                         "size": f.stat().st_size,
+                        "type": "noteblocks",
                     })
             except Exception:
                 pass
 
-    # 4. Learning progress (modules / knowledge points)
-    learning = {}
-    learning_dir = PROJECT_DIR / "data" / "modules"
-    if learning_dir.exists():
-        for mod_dir in learning_dir.iterdir():
-            if mod_dir.is_dir():
-                mod_name = mod_dir.name
-                state_file = mod_dir / "progress.json"
-                if state_file.exists():
-                    try:
-                        learning[mod_name] = json.loads(state_file.read_text(encoding="utf-8"))
-                    except Exception:
-                        pass
+    # 4. Videos from KB videos directory
+    videos = []
+    videos_dir = PROJECT_DIR / "kb" / "videos"
+    if videos_dir.exists():
+        for f in videos_dir.glob("*.md"):
+            try:
+                content = f.read_text(encoding="utf-8")
+                fm = yaml.safe_load(content.split("---\n", 2)[1]) if "---\n" in content else {}
+                if fm.get("link"):
+                    videos.append({
+                        "title": fm.get("title", f.stem),
+                        "url": fm["link"],
+                        "channel": fm.get("channel", ""),
+                        "tags": fm.get("tags", []),
+                        "duracao": fm.get("duracao", ""),
+                    })
+            except Exception:
+                pass
 
-    # 5. Session stats from opencode DB
-    session_stats = {"total": 0, "total_cost": 0.0, "by_agent": {}}
+    # Also check youtube video DB from session search results
+    if not videos:
+        try:
+            share_videos = _query_opencode(
+                "SELECT DISTINCT s.title, s_share.url FROM session s "
+                "LEFT JOIN session_share s_share ON s.id = s_share.session_id "
+                "WHERE LOWER(s.title) LIKE '%youtube%' OR LOWER(s.title) LIKE '%wolfram%' "
+                "OR LOWER(s.title) LIKE '%video%' LIMIT 10"
+            )
+            for v in share_videos:
+                videos.append({
+                    "title": v.get("title", "")[:80],
+                    "url": v.get("url", ""),
+                    "source": "opencode_session",
+                })
+        except Exception:
+            pass
+
+    # 5. Active sessions from opencode DB
+    active_sessions = []
+    closed_sessions = []
     try:
-        rows = _query_opencode(
-            "SELECT agent, COUNT(*) as cnt, SUM(cost) as total_cost FROM session WHERE slug IN "
-            f"(SELECT slug FROM session WHERE directory LIKE '%{slug.replace('-', ' ')}%') "
-            "GROUP BY agent"
+        all_sessions = _query_opencode(
+            "SELECT slug, title, agent, model, cost, datetime(time_created / 1000, 'unixepoch') as date_created, "
+            "tokens_input, tokens_output "
+            "FROM session ORDER BY time_created DESC LIMIT 50"
         )
-        for r in rows:
-            agent = r.get("agent", "unknown")
-            session_stats["by_agent"][agent] = {
-                "count": r.get("cnt", 0),
-                "cost": round(r.get("total_cost", 0) or 0, 4),
+        for s in all_sessions:
+            entry = {
+                "slug": s.get("slug"),
+                "title": s.get("title", "")[:80],
+                "agent": s.get("agent", ""),
+                "messages": (s.get("tokens_input") or 0) // 1000 + 1,
+                "custo": round(s.get("cost") or 0, 4),
+                "date": (s.get("date_created") or "")[:10],
+                "branch": resolved_branch if s.get("slug") in [x.get("slug") for x in (ps_data or {}).get("sessoes_ativas", [])] else "main",
             }
-            session_stats["total"] += r.get("cnt", 0)
-            session_stats["total_cost"] += r.get("total_cost", 0) or 0
+            # Simple heuristic: sessions with "concluído" or older than 3 days in title are "closed"
+            title_lower = (s.get("title") or "").lower()
+            if any(w in title_lower for w in ["encerrada", "concluído", "concluido", "archive"]) or False:
+                closed_sessions.append(entry)
+            else:
+                active_sessions.append(entry)
     except Exception:
         pass
 
-    # 6. Build graph nodes
+    # 6. Session stats
+    session_stats = {
+        "ativas": len(active_sessions),
+        "encerradas": len(closed_sessions),
+        "total": len(active_sessions) + len(closed_sessions),
+    }
     nodes = []
     edges = []
 
@@ -1034,15 +1087,29 @@ async def pm_project_space(slug: str):
 
     return {
         "project": slug,
+        "branch": resolved_branch,
         "nodes": nodes,
         "edges": edges,
+        "features": (ps_data or {}).get("features", []),
+        "repositorio_codigo": (ps_data or {}).get("repositorio_codigo", ""),
+        "kbs": kbs[:20],
+        "notes": notes[:20],
+        "videos": videos[:20],
+        "sessoes": {
+            "ativas": active_sessions[:20],
+            "encerradas": closed_sessions[:20],
+        },
+        "decisions": detail.get("decisions", [])[:20],
+        "todos": (ps_data or {}).get("todos", [])[:10],
         "meta": {
             "sessions": detail.get("total_sessions", 0),
             "total_cost": detail.get("total_cost", 0),
-            "branch": detail.get("branch"),
+            "branch": resolved_branch,
             "kbs": len(kbs),
             "notes": len(notes),
+            "videos": len(videos),
             "modules": len(learning),
             "session_stats": session_stats,
+            "features_count": len((ps_data or {}).get("features", [])),
         },
     }

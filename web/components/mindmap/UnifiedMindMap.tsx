@@ -17,12 +17,33 @@ import {
   Panel,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import dagre from "@dagrejs/dagre";
 import { Loader2, AlertCircle, Plus, Save, LayoutGrid } from "lucide-react";
 import BaseNode from "./nodes/BaseNode";
 import ProjectNode from "./nodes/ProjectNode";
 import SessionNode from "./nodes/SessionNode";
 import type { MindMapNode, MindMapEdge, MindMapResponse, MindMapMeta, MindMapNodeType, MindMapNodeData } from "./types";
 import { NODE_COLORS } from "./types";
+
+function layoutNodes(nodes: Node[], edges: Edge[], direction: "LR" | "TB" = "LR"): Node[] {
+  const g = new dagre.graphlib.Graph();
+  g.setDefaultEdgeLabel(() => ({}));
+  g.setGraph({ rankdir: direction, nodesep: 60, ranksep: 100, marginx: 40, marginy: 40 });
+
+  nodes.forEach((n) => {
+    const w = n.type === "project" ? 160 : n.type === "session" ? 140 : 120;
+    const h = 60;
+    g.setNode(n.id, { width: w, height: h });
+  });
+  edges.forEach((e) => g.setEdge(e.source, e.target));
+
+  dagre.layout(g);
+
+  return nodes.map((n) => {
+    const pos = g.node(n.id);
+    return { ...n, position: { x: pos.x - (pos.width || 120) / 2, y: pos.y - (pos.height || 60) / 2 } };
+  });
+}
 
 interface UnifiedMindMapProps {
   pathId?: string;
@@ -104,12 +125,13 @@ function Flow({ pathId = "default", slug, apiBase = "/api/v1/mindmap", initialDa
           label: e.label,
           style: { stroke: "#4b5563", strokeOpacity: 0.4 },
         }));
-        setNodes(rfNodes);
+        const laidOut = layoutNodes(rfNodes, rfEdges, "LR");
+        setNodes(laidOut);
         setEdges(rfEdges);
         setMeta(data.meta);
         setLoading(false);
 
-        setTimeout(() => fitViewRef.current(), 100);
+        setTimeout(() => fitViewRef.current(), 150);
       })
       .catch((e) => {
         if (!cancelled) {
