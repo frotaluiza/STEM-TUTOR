@@ -1,0 +1,7 @@
+﻿Ôû▓ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3784
+- Network:       http://100.117.222.86:3784
+Ô£ô Ready in 1570ms
+- Experiments (use with caution):
+  ┬À proxyClientMaxBodySize: 220200960
+
