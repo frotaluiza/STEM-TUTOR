@@ -1,0 +1,19 @@
+projeto: "PC Windows — diagnóstico + performance"
+slug: pc-windows
+perfil: Frota
+area: Pessoal
+status: "Em andamento"
+objetivo: "Diagnóstico e otimização de performance do PC Windows"
+
+caminho:
+  - fase: "Diagnóstico"
+    descricao: "Identificar gargalos de performance"
+  - fase: "Otimização"
+    descricao: "Aplicar correções e ajustes"
+
+decisoes_acumuladas: []
+proximos_passos:
+  - descricao: "Finalizar diagnóstico de performance"
+    prioridade: baixa
+
+ultima_atualizacao: 2026-07-14

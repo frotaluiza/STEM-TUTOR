@@ -1,0 +1,97 @@
+# Project Orchestrator — Instruções
+
+## Arquitetura
+
+```
+GitHub: frotaluiza/Projetos/        ← repositório único de project-spaces
+├── perfis/
+│   └── frota.yaml                   ← perfil do usuário
+├── {projeto-slug}/
+│   ├── project-state.yaml           ← estado do projeto
+│   ├── fontes/                      ← vídeos, leituras, artigos, anotações
+│   ├── arquitetura/                 ← decisões arquiteturais
+│   ├── tarefas/                     ← tasks do projeto
+│   ├── rotinas/                     ← agendador de eventos
+│   ├── frameworks/                  ← frameworks usadas
+│   ├── ferramentas/                 ← ferramentas conectadas
+│   ├── docs/                        ← NoteBlocks
+│   ├── sessoes/                     ← sessões opencode
+│   ├── conversas/                   ← conversas Notion
+│   └── relatorios/
+│       ├── testes/
+│       └── diarios/
+├── scripts/kb/                      ← scripts compartilhados
+├── .github/workflows/
+│   └── sync-notion.yml
+└── .opencode/skills/
+    └── project-orchestrator/
+```
+
+## Gestão de Branches
+
+### Ao iniciar sessão:
+1. Verificar branch atual
+2. Se for main: criar branch `sessao/{slug}` a partir de main
+3. Se já estiver em branch de sessão: continuar nela
+
+### Ao alterar project-state:
+- Commitar na branch da sessão
+- Mensagem: `project-state: {descrição resumida}`
+
+### Ao alterar código do projeto:
+- Se o projeto tem repo de código (ex: deeptutor/):
+  - Criar branch `feature/{descricao}` no repo de código
+  - Trabalhar localmente
+  - Mergear quando pronto
+
+### Ao finalizar sessão:
+1. Commit final na branch
+2. Checkout main
+3. Merge da branch de sessão
+4. Push
+
+## Formatos
+
+### project-state.yaml
+```yaml
+projeto: "Nome do Projeto"
+slug: nome-do-projeto
+perfil: Frota
+objetivo: "Descrição do objetivo"
+status: "Ideia | Planejar | Em andamento | Concluído"
+repositorio_codigo: "owner/repo"  # opcional
+caminho:
+  - fase: "Fase 1"
+    descricao: "..."
+    fontes: []
+ultima_atualizacao: 2026-07-14
+```
+
+### Fontes (fontes/ diretório)
+Cada fonte é um .md com frontmatter:
+```yaml
+---
+tipo: video | leitura | artigo | anotacao | referencia
+titulo: "..."
+url: "..."
+projeto: nome-do-projeto
+tags: []
+data: 2026-07-14
+---
+```
+
+## Comandos Rápidos
+
+- `@init-environment` — Verifica git, Notion API, dependências
+- `@start-session` — Cria branch de sessão, prepara ambiente
+- `@end-session` — Merge da branch, push, sync
+- `@sync-notion` — Sincroniza alterações locais → Notion
+- `@pull-notion` — Puxa alterações do Notion → local
+- `@generate-report` — Gera resumo diário do projeto
+
+## Perfil Frota
+
+O perfil "Frota" dá acesso ao repositório Projetos/.
+- Usuário: LuizaF
+- GitHub: frotaluiza
+- Perfil definido em: `perfis/frota.yaml`

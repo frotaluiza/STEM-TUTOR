@@ -127,6 +127,64 @@ deeptutor start                   # backend + frontend together
 | `deeptutor_cli/main.py`                    | Typer CLI entry point                |
 | `deeptutor/api/routers/unified_ws.py`      | Unified WebSocket endpoint           |
 
+## Project Orchestrator — Skill de Orquestração
+
+Habilitada automaticamente no início de cada sessão do opencode.
+Carrega as instruções em `.opencode/skills/project-orchestrator/instructions.md`.
+
+### Estrutura do Repositório Projetos/
+
+```
+Projetos/                        ← repositório único de project-spaces
+├── perfis/
+│   └── frota.yaml               ← perfil do usuário
+├── {projeto-slug}/
+│   ├── project-state.yaml       ← estado, objetivo, caminho
+│   ├── fontes/                  ← vídeos, leituras, artigos, anotações
+│   ├── arquitetura/             ← decisões arquiteturais
+│   ├── tarefas/                 ← tasks do projeto
+│   ├── rotinas/                 ← agendador de eventos
+│   ├── frameworks/              ← frameworks usadas
+│   ├── ferramentas/             ← ferramentas conectadas
+│   ├── docs/                    ← NoteBlocks
+│   ├── sessoes/                 ← sessões opencode
+│   ├── conversas/               ← conversas Notion
+│   └── relatorios/
+│       ├── testes/
+│       └── diarios/
+├── scripts/kb/                  ← scripts compartilhados
+├── .github/workflows/
+│   └── sync-notion.yml
+└── .opencode/skills/
+    └── project-orchestrator/
+```
+
+### Fluxo de Branch
+
+```
+Início da sessão
+  → init-environment.ps1 cria branch sessao/{slug}
+  → LLM altera arquivos direto
+  → watch-project-state.ps1 commita automaticamente
+
+Final da sessão
+  → end-session mergeia sessao/{slug} → main
+  → GitHub Action sync → Notion
+```
+
+### Comandos da Skill
+
+| Comando | Ação |
+|---------|------|
+| `@init-environment` | Verifica git, repo, Python, Notion API |
+| `@start-session` | Cria branch de sessão + inicia watcher |
+| `@end-session` | Merge + push + sync |
+| `@sync-notion` | Sobe alterações locais → Notion |
+| `@pull-notion` | Puxa alterações do Notion → local |
+| `@generate-report` | Gera resumo diário do projeto |
+
+---
+
 ## Dependency Layers
 
 Public install paths and source extras are defined in `pyproject.toml`.

@@ -1,0 +1,47 @@
+projeto: "Mar da Elétrica: AI STEM Tutor"
+slug: ai-stem-tutor
+perfil: Frota
+area: IA
+status: "Em andamento"
+objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
+repositorio_codigo: "frotaluiza/STEM-TUTOR"
+
+caminho:
+  - fase: "Pesquisa"
+    descricao: "Referências, artigos, papers. Alimentar Fontes Projetos."
+    fontes: []
+  - fase: "Arquitetura"
+    descricao: "Documentar decisões técnicas em arquitetura/"
+    fontes: []
+  - fase: "Implementação"
+    descricao: "Codar seguindo a arquitetura definida"
+    fontes: []
+  - fase: "Testes"
+    descricao: "Testes unitários + Render-first Verification + Documentação"
+    fontes: []
+
+decisoes_acumuladas:
+  - contexto: "Editor de blocos estilo Notion para anotações conectadas com agente"
+    escolha: "Implementar como nova surface acessível pelo menu lateral (/noteblocks)"
+    stack: "Slate.js, xterm.js, FastAPI + WebSocket, .md + frontmatter"
+  - contexto: "Mini-game 2D estilo Dino Chrome para remediação"
+    escolha: "Canvas 2D puro (HTML5), boneco pixel art monocromático"
+    mecanica: "Frases como obstáculos — ordenadas por pré-requisito (escada Memphis)"
+
+proximos_passos:
+  - descricao: "Implementar NoteBlocks completo com NoteBlocks"
+    prioridade: alta
+  - descricao: "Watcher de pull Notion → Local"
+    prioridade: alta
+  - descricao: "Sistema de perfil Frota no DeepTutor"
+    prioridade: media
+  - descricao: "API estruturada dos project-states"
+    prioridade: media
+
+fontes:
+  videos: 12
+  leituras: 8
+  artigos: 5
+  anotacoes: 3
+
+ultima_atualizacao: 2026-07-14
