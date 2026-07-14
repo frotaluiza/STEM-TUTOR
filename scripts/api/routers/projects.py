@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
@@ -6,6 +7,35 @@ import yaml
 router = APIRouter()
 
 PROJETOS_DIR = Path(__file__).resolve().parents[3] / "Projetos"
+KB_DIR = Path(__file__).resolve().parents[3] / "kb"
+CLASSIFICATION_FILE = KB_DIR / "sessoes" / "classification.json"
+
+
+def _session_counts() -> dict[str, int]:
+    """Return {slug: count} from classification.json, with fallback to opencode DB."""
+    counts: dict[str, int] = {}
+
+    # Try classification.json first
+    if CLASSIFICATION_FILE.exists():
+        raw = json.loads(CLASSIFICATION_FILE.read_text(encoding="utf-8-sig"))
+        for info in raw.get("classification", {}).values():
+            slug = info.get("project_slug", "")
+            if slug:
+                counts[slug] = counts.get(slug, 0) + 1
+
+    # Fallback: query opencode DB
+    if not counts:
+        import sqlite3
+        op_db = Path.home() / ".local" / "share" / "opencode" / "opencode.db"
+        if op_db.exists():
+            conn = sqlite3.connect(str(op_db))
+            rows = conn.execute(
+                "SELECT s.directory, COUNT(*) FROM session s GROUP BY s.directory"
+            ).fetchall()
+            conn.close()
+            counts["ai-stem-tutor"] = sum(r[1] for r in rows if "ai tutor" in (r[0] or "").lower() or "deep" in (r[0] or "").lower())
+
+    return counts
 
 
 def _list_project_dirs():
@@ -44,6 +74,7 @@ def _list_markdown_files(dir_path: Path, subdir: str):
 @router.get("/projects")
 def list_projects():
     projetos = _list_project_dirs()
+    session_counts = _session_counts()
     result = []
     for slug in projetos:
         state = _load_yaml(PROJETOS_DIR / slug / "project-state.yaml")
@@ -54,6 +85,7 @@ def list_projects():
             "status": state.get("status") if state else None,
             "repositorio_codigo": state.get("repositorio_codigo") if state else None,
             "objetivo": state.get("objetivo") if state else None,
+            "session_count": session_counts.get(slug, 0),
         })
     return {"projects": result, "count": len(result)}
 

@@ -7,6 +7,7 @@ export interface ProjectSummary {
   status: string | null;
   repositorio_codigo: string | null;
   objetivo: string | null;
+  session_count?: number;
 }
 
 export interface ProjectState {

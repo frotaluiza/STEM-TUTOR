@@ -124,6 +124,12 @@ export default function ProjectsPage() {
                     {project.status}
                   </span>
                 )}
+                {project.session_count !== undefined && (
+                  <span className="flex items-center gap-1" title="Sessões">
+                    <span>💬</span>
+                    {project.session_count}
+                  </span>
+                )}
                 {project.repositorio_codigo && (
                   <span className="truncate font-mono">
                     {project.repositorio_codigo}
