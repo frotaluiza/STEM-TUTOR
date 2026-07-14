@@ -65,6 +65,26 @@ export async function fetchProjectDatabase(
   return data[database] ?? [];
 }
 
+export interface SessionEntry {
+  slug: string;
+  arquivo: string;
+  projeto: string;
+  origem?: string;
+}
+
+export async function fetchSessions(
+  projeto?: string,
+  origem?: string,
+): Promise<SessionEntry[]> {
+  const params = new URLSearchParams();
+  if (projeto) params.set("projeto", projeto);
+  if (origem) params.set("origem", origem);
+  const qs = params.toString();
+  const res = await apiFetch(`${BASE}/sessions${qs ? `?${qs}` : ""}`);
+  const data = await res.json();
+  return data.sessions ?? [];
+}
+
 export async function fetchProfile(): Promise<Profile> {
   const res = await apiFetch(`${BASE}/profile`);
   return res.json();

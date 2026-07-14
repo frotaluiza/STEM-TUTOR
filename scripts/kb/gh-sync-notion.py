@@ -177,6 +177,9 @@ def extract_preview(text):
 
 
 def session_to_notion_properties(fm, slug, preview, projeto_slug=None):
+    # Read origem from frontmatter, default to github_action for GH sync
+    origem = fm.get('origem', 'github_action')
+
     props = {
         'Sessão': {'title': [{'text': {'content': fm.get('title', slug)[:100]}}]},
         'Chat ID': {'rich_text': [{'text': {'content': slug}}]},
@@ -184,7 +187,7 @@ def session_to_notion_properties(fm, slug, preview, projeto_slug=None):
         'Status': {'status': {'name': 'Concluído'}},
         'Resumo (curto)': {'rich_text': [{'text': {'content': preview[:150]}}]},
         'Título Resumido': {'rich_text': [{'text': {'content': fm.get('title', slug)[:60]}}]},
-        'Origem': {'select': {'name': 'github_action'}},
+        'Origem': {'select': {'name': origem}},
     }
 
     # Link to project

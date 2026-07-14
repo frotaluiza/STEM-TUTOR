@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   fetchProject,
+  fetchSessions,
   type ProjectDetail,
+  type SessionEntry,
 } from "@/lib/projects-api";
 
 const DB_LABELS: Record<string, string> = {
@@ -25,18 +27,34 @@ export default function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sessions, setSessions] = useState<SessionEntry[]>([]);
+  const [showMiniSessions, setShowMiniSessions] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      setProject(await fetchProject(slug));
+      const [proj, sess] = await Promise.all([
+        fetchProject(slug),
+        fetchSessions(slug),
+      ]);
+      setProject(proj);
+      setSessions(sess);
     } catch {
       setError(`Projeto "${slug}" não encontrado.`);
     } finally {
       setLoading(false);
     }
   }, [slug]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  // Filter sessions by origem
+  const filteredSessions = showMiniSessions
+    ? sessions
+    : sessions.filter((s) => s.origem !== "noteblocks");
 
   useEffect(() => {
     void load();
@@ -186,6 +204,55 @@ export default function ProjectDetailPage() {
           <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
             Databases
           </h2>
+
+          {/* Sessões */}
+          <section className="rounded-lg border border-[var(--border)] bg-[var(--card)]">
+            <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+              <div>
+                <h3 className="text-sm font-medium">Sessões</h3>
+                <p className="text-xs text-[var(--muted-foreground)]">
+                  {filteredSessions.length} sessões
+                  {!showMiniSessions && sessions.length > filteredSessions.length &&
+                    ` (${sessions.length - filteredSessions.length} mini-sessões ocultas)`}
+                </p>
+              </div>
+              <label className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
+                <input
+                  type="checkbox"
+                  checked={showMiniSessions}
+                  onChange={(e) => setShowMiniSessions(e.target.checked)}
+                  className="h-3.5 w-3.5 rounded border-[var(--border)]"
+                />
+                Mostrar mini-sessões
+              </label>
+            </div>
+            <div className="divide-y divide-[var(--border)]">
+              {filteredSessions.slice(0, 15).map((s) => (
+                <div key={s.slug} className="flex items-center justify-between px-4 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                      s.origem === "noteblocks" ? "bg-purple-400" : "bg-blue-400"
+                    }`} />
+                    <span className="text-sm font-medium">{s.slug}</span>
+                  </div>
+                  {s.origem && (
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                      s.origem === "noteblocks"
+                        ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
+                        : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                    }`}>
+                      {s.origem}
+                    </span>
+                  )}
+                </div>
+              ))}
+              {filteredSessions.length === 0 && (
+                <div className="px-4 py-6 text-center text-xs text-[var(--muted-foreground)]">
+                  Nenhuma sessão encontrada.
+                </div>
+              )}
+            </div>
+          </section>
 
           {Object.entries(DB_LABELS).map(([key, label]) => {
             const entries = project.fontes[key];
