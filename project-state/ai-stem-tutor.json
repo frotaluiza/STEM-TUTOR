@@ -3,8 +3,8 @@
   "slug": "ai-stem-tutor",
   "created": "2026-07-11T21:11:50Z",
   "last_updated": "2026-07-14T05:55:57Z",
-  "branch": "feature/pm-dashboard-v2",
-  "last_commit": "94e39bb0 fix: live-doc gerado do opencode DB (limpo, sem corrupcao de encoding)",
+  "branch": "main",
+  "last_commit": "ac28b93e Merge branch 'feature/pm-dashboard-v2'",
   "git_log": "94e39bb0 fix: live-doc gerado do opencode DB (limpo, sem corrupcao de encoding)\n35ebae21 fix: encoding project names + auto-select recent project + URL persistence\nc3941025 feat: fork session (opencode --fork) via botao no SessionViewer\n40f6759a fix: live-doc endpoint fallback para opencode docs dir\n6e8c9bbc feat: SessionViewer com aba Live Doc (markdown formatado)\n13a9c416 fix: LevelingModal so para Mastery Path; bg-black opaco\n0c49d0fb feat: NoteBlocks aba Live Doc com visualizador markdown + import\n83ba61e1 fix: React 19 script warning - add suppressHydrationWarning\n88b2b1f3 feat: drag-and-drop para reordenar blocos no NoteEditor\n012c937c feat: MarkdownBlock preview-first estilo Notion (click-to-edit)\n344feb05 fix: InternalGroup nao-funcional -> indicador estatico; toggle showInternals funcional\nb4874ca6 feat: MarkdownBlock type - edit/preview toggle with MarkdownRenderer\n479dd960 fix: restore kb/ + project-state from stash, PM fallback to opencode DB\n3c083ddf fix: resolve merge conflict in learning page - keep main MapView\nd068ade9 fix: replace deleted ProjectMindMap import with UnifiedMindMap",
   "sessions": [
     {
