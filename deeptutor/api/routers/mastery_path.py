@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 import json
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -128,6 +129,55 @@ async def get_progress_map(book_id: str):
         "book_id": book_id,
         "next": learning_policy.next_objective(progress).to_dict(),
         "map": learning_policy.map_summary(progress),
+    }
+
+
+@router.get("/progress/{book_id}/material")
+async def get_progress_material(book_id: str):
+    """Return the source material for this path as rendered markdown.
+
+    Looks for associated markdown files in well-known locations and
+    falls back to generating a structured outline from the modules
+    and knowledge points.
+    """
+    _validate_book_id(book_id)
+    service = get_learning_service()
+    progress = service.get_or_create(book_id)
+
+    material_sections = []
+
+    # 1. Try to find a markdown material file
+    material_paths = [
+        Path(f"data/user/workspace/learning/{book_id}-material.md"),
+        Path(f"data/noteblocks/notes/{book_id}-material.md"),
+        Path(f"data/user/workspace/learning/materials/{book_id}.md"),
+    ]
+    for mp in material_paths:
+        if mp.exists():
+            text = mp.read_text(encoding="utf-8", errors="replace")
+            if text.strip():
+                material_sections.append({
+                    "title": "Material de Estudo",
+                    "content": text[:100000],
+                })
+                break
+
+    # 2. Generate module outline from the progress data
+    if progress.modules:
+        outline_lines = []
+        for mod in sorted(progress.modules, key=lambda m: m.order):
+            outline_lines.append(f"\n## {mod.name}\n")
+            for kp in mod.knowledge_points:
+                outline_lines.append(f"- **{kp.name}** ({kp.type.value})")
+        outline = "\n".join(outline_lines)
+        material_sections.append({
+            "title": "Estrutura do Curso",
+            "content": outline,
+        })
+
+    return {
+        "book_id": book_id,
+        "sections": material_sections,
     }
 
 

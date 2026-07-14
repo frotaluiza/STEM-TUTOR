@@ -250,14 +250,23 @@ export default function MasteryPathPage() {
                 <ModuleMap
                   result={detail}
                   onContinue={() =>
-                    selected && router.push(`/home/${encodeURIComponent(selected)}`)
+                    selected && router.push(
+                      `/noteblocks?session=1&pathId=${encodeURIComponent(selected)}`
+                    )
                   }
+                  onModuleStudy={(moduleId) => {
+                    const encodedPath = encodeURIComponent(selected!);
+                    const encodedModule = encodeURIComponent(moduleId);
+                    router.push(`/noteblocks?session=1&pathId=${encodedPath}&module=${encodedModule}`);
+                  }}
                 />
               ) : (
                 <ConceptGraph
                   result={detail}
                   onNodeClick={(kpId) =>
-                    router.push(`/home/${encodeURIComponent(selected)}?kp=${kpId}`)
+                    router.push(
+                      `/noteblocks?session=1&pathId=${encodeURIComponent(selected!)}&kp=${kpId}`
+                    )
                   }
                 />
               )}

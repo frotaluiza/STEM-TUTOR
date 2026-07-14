@@ -2,10 +2,15 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BookOpen, FileText, Import, Loader2, MessageSquare, Terminal } from "lucide-react";
+import {
+  BookOpen, FileText, GraduationCap, Import, Library, Loader2, MessageSquare, Terminal,
+} from "lucide-react";
 import { NoteEditor } from "./Editor/NoteEditor";
 import { TerminalPane } from "./Terminal/TerminalPane";
 import { LevelingModal } from "./LevelingModal";
+import { TutorChatSidebar } from "./TutorChatSidebar";
+import { ArtefactViewer } from "./ArtefactViewer";
+import { MaterialViewer } from "./MaterialViewer";
 import SessionViewer from "@/components/pm/SessionViewer";
 import type { Note } from "../types";
 
@@ -14,9 +19,11 @@ const MarkdownRenderer = dynamic(() => import("@/components/common/MarkdownRende
 interface NoteBlocksViewProps {
   noteId?: string;
   showLevelingOnMount?: boolean;
+  sessionMode?: boolean;
+  pathId?: string;
 }
 
-type ViewTab = "note" | "terminal" | "live-doc";
+type ViewTab = "note" | "chat" | "artefact" | "material" | "terminal" | "live-doc";
 
 function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
   const [content, setContent] = useState<string | null>(null);
@@ -45,12 +52,9 @@ function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
     if (!content || importing) return;
     setImporting(true);
     try {
-      // Use the built-in browser clipboard API to copy the markdown
-      // Then navigate to the note tab for the user to paste
       await navigator.clipboard.writeText(content);
-      alert("Conteudo copiado! Va na aba Nota e cole (Ctrl+V) como um bloco markdown.");
+      alert("Conteúdo copiado! Vá na aba Nota e cole (Ctrl+V) como um bloco markdown.");
     } catch {
-      // Fallback: create a new note from the session
       const res = await fetch(`/api/v1/pm/sessions/${sessionSlug}/to-note`, { method: "POST" });
       if (res.ok) {
         const data = await res.json();
@@ -80,7 +84,6 @@ function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Toolbar */}
       <div className="flex shrink-0 items-center gap-2 px-4 py-2 border-b border-[#1a1a1a] bg-[#0d0d0d]">
         <span className="text-xs text-gray-500 font-mono">{sessionSlug}.md</span>
         <span className="text-[10px] text-gray-600">{(content?.length || 0).toLocaleString()} bytes</span>
@@ -95,8 +98,6 @@ function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
           {importing ? "Copiando..." : "Importar para nota"}
         </button>
       </div>
-
-      {/* Rendered markdown */}
       <div className="flex-1 overflow-y-auto px-6 py-4">
         <MarkdownRenderer content={content || ""} variant="prose" />
       </div>
@@ -104,13 +105,19 @@ function LiveDocPanel({ sessionSlug }: { sessionSlug: string }) {
   );
 }
 
-export function NoteBlocksView({ noteId: externalNoteId, showLevelingOnMount = false }: NoteBlocksViewProps) {
+export function NoteBlocksView({
+  noteId: externalNoteId,
+  showLevelingOnMount = false,
+  sessionMode = false,
+  pathId,
+}: NoteBlocksViewProps) {
   const [note, setNote] = useState<Note | null>(null);
-  const [activeTab, setActiveTab] = useState<ViewTab>("note");
+  const [activeTab, setActiveTab] = useState<ViewTab>(sessionMode ? "material" : "note");
   const [showLeveling, setShowLeveling] = useState(showLevelingOnMount);
   const [level, setLevel] = useState<string | null>(null);
 
   const hasSession = !!(note?.session);
+  const effectivePathId = pathId || note?.module || undefined;
 
   useEffect(() => {
     if (!externalNoteId) return;
@@ -140,7 +147,18 @@ export function NoteBlocksView({ noteId: externalNoteId, showLevelingOnMount = f
 
   const tabs: { id: ViewTab; label: string; icon: typeof FileText }[] = [
     { id: "note", label: "Nota", icon: FileText },
-    ...(hasSession ? [{ id: "live-doc" as ViewTab, label: "Live Doc", icon: BookOpen }] : []),
+    ...(sessionMode || effectivePathId
+      ? [{ id: "material" as ViewTab, label: "Material", icon: Library }]
+      : []),
+    ...(sessionMode || effectivePathId
+      ? [{ id: "chat" as ViewTab, label: "Tutor", icon: GraduationCap }]
+      : []),
+    ...(sessionMode || effectivePathId
+      ? [{ id: "artefact" as ViewTab, label: "Artefatos", icon: BookOpen }]
+      : []),
+    ...(hasSession
+      ? [{ id: "live-doc" as ViewTab, label: "Live Doc", icon: MessageSquare }]
+      : []),
     { id: "terminal", label: "Terminal", icon: Terminal },
   ];
 
@@ -188,6 +206,9 @@ export function NoteBlocksView({ noteId: externalNoteId, showLevelingOnMount = f
         {/* Content */}
         <div className="flex-1 min-h-0">
           {activeTab === "note" && <NoteEditor noteId={externalNoteId} />}
+          {activeTab === "material" && <MaterialViewer pathId={effectivePathId} />}
+          {activeTab === "chat" && <TutorChatSidebar pathId={effectivePathId} />}
+          {activeTab === "artefact" && <ArtefactViewer sourceId={effectivePathId} />}
           {activeTab === "terminal" && <TerminalPane />}
           {activeTab === "live-doc" && note?.session && <LiveDocPanel sessionSlug={note.session} />}
         </div>

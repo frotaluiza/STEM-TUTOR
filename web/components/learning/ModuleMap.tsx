@@ -113,7 +113,7 @@ export default function ModuleMap({ result, onContinue, onKpClick }: ModuleMapPr
           )}
         </div>
         <div className="mt-1 text-xs text-[var(--primary)]">
-          {t("Continue tutoring in Chat →")}
+          {t("Continue in NoteBlocks →")}
         </div>
       </button>
 
