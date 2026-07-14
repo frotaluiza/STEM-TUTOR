@@ -43,6 +43,101 @@ def _read_json(path):
         return None
 
 
+PROJECT_KEYWORDS: dict[str, tuple[str, str]] = {
+    "ai-stem-tutor": ("AI STEM Tutor — DeepTutor", [
+        "ai tutor", "deeptutor", "deep tutor", "stem tutor", "ai-stem", "deep t",
+        "noteblocks", "mind map", "mermaid", "project manager", "unified mind",
+        "rode o front", "rode o back", "rodar front", "kb pipeline",
+        "mastery path", "mastery", "knowledge base", "memphis", "bkt",
+        "learning space", "space", "conceitual", "subagente",
+    ]),
+    "tcc": ("TCC — Ingrid (MD/Desalination)", [
+        "tcc", "ingrid", "desalination", "md/", "membrana",
+        "flux", "permeate", "vmd", "agmd", "reverse osmosis",
+        "tese", "thesis", "disserta", "poli slides",
+    ]),
+    "notion-infra": ("Notion Infrastructure", [
+        "notion", "workflows", "obsidian", "composio",
+        "session agent", "escrever entrada", "@session",
+    ]),
+    "luc-repport": ("Luc-Repport", [
+        "luc-repport", "luc rep", "luc appendix", "luc data",
+    ]),
+    "pinns": ("PINNs", [
+        "pinns", "physics-informed", "pinn",
+    ]),
+    "plex": ("Plex / Media", [
+        "plex", "media server",
+    ]),
+    "personal": ("Personal / PC", [
+        "personal", "pc ", "windows", "desativar",
+    ]),
+}
+
+
+def _classify_session(title: str, agent: str, directory: str) -> tuple[str, str]:
+    """Classify a session into a project based on title, agent, and directory."""
+    text = f"{title} {agent}".lower()
+    dir_lower = directory.lower()
+
+    for p_slug, (p_name, keywords) in PROJECT_KEYWORDS.items():
+        for kw in keywords:
+            if kw in text or kw in dir_lower:
+                return (p_slug, p_name)
+
+    # Agent-based fallbacks
+    if agent == "session":
+        return ("notion-infra", "Notion Infrastructure")
+
+    return ("opencode-explore", "OpenCode Exploration")
+
+
+def _get_classification() -> dict | None:
+    """Get classification, with fallback to opencode DB query."""
+    cached = _read_json(CLASSIFICATION_FILE)
+    if cached:
+        return cached
+
+    # Build from opencode DB
+    rows = _query_opencode("SELECT slug, title, agent, model, cost, directory, path, "
+                           "datetime(time_created / 1000, 'unixepoch') as date_created "
+                           "FROM session WHERE slug IS NOT NULL AND slug != '' "
+                           "ORDER BY time_created DESC")
+    if not rows:
+        return None
+
+    result = {}
+    for r in rows:
+        slug = r["slug"]
+        if slug == "empty":
+            continue
+
+        proj_slug, proj_name = _classify_session(
+            r["title"] or slug, r["agent"] or "", r["directory"] or ""
+        )
+
+        model_raw = r["model"]
+        model_id = ""
+        if model_raw:
+            try:
+                mo = json.loads(model_raw) if isinstance(model_raw, str) else model_raw
+                model_id = mo.get("modelID", mo.get("id", ""))
+            except Exception:
+                model_id = str(model_raw)[:50]
+
+        result[slug] = {
+            "project_slug": proj_slug,
+            "project_name": proj_name,
+            "title": r["title"] or slug,
+            "date": (r["date_created"] or "")[:10],
+            "agent": r["agent"] or "",
+            "model": model_id,
+            "cost": round(r["cost"] or 0, 6),
+        }
+
+    return {"classification": result}
+
+
 def _tail_file(path, n=50):
     if not path.exists():
         return []
@@ -128,7 +223,7 @@ async def pm_logs(tail: int = 50):
 @router.get("/api/v1/pm/projects")
 async def pm_projects():
     """All projects with session counts and cost."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     if not classification:
         return {"projects": [], "total_sessions": 0, "total_cost": 0.0}
 
@@ -150,7 +245,7 @@ async def pm_projects():
 @router.get("/api/v1/pm/sessions/recent")
 async def pm_sessions_recent(limit: int = 20):
     """Most recent sessions across all projects."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     if not classification:
         return {"sessions": []}
 
@@ -192,7 +287,7 @@ async def pm_health():
 @router.get("/api/v1/pm/stats")
 async def pm_stats():
     """Aggregate statistics."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     state = _read_json(STATE_JSON)
 
     total_sessions = len(classification.get("classification", {})) if classification else 0
@@ -221,7 +316,7 @@ async def pm_stats():
 @router.get("/api/v1/pm/projects/{slug}")
 async def pm_project_detail(slug: str):
     """Detailed report for a specific project by slug."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     state_file = PROJECT_DIR / "project-state" / f"{slug}.json"
     state = _read_json(state_file)
 
@@ -302,7 +397,7 @@ async def pm_project_detail(slug: str):
 @router.get("/api/v1/pm/projects/{slug}/sessions")
 async def pm_project_sessions(slug: str, limit: int = 50, offset: int = 0):
     """Paginated sessions for a specific project."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     if not classification:
         return {"sessions": [], "total": 0, "offset": offset, "limit": limit}
 
@@ -334,7 +429,7 @@ async def pm_project_sessions(slug: str, limit: int = 50, offset: int = 0):
 
 def _resolve_session_file(slug: str) -> tuple[dict, Path, str]:
     """Resolve a session slug to its classification info, file path, and project slug."""
-    classification = _read_json(CLASSIFICATION_FILE)
+    classification = _get_classification()
     if not classification:
         raise HTTPException(status_code=404, detail="No classification data")
 
