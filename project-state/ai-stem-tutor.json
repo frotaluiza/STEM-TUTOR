@@ -80,7 +80,15 @@
         "priority": "Media"
       },
       {
-        "task": "Integrar Wolfram Alpha MCP server + ferramentas no chat",
+        "task": "Visualizacao de branches estilo GitHub network no PM",
+        "priority": "Media"
+      },
+      {
+        "task": "Wolfram Alpha MCP + ferramentas",
+        "priority": "Baixa"
+      },
+      {
+        "task": "Fix: filtro databases (humano vs agente) nas sessoes",
         "priority": "Baixa"
       }
     ]
