@@ -2,11 +2,11 @@
   "project": "AI STEM Tutor",
   "slug": "ai-stem-tutor",
   "created": "2026-07-11T21:11:50Z",
-  "last_updated": "2026-07-14T15:30:00Z",
-  "branch": "ps/mindmap-v2",
+  "last_updated": "2026-07-14T23:59:00Z",
+  "branch": "main",
   "repo_branch": "ps/mindmap-v2",
   "session_slug": "lucky-wizard",
-  "last_commit": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap",
+  "last_commit": "6d1783e3 feat: conflict analysis between branches + remote branches in selector; npx tsc --noEmit 2>&1 | tail -5",
   "branching_strategy": {
     "model": "session → project_state_branch → repo_branch",
     "description": "Cada sessão opencode equivale a uma branch do project state. Dentro dela, pode-se criar uma branch do repositório do projeto. Decisões vão para a branch onde a sessão ativou. Project state mergeia para main ao final da sessão.",
@@ -16,7 +16,7 @@
       "feature/source-providers-system"
     ]
   },
-  "git_log": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap\nce4028be Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n220ad923 feat: tarefas (tasks) system — backend API + PM panel + AGENTS.md guideline\n1b6f80b2 Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n57aa68c3 docs: atualiza project-state com decisoes da sessao e proximos passos",
+  "git_log": "6d1783e3 feat: conflict analysis between branches + remote branches in selector; npx tsc --noEmit 2>&1 | tail -5\nc8ae0bdd fix: todos object rendering in PMReportSection\n89ee6f03 Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\na8957ab6 docs: encerramento de sessao â€” tarefas pendentes + artefatos\n161b04ac chore: start-dev scripts for persistent frontend\na2f6844b Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n226cf4bb feat: artefatos novo formato + tarefas-main.json\n57d30c46 docs: project state update â€” branching strategy + Source Providers System (lucky-wizard)\nff458987 docs: adiciona visualizacao worktree no PM como tarefa futura\n1f69a3c4 docs: worktree setup script + documentacao multi-branch\na4c98923 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap\n59f6534b docs: add GitHub network graph visualization task to roadmap\n0f3eb750 feat: connect branch selector to mind map + space endpoint filtering\n47ee0b11 feat: branch selector + sync status + fix space endpoint + sessoes ativas/encerradas\nce4028be Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR",
   "sessions": [
     {
       "id": "lucky-wizard",
@@ -95,36 +95,31 @@
     "completed": [
       "PM Dashboard v2 com tabelas sort/filter e dropdown de projetos",
       "SessionViewer estilo chat com toggles (colapsar/expandir)",
-      "Filtro automatico de processamento interno (214/654 msg ocultas)",
+      "Filtro automatico de processamento interno",
       "Terminal como aba integrada (PowerShell via WebSocket)",
       "NoteBlocks multi-modal com abas (Nota + Live Doc + Terminal)",
       "MarkdownBlock estilo Notion (preview-first, click-to-edit)",
       "Drag-and-drop para reordenar blocos no NoteEditor",
-      "Live Doc com markdown renderizado e botao Importar",
-      "Fork de sessoes (opencode --fork) via botao no SessionViewer",
+      "Live Doc com markdown renderizado",
+      "Fork de sessoes (opencode --fork)",
       "Restauracao do classification.json + project-state historico",
-      "Fallback do backend para opencode DB (sem dependencia de classification.json)",
-      "Branching Strategy documentada: sessao → ps branch → repo branch"
+      "Branch selector + sync status no PM",
+      "Tarefas (tasks system) com CRUD via API",
+      "Analise de conflitos entre branches (merge-tree)",
+      "Artefatos novo formato (tipo--data--slug--descricao)",
+      "Auto-push hook + start-dev.js frontend persistente"
     ],
     "pending": [
       {
-        "task": "Source Providers System — implementar modulo deeptutor/services/sources/ + providers + database + API",
+        "task": "Mind Map como Project Space visual (KBs, notas, learning)",
         "priority": "Alta"
       },
       {
-        "task": "Mar da Eletrica — criar como projeto no sistema de fontes com mastery paths (futuro)",
-        "priority": "Alta"
-      },
-      {
-        "task": "Mind Map como Project Space visual (KBs, notas, learning, multi-projeto)",
+        "task": "SQLite storage unificado",
         "priority": "Media"
       },
       {
-        "task": "SQLite storage unificado (migrar NoteBlocks de .md para SQLite)",
-        "priority": "Media"
-      },
-      {
-        "task": "Catalogar ferramentas STEM das sessoes de pesquisa",
+        "task": "Monorepo migration (Projetos/ como git root)",
         "priority": "Media"
       },
       {
@@ -132,7 +127,11 @@
         "priority": "Media"
       },
       {
-        "task": "Wolfram Alpha MCP + ferramentas",
+        "task": "Catalogar ferramentas STEM das sessoes de pesquisa",
+        "priority": "Media"
+      },
+      {
+        "task": "Wolfram Alpha MCP + ferramentas no chat",
         "priority": "Baixa"
       },
       {
