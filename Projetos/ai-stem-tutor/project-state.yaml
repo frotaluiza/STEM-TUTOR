@@ -1,71 +1,80 @@
-projeto: "Mar da Elétrica: AI STEM Tutor"
+﻿projeto: "Mar da ElÃ©trica: AI STEM Tutor"
 slug: ai-stem-tutor
 perfil: Frota
 area: IA
 status: "Em andamento"
-objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
+objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo bÃ¡sico e profissional de engenharia elÃ©trica da UFRJ"
 repositorio_codigo: "frotaluiza/STEM-TUTOR"
-branch_atual: "ps/mindmap-v2"
+branch_atual: "main"
 ultima_sessao:
-  slug: continuacao-sessao
-  titulo: "Project Orchestrator — implementação completa + merge"
+  slug: encerramento-sessao
+  titulo: "Finalização — Project Orchestrator merge + tarefas pendentes"
   data: 2026-07-14
-  branch: "feature/continuacao-sessao"
-  decisoes: 10
+  branch: "main"
+  decisoes: 13
+  artefatos:
+    - arquitetura/project-orchestrator.md
+    - arquitetura/branch-hierarchy.md
+    - docs/branch-hierarchy.md
+    - tarefas/pipeline-agent.md
+    - tarefas/chatblock-noteblocks.md
+    - tarefas/popular-projetos.md
+    - tarefas/relatorio-diario.md
+    - tarefas/visualizar-worktree.md
 
 caminho:
   - fase: "Pesquisa"
-    descricao: "Referências, artigos, papers. Alimentar Fontes Projetos."
+    descricao: "ReferÃªncias, artigos, papers. Alimentar Fontes Projetos."
     fontes: []
   - fase: "Arquitetura"
-    descricao: "Documentar decisões técnicas em arquitetura/"
+    descricao: "Documentar decisÃµes tÃ©cnicas em arquitetura/"
     fontes: []
-  - fase: "Implementação"
+  - fase: "ImplementaÃ§Ã£o"
     descricao: "Codar seguindo a arquitetura definida"
     fontes: []
   - fase: "Testes"
-    descricao: "Testes unitários + Render-first Verification + Documentação"
+    descricao: "Testes unitÃ¡rios + Render-first Verification + DocumentaÃ§Ã£o"
     fontes: []
 
 decisoes_acumuladas:
-  - contexto: "Editor de blocos estilo Notion para anotações conectadas com agente"
-    escolha: "Implementar como nova surface acessível pelo menu lateral (/noteblocks)"
+  - contexto: "Editor de blocos estilo Notion para anotaÃ§Ãµes conectadas com agente"
+    escolha: "Implementar como nova surface acessÃ­vel pelo menu lateral (/noteblocks)"
     stack: "Slate.js, xterm.js, FastAPI + WebSocket, .md + frontmatter"
-  - contexto: "Mini-game 2D estilo Dino Chrome para remediação"
-    escolha: "Canvas 2D puro (HTML5), boneco pixel art monocromático"
-    mecanica: "Frases como obstáculos — ordenadas por pré-requisito (escada Memphis)"
-  - contexto: "Centralizar todos os project-spaces em um repositório único Projetos/"
+  - contexto: "Mini-game 2D estilo Dino Chrome para remediaÃ§Ã£o"
+    escolha: "Canvas 2D puro (HTML5), boneco pixel art monocromÃ¡tico"
+    mecanica: "Frases como obstÃ¡culos â€” ordenadas por prÃ©-requisito (escada Memphis)"
+  - contexto: "Centralizar todos os project-spaces em um repositÃ³rio Ãºnico Projetos/"
     escolha: "Estrutura Projetos/{slug}/ com subpastas padronizadas (fontes, arquitetura, tarefas, etc.)"
     stack: "YAML + Markdown + git"
     data: 2026-07-14
-  - contexto: "Sincronização bidirecional com Notion"
-    escolha: "GitHub Action com push (commit → Notion) + pull (schedule 30min Notion → commit)"
+  - contexto: "SincronizaÃ§Ã£o bidirecional com Notion"
+    escolha: "GitHub Action com push (commit â†’ Notion) + pull (schedule 30min Notion â†’ commit)"
     stack: "GitHub Actions + Notion API + Python"
     data: 2026-07-14
   - contexto: "API REST para servir project-states ao DeepTutor"
     escolha: "FastAPI em scripts/api/ rodando em localhost:8080 com auto-start via Task Scheduler"
     stack: "FastAPI, Uvicorn, PyYAML"
     data: 2026-07-14
-  - contexto: "Hierarquia de branches entre código e project-state"
-    escolha: "sessao/{slug} → ps/{feature} (project-space) + feature/{feature} (código), mergeados juntos"
+  - contexto: "Hierarquia de branches entre cÃ³digo e project-state"
+    escolha: "sessao/{slug} â†’ ps/{feature} (project-space) + feature/{feature} (cÃ³digo), mergeados juntos"
     data: 2026-07-14
-  - contexto: "Mini-sessões no NoteBlocks (chat inline)"
-    escolha: "Novo tipo de bloco Slate.js com origem: noteblocks, filtrável no PM"
+  - contexto: "Mini-sessÃµes no NoteBlocks (chat inline)"
+    escolha: "Novo tipo de bloco Slate.js com origem: noteblocks, filtrÃ¡vel no PM"
     data: 2026-07-14
-  - contexto: "Filtro de sessões por origem no PM"
-    escolha: "API /sessions?origem= + checkbox 'Mostrar mini-sessões' no frontend"
+  - contexto: "Filtro de sessÃµes por origem no PM"
+    escolha: "API /sessions?origem= + checkbox 'Mostrar mini-sessÃµes' no frontend"
     data: 2026-07-14
 
 proximos_passos:
-  - descricao: "Pipeline agent robusto — watcher contínuo Python para automatizar branch/merge/sync sem depender do LLM"
+  - descricao: "Pipeline agent robusto â€” watcher contÃ­nuo Python para automatizar branch/merge/sync sem depender do LLM"
     prioridade: alta
-  - descricao: "ChatBlock no NoteBlocks — mini-sessão opencode com origem: noteblocks"
+  - descricao: "ChatBlock no NoteBlocks â€” mini-sessÃ£o opencode com origem: noteblocks"
     prioridade: media
   - descricao: "Popular Projetos/ com dados reais dos outros projetos (TCC, bateria, PC)"
     prioridade: media
-  - descricao: "Visualização de worktree no PM — acompanhar branches em tempo real pelo DeepTutor"
+  - descricao: "VisualizaÃ§Ã£o de worktree no PM â€” acompanhar branches em tempo real pelo DeepTutor"
     prioridade: media
-  - descricao: "Relatório diário automático — resumo das alterações do dia no project-state e código"
+  - descricao: "RelatÃ³rio diÃ¡rio automÃ¡tico â€” resumo das alteraÃ§Ãµes do dia no project-state e cÃ³digo"
     prioridade: baixa
 
 mastery_paths:
@@ -73,12 +82,12 @@ mastery_paths:
     topicos: 12
     concluidos: 5
     status: "Em andamento"
-    descricao: "Conceitos básicos de engenharia elétrica"
-  - nome: "Circuitos Elétricos"
+    descricao: "Conceitos bÃ¡sicos de engenharia elÃ©trica"
+  - nome: "Circuitos ElÃ©tricos"
     topicos: 8
     concluidos: 2
     status: "Em andamento"
-    descricao: "Análise de circuitos CC e CA"
+    descricao: "AnÃ¡lise de circuitos CC e CA"
 
 fontes:
   videos: 12
