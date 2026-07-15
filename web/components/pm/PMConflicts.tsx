@@ -29,6 +29,22 @@ export default function PMConflicts({ branch, onSelect }: { branch?: string; onS
   const [loading, setLoading] = useState(false);
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("main");
+  const [branches, setBranches] = useState<{ name: string; current: boolean }[]>([]);
+
+  // Fetch branches from API
+  useEffect(() => {
+    fetch("/api/v1/pm/branches")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d?.branches) {
+          setBranches(d.branches);
+          // Auto-select current branch if available
+          const current = d.current;
+          if (current && current !== "main") setSource(current);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const analyze = useCallback(async () => {
     if (!source) return;
@@ -53,11 +69,11 @@ export default function PMConflicts({ branch, onSelect }: { branch?: string; onS
           className="flex-1 bg-transparent text-[12px] text-[var(--foreground)] border border-[var(--border)] rounded px-2 py-1 outline-none"
         >
           <option value="">Selecionar branch...</option>
-          {branch && <option value={branch}>{branch} (atual)</option>}
-          <option value="feature/source-providers-system">feature/source-providers-system</option>
-          <option value="feature/session-from-module">feature/session-from-module</option>
-          <option value="ps/mindmap-v2">ps/mindmap-v2</option>
-          <option value="main">main</option>
+          {branches.map((b) => (
+            <option key={b.name} value={b.name}>
+              {b.name} {b.current ? "(atual)" : ""}
+            </option>
+          ))}
         </select>
         <span className="text-[11px] text-[var(--muted-foreground)]">→</span>
         <select
@@ -65,10 +81,11 @@ export default function PMConflicts({ branch, onSelect }: { branch?: string; onS
           onChange={(e) => setTarget(e.target.value)}
           className="flex-1 bg-transparent text-[12px] text-[var(--foreground)] border border-[var(--border)] rounded px-2 py-1 outline-none"
         >
-          <option value="main">main</option>
-          <option value="feature/source-providers-system">feature/source-providers-system</option>
-          <option value="feature/session-from-module">feature/session-from-module</option>
-          <option value="ps/mindmap-v2">ps/mindmap-v2</option>
+          {branches.map((b) => (
+            <option key={b.name} value={b.name}>
+              {b.name}
+            </option>
+          ))}
         </select>
         <button
           type="button"
