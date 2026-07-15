@@ -6,6 +6,7 @@ import type { ProjectDetail } from "./types";
 interface PMReportSectionProps {
   project: ProjectDetail | null;
   loading: boolean;
+  branchData?: any;
 }
 
 export default function PMReportSection({ project, loading }: PMReportSectionProps) {

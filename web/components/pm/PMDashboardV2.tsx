@@ -48,8 +48,7 @@ export default function PMDashboardV2() {
   const [activeView, setActiveView] = useState<"dashboard" | "mindmap">("dashboard");
   const [currentBranch, setCurrentBranch] = useState<string | null>(() => searchParams.get("branch") || null);
   const [showEncerradas, setShowEncerradas] = useState(false);
-
-  // Auto-select: URL param > most recent > first
+    // Auto-select: URL param > most recent > first
   const defaultSlug = useMemo(() => {
     if (selectedSlug) return selectedSlug;
     const fromUrl = searchParams.get("project");
@@ -69,7 +68,7 @@ export default function PMDashboardV2() {
   useEffect(() => {
     const branch = selectedSlug || defaultSlug || "main";
     if (!branch) return;
-    fetch(`/api/v1/pm/tarefas?branch=${branch}`)
+    fetch(`/api/v1/pm/tarefas?branch=${currentBranch || "main"}`)
       .then((r) => r.ok ? r.json() : null)
       .then((d) => { if (d) setTarefas(d.tarefas || []); })
       .catch(() => {});
@@ -78,12 +77,11 @@ export default function PMDashboardV2() {
   const addTarefa = useCallback(async () => {
     const text = novoTarefa.trim();
     if (!text) return;
-    const branch = selectedSlug || defaultSlug || "main";
     try {
       const res = await fetch("/api/v1/pm/tarefas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, branch }),
+        body: JSON.stringify({ text, branch: currentBranch || "main" }),
       });
       if (res.ok) {
         const task = await res.json();
@@ -95,21 +93,19 @@ export default function PMDashboardV2() {
 
   const toggleTarefa = useCallback(async (id: string, feito: boolean) => {
     setTarefas((prev) => prev.map((t) => (t.id === id ? { ...t, feito: !feito } : t)));
-    const branch = selectedSlug || defaultSlug || "main";
     try {
       await fetch(`/api/v1/pm/tarefas/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ feito: !feito, branch }),
+        body: JSON.stringify({ feito: !feito, branch: currentBranch || "main" }),
       });
     } catch {}
   }, [selectedSlug, defaultSlug]);
 
   const deleteTarefa = useCallback(async (id: string) => {
     setTarefas((prev) => prev.filter((t) => t.id !== id));
-    const branch = selectedSlug || defaultSlug || "main";
     try {
-      await fetch(`/api/v1/pm/tarefas/${id}?branch=${branch}`, { method: "DELETE" });
+      await fetch(`/api/v1/pm/tarefas/${id}?branch=${currentBranch || "main"}`, { method: "DELETE" });
     } catch {}
   }, [selectedSlug, defaultSlug]);
 
@@ -121,6 +117,18 @@ export default function PMDashboardV2() {
       setInitialized(true);
     }
   }, [defaultSlug, selectedSlug, selectProject, initialized]);
+  const [branchSpaceData, setBranchSpaceData] = useState<any>(null);
+
+  // Fetch branch-specific data when branch changes
+  useEffect(() => {
+    const slug = selectedSlug || defaultSlug;
+    if (!slug || !currentBranch) return;
+    fetch(`/api/v1/pm/space/${slug}?branch=${encodeURIComponent(currentBranch)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (d) setBranchSpaceData(d); })
+      .catch(() => {});
+  }, [selectedSlug, defaultSlug, currentBranch]);
+
 
   const handleSessionClick = useCallback(
     (row: SessionBrief) => {
@@ -378,7 +386,7 @@ export default function PMDashboardV2() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Left: Report + MindMap preview */}
           <div className="lg:col-span-1 space-y-5">
-            <PMReportSection project={selectedProject} loading={loading} />
+            <PMReportSection project={selectedProject} loading={loading} branchData={branchSpaceData} />
           </div>
 
           {/* Right: Tables */}
