@@ -1238,22 +1238,22 @@ async def pm_conflicts(source: str = "main", target: str | None = None):
     current_file = ""
     in_conflict = False
 
-    for line in lines:
-        # Detect changed files (not conflicted)
-        if line.startswith("CHANGED:") or line.startswith("CONFLICT"):
-            in_conflict = True
+    # Parse merge-tree output for real conflicts
+    import re
+    conflict_pattern = re.compile(r"^CONFLICT\s+\(content\):\s+Merge conflict in (.+)$")
 
-        # merge-tree format: "CONFLICT (content): Merge conflict in file.txt"
-        if "CONFLICT" in line and "in " in line:
-            fname = line.split("in ")[-1].strip()
+    for line in lines:
+        m = conflict_pattern.match(line)
+        if m:
+            fname = m.group(1).strip()
             conflicts.append({
                 "file": fname,
                 "type": "content",
                 "description": line.strip(),
             })
             current_file = fname
+            continue
 
-        # Auto-mergeable changes
         if line.startswith("CHANGED:"):
             parts = line.split()
             if len(parts) >= 2:
@@ -1261,7 +1261,7 @@ async def pm_conflicts(source: str = "main", target: str | None = None):
                 conflicts.append({
                     "file": fname,
                     "type": "auto-merge",
-                    "description": f"Será mergeado automaticamente",
+                    "description": "Será mergeado automaticamente",
                 })
 
     # Get ahead/behind info
