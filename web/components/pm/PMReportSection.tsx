@@ -107,10 +107,10 @@ export default function PMReportSection({ project, loading }: PMReportSectionPro
             Próximos passos ({project.todos.length})
           </div>
           <div className="space-y-1">
-            {project.todos.map((t, i) => (
+            {project.todos.map((t: string | Record<string, unknown>, i: number) => (
               <div key={i} className="flex items-start gap-2 text-[11.5px] text-[var(--foreground)]/85">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                {t}
+                {typeof t === "string" ? t : String(t.task || t.text || t.descricao || "")}
               </div>
             ))}
           </div>

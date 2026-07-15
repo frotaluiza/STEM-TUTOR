@@ -52,7 +52,7 @@ export type ProjectDetail = {
   last_commit: string | null;
   last_updated: string | null;
   decisions: Decision[];
-  todos: string[];
+  todos: (string | { task?: string; text?: string; descricao?: string })[];
   recent_sessions: SessionBrief[];
   session_files_available: number;
 };
