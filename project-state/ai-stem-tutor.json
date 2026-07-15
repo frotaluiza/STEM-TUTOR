@@ -139,5 +139,23 @@
         "priority": "Baixa"
       }
     ]
+  },
+  "capabilities": {
+    "pm_dashboard_v2": true,
+    "branch_selector": true,
+    "sync_status": true,
+    "tarefas": true,
+    "conflict_analysis": true,
+    "mind_map": true,
+    "session_viewer": true,
+    "live_doc": true,
+    "terminal": true,
+    "fork_session": true,
+    "noteblocks_multi": true,
+    "markdown_block": true,
+    "drag_drop_blocks": true,
+    "projects_page": true,
+    "session_branch_map": false,
+    "wolfram_alpha": false
   }
 }
