@@ -1112,6 +1112,7 @@ async def pm_project_space(slug: str, branch: str | None = None):
             "modules": len(learning),
             "session_stats": session_stats,
             "features_count": len((ps_data or {}).get("features", [])),
+        "capabilities": (ps_data or {}).get("capabilities", {}),
         },
     }
 
