@@ -17,8 +17,9 @@ import {
 const API_BASE_URL =
   process.env.DEEPTUTOR_API_BASE_URL ?? "http://localhost:8001";
 
-// Project Orchestrator API — runs separately on port 8080
-const ORCHESTRATOR_BASE_URL = "http://127.0.0.1:8080";
+// Project Orchestrator API — runs separately. Override via env var for multi-branch testing.
+const ORCHESTRATOR_BASE_URL =
+  process.env.ORCHESTRATOR_API_URL ?? "http://127.0.0.1:8080";
 
 const AUTH_ENABLED = parseAuthEnabled(process.env.DEEPTUTOR_AUTH_ENABLED);
 

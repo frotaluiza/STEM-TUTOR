@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { useAppShell } from "@/context/AppShellContext";
+import { useActiveProject } from "@/context/ProjectContext";
 import {
   BookOpen,
   BookText,

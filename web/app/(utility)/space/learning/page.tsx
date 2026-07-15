@@ -250,6 +250,7 @@ export default function MasteryPathPage() {
                 <ModuleMap
                   result={detail}
                   onContinue={() =>
+<<<<<<< Updated upstream
                     selected && router.push(
                       `/noteblocks?session=1&pathId=${encodeURIComponent(selected)}`
                     )
@@ -258,16 +259,30 @@ export default function MasteryPathPage() {
                     const encodedPath = encodeURIComponent(selected!);
                     const encodedModule = encodeURIComponent(moduleId);
                     router.push(`/noteblocks?session=1&pathId=${encodedPath}&module=${encodedModule}`);
+=======
+                    selected && router.push(`/noteblocks?session=1&pathId=${encodeURIComponent(selected)}`)
+                  }
+                  onModuleStudy={(moduleId, moduleName) => {
+                    if (!selected) return;
+                    router.push(`/noteblocks?session=1&pathId=${encodeURIComponent(selected)}&module=${encodeURIComponent(moduleId)}`);
+>>>>>>> Stashed changes
                   }}
                 />
               ) : (
                 <ConceptGraph
                   result={detail}
+<<<<<<< Updated upstream
                   onNodeClick={(kpId) =>
                     router.push(
                       `/noteblocks?session=1&pathId=${encodeURIComponent(selected!)}&kp=${kpId}`
                     )
                   }
+=======
+                  onNodeClick={(kpId) => {
+                    if (!selected) return;
+                    router.push(`/noteblocks?session=1&pathId=${encodeURIComponent(selected)}&kp=${kpId}`);
+                  }}
+>>>>>>> Stashed changes
                 />
               )}
             </div>

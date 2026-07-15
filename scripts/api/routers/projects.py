@@ -1,18 +1,18 @@
-from pathlib import Path
+﻿from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 import yaml
+
+from ..utils import resolve_projetos_dir, current_branch, PROJETOS_DIR, REPO_DIR
 
 router = APIRouter()
 
-PROJETOS_DIR = Path(__file__).resolve().parents[3] / "Projetos"
 
-
-def _list_project_dirs():
-    if not PROJETOS_DIR.exists():
+def _list_project_dirs(projetos_dir: Path):
+    if not projetos_dir.exists():
         return []
     return sorted(
-        d.name for d in PROJETOS_DIR.iterdir()
+        d.name for d in projetos_dir.iterdir()
         if d.is_dir() and (d / "project-state.yaml").exists()
     )
 
@@ -35,18 +35,19 @@ def _list_markdown_files(dir_path: Path, subdir: str):
             files.append({
                 "nome": f.stem,
                 "arquivo": f.name,
-                "caminho": str(f.relative_to(PROJETOS_DIR)),
+                "caminho": str(f.relative_to(dir_path.parent / "Projetos")),
                 "conteudo": content,
             })
     return files
 
 
 @router.get("/projects")
-def list_projects():
-    projetos = _list_project_dirs()
+def list_projects(branch: str = Query(None, description="Branch do worktree (ex: main)")):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    projetos = _list_project_dirs(projetos_dir)
     result = []
     for slug in projetos:
-        state = _load_yaml(PROJETOS_DIR / slug / "project-state.yaml")
+        state = _load_yaml(projetos_dir / slug / "project-state.yaml")
         result.append({
             "slug": slug,
             "nome": state.get("projeto", slug) if state else slug,
@@ -55,25 +56,24 @@ def list_projects():
             "repositorio_codigo": state.get("repositorio_codigo") if state else None,
             "objetivo": state.get("objetivo") if state else None,
         })
-    return {"projects": result, "count": len(result)}
+    return {"projects": result, "count": len(result), "branch": real_branch}
 
 
 @router.get("/projects/{slug}")
-def get_project(slug: str):
-    project_dir = PROJETOS_DIR / slug
+def get_project(slug: str, branch: str = Query(None)):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    project_dir = projetos_dir / slug
     if not project_dir.exists() or not (project_dir / "project-state.yaml").exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
 
     state = _load_yaml(project_dir / "project-state.yaml")
     if not state:
         raise HTTPException(status_code=500, detail=f"Erro ao ler project-state de '{slug}'")
 
-    # Fontes (diretórios dentro do projeto)
     fontes = {}
     for sub in ["fontes", "arquitetura", "tarefas", "rotinas", "frameworks", "ferramentas", "docs", "sessoes", "conversas"]:
         fontes[sub] = _list_markdown_files(project_dir, sub)
 
-    # Relatórios
     relatorios = {}
     rel_dir = project_dir / "relatorios"
     if rel_dir.exists():
@@ -91,43 +91,72 @@ def get_project(slug: str):
 
 
 @router.get("/projects/{slug}/state")
-def get_project_state(slug: str):
-    project_dir = PROJETOS_DIR / slug
+def get_project_state(slug: str, branch: str = Query(None)):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
     state = _load_yaml(project_dir / "project-state.yaml")
     if not state:
-        raise HTTPException(status_code=404, detail="project-state.yaml não encontrado")
-    return state
+        raise HTTPException(status_code=404, detail="project-state.yaml nÃ£o encontrado")
+    return {**state, "branch_detectada": real_branch}
 
 
 @router.get("/projects/{slug}/mastery-paths")
-def get_mastery_paths(slug: str):
-    project_dir = PROJETOS_DIR / slug
+def get_mastery_paths(slug: str, branch: str = Query(None)):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
     state = _load_yaml(project_dir / "project-state.yaml")
     paths = state.get("mastery_paths", []) if state else []
     return {"mastery_paths": paths, "count": len(paths)}
 
 
 @router.get("/projects/{slug}/{database}")
-def get_project_database(slug: str, database: str):
-    project_dir = PROJETOS_DIR / slug
+def get_project_database(slug: str, database: str, branch: str = Query(None)):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
 
     allowed = {"fontes", "arquitetura", "tarefas", "rotinas", "frameworks", "ferramentas", "docs", "sessoes", "conversas"}
     if database not in allowed:
-        raise HTTPException(status_code=400, detail=f"Database inválida. Use: {', '.join(sorted(allowed))}")
+        raise HTTPException(status_code=400, detail=f"Database invÃ¡lida. Use: {', '.join(sorted(allowed))}")
 
     return {database: _list_markdown_files(project_dir, database)}
 
 
+@router.get("/branches")
+def list_branches():
+    """List available worktree branches."""
+    import subprocess
+    try:
+        result = subprocess.run(
+            ["git", "worktree", "list"],
+            capture_output=True, text=True, cwd=REPO_DIR, timeout=5
+        )
+        branches = []
+        for line in result.stdout.strip().split("\n"):
+            parts = line.split()
+            if len(parts) >= 3:
+                path = parts[0]
+                branch = parts[2].strip("[]")
+                branches.append({"path": path, "branch": branch})
+            elif len(parts) >= 2:
+                path = parts[0]
+                branch = parts[1]
+                branches.append({"path": path, "branch": branch})
+        return {"branches": branches, "current": current_branch()}
+    except Exception as e:
+        return {"branches": [], "current": current_branch(), "error": str(e)}
+
+
 @router.get("/profile")
-def get_profile():
-    profile_path = PROJETOS_DIR / "perfis" / "frota.yaml"
+def get_profile(branch: str = Query(None)):
+    projetos_dir, real_branch = resolve_projetos_dir(branch)
+    profile_path = projetos_dir / "perfis" / "frota.yaml"
     profile = _load_yaml(profile_path)
     if not profile:
-        raise HTTPException(status_code=404, detail="Perfil Frota não encontrado")
+        raise HTTPException(status_code=404, detail="Perfil Frota nÃ£o encontrado")
     return profile

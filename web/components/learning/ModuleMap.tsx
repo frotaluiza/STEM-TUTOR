@@ -8,6 +8,7 @@ import {
   Circle,
   CircleCheck,
   CircleDot,
+  GraduationCap,
 } from "lucide-react";
 import type {
   MasteryMapResult,
@@ -20,6 +21,7 @@ interface ModuleMapProps {
   result: MasteryMapResult;
   onContinue: () => void;
   onKpClick?: (kpId: string) => void;
+  onModuleStudy?: (moduleId: string, moduleName: string) => void;
 }
 
 const STATUS_META: Record<ObjectiveStatus, { className: string }> = {
@@ -35,7 +37,7 @@ function StatusIcon({ status }: { status: ObjectiveStatus }) {
   return <Circle className={cls} />;
 }
 
-export default function ModuleMap({ result, onContinue, onKpClick }: ModuleMapProps) {
+export default function ModuleMap({ result, onContinue, onKpClick, onModuleStudy }: ModuleMapProps) {
   const { t } = useTranslation();
   const { map, next } = result;
   const [expanded, setExpanded] = useState<Set<string>>(() => {
@@ -151,6 +153,19 @@ export default function ModuleMap({ result, onContinue, onKpClick }: ModuleMapPr
                     style={{ width: `${total ? (mastered / total) * 100 : 0}%` }}
                   />
                 </div>
+                {onModuleStudy && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onModuleStudy(mod.id, mod.name);
+                    }}
+                    className="ml-1.5 p-1 rounded text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--accent)] transition-colors"
+                    title="Estudar este módulo no NoteBlocks"
+                  >
+                    <GraduationCap className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </button>
 
               {/* KP list (collapsible) */}
