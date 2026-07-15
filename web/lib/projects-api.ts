@@ -22,7 +22,6 @@ export interface ProjectState {
   decisoes_acumuladas?: { contexto: string; escolha: string }[];
   proximos_passos?: { descricao: string; prioridade: string }[];
   ultima_atualizacao?: string;
-  branch_detectada?: string;
 }
 
 export interface ProjectDetail {
@@ -33,14 +32,38 @@ export interface ProjectDetail {
   relatorios: Record<string, { nome: string; arquivo: string }[]>;
 }
 
-export interface BranchInfo {
-  path: string;
-  branch: string;
+export interface Profile {
+  perfil: string;
+  usuario: string;
+  github: string;
+  projetos: { slug: string; nome: string; repositorio_codigo?: string }[];
 }
 
-export interface BranchesResponse {
-  branches: BranchInfo[];
-  current: string;
+const BASE = "/orchestrator/api/v1";
+
+export async function fetchProjects(): Promise<ProjectSummary[]> {
+  const res = await apiFetch(`${BASE}/projects`);
+  const data = await res.json();
+  return data.projects ?? [];
+}
+
+export async function fetchProject(slug: string): Promise<ProjectDetail> {
+  const res = await apiFetch(`${BASE}/projects/${slug}`);
+  return res.json();
+}
+
+export async function fetchProjectState(slug: string): Promise<ProjectState> {
+  const res = await apiFetch(`${BASE}/projects/${slug}/state`);
+  return res.json();
+}
+
+export async function fetchProjectDatabase(
+  slug: string,
+  database: string,
+): Promise<{ nome: string; arquivo: string; conteudo?: string }[]> {
+  const res = await apiFetch(`${BASE}/projects/${slug}/${database}`);
+  const data = await res.json();
+  return data[database] ?? [];
 }
 
 export interface SessionEntry {
@@ -50,67 +73,20 @@ export interface SessionEntry {
   origem?: string;
 }
 
-const BASE = "/orchestrator/api/v1";
-
-function qs(params: Record<string, string | undefined>): string {
-  const entries = Object.entries(params).filter(
-    ([, v]) => v !== undefined && v !== "",
-  );
-  return entries.length ? "?" + new URLSearchParams(entries).toString() : "";
-}
-
-export async function fetchProjects(branch?: string): Promise<ProjectSummary[]> {
-  const res = await apiFetch(`${BASE}/projects${qs({ branch })}`);
-  const data = await res.json();
-  return data.projects ?? [];
-}
-
-export async function fetchProject(
-  slug: string,
-  branch?: string,
-): Promise<ProjectDetail> {
-  const res = await apiFetch(`${BASE}/projects/${slug}${qs({ branch })}`);
-  return res.json();
-}
-
-export async function fetchProjectState(
-  slug: string,
-  branch?: string,
-): Promise<ProjectState> {
-  const res = await apiFetch(`${BASE}/projects/${slug}/state${qs({ branch })}`);
-  return res.json();
-}
-
-export async function fetchProjectDatabase(
-  slug: string,
-  database: string,
-  branch?: string,
-): Promise<{ nome: string; arquivo: string; conteudo?: string }[]> {
-  const res = await apiFetch(
-    `${BASE}/projects/${slug}/${database}${qs({ branch })}`,
-  );
-  const data = await res.json();
-  return data[database] ?? [];
-}
-
 export async function fetchSessions(
   projeto?: string,
   origem?: string,
-  branch?: string,
 ): Promise<SessionEntry[]> {
-  const res = await apiFetch(
-    `${BASE}/sessions${qs({ projeto, origem, branch })}`,
-  );
+  const params = new URLSearchParams();
+  if (projeto) params.set("projeto", projeto);
+  if (origem) params.set("origem", origem);
+  const qs = params.toString();
+  const res = await apiFetch(`${BASE}/sessions${qs ? `?${qs}` : ""}`);
   const data = await res.json();
   return data.sessions ?? [];
 }
 
-export async function fetchBranches(): Promise<BranchesResponse> {
-  const res = await apiFetch(`${BASE}/branches`);
-  return res.json();
-}
-
-export async function fetchProfile(branch?: string) {
-  const res = await apiFetch(`${BASE}/profile${qs({ branch })}`);
+export async function fetchProfile(): Promise<Profile> {
+  const res = await apiFetch(`${BASE}/profile`);
   return res.json();
 }

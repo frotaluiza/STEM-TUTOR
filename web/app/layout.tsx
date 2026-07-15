@@ -4,7 +4,6 @@ import "./globals.css";
 import ThemeScript from "@/components/ThemeScript";
 import ToastViewport from "@/components/common/ToastViewport";
 import { AppShellProvider } from "@/context/AppShellContext";
-import { ProjectProvider } from "@/context/ProjectContext";
 import { I18nClientBridge } from "@/i18n/I18nClientBridge";
 
 // Geist matches the public site (deeptutor.info) and stays crisp at the
@@ -51,10 +50,8 @@ export default function RootLayout({
       >
         <ThemeScript />
         <AppShellProvider>
-          <ProjectProvider>
-            <I18nClientBridge>{children}</I18nClientBridge>
-            <ToastViewport />
-          </ProjectProvider>
+          <I18nClientBridge>{children}</I18nClientBridge>
+          <ToastViewport />
         </AppShellProvider>
       </body>
     </html>

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "91a45a129f44",
+    "text": "Criar pagina de configuracao de sources em /settings/sources",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "media",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.375542+00:00",
+    "updated": "2026-07-15T03:07:27.375542+00:00"
+  },
+  {
+    "id": "cba357bda545",
+    "text": "Criar API client sources-api.ts para o frontend",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "media",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.338434+00:00",
+    "updated": "2026-07-15T03:07:27.338434+00:00"
+  },
+  {
+    "id": "df512ebf7a5e",
+    "text": "Criar pagina Sources Manager em web/app/(workspace)/sources/",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "alta",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.297572+00:00",
+    "updated": "2026-07-15T03:07:27.297572+00:00"
+  },
+  {
+    "id": "9e50a2d4e2a8",
+    "text": "Adicionar /sources na SECONDARY_NAV da sidebar",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "alta",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.251556+00:00",
+    "updated": "2026-07-15T03:07:27.251556+00:00"
+  }
+]

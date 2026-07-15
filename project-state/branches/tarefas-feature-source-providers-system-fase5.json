@@ -1,0 +1,22 @@
+[
+  {
+    "id": "22e64b071d4c",
+    "text": "Criar tool customizado no opencode.jsonc apontando pra API do DeepTutor",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "baixa",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.441653+00:00",
+    "updated": "2026-07-15T03:07:27.441653+00:00"
+  },
+  {
+    "id": "b8617fdd2410",
+    "text": "Documentar API sources para acesso pelo OpenCode",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "baixa",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.403891+00:00",
+    "updated": "2026-07-15T03:07:27.403891+00:00"
+  }
+]

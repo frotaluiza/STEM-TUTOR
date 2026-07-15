@@ -1,0 +1,52 @@
+[
+  {
+    "id": "8d37dc06b85e",
+    "text": "Provider: Google Books (API key)",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "media",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.188548+00:00",
+    "updated": "2026-07-15T03:07:27.188548+00:00"
+  },
+  {
+    "id": "0bed407abd85",
+    "text": "Provider: Perplexity DeepSearch (API key)",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "media",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.145470+00:00",
+    "updated": "2026-07-15T03:07:27.145470+00:00"
+  },
+  {
+    "id": "0c24d2d86274",
+    "text": "Provider: Newton Braga (scraper)",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "alta",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.086830+00:00",
+    "updated": "2026-07-15T03:07:27.086830+00:00"
+  },
+  {
+    "id": "2902e64a9b46",
+    "text": "Provider: Zona da Eletrica (scraper)",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "alta",
+    "tags": [],
+    "created": "2026-07-15T03:07:27.030862+00:00",
+    "updated": "2026-07-15T03:07:27.030862+00:00"
+  },
+  {
+    "id": "9448bcf5af7f",
+    "text": "Registrar router sources no deeptutor/api/main.py",
+    "feito": false,
+    "session_slug": "lucky-wizard",
+    "prioridade": "alta",
+    "tags": [],
+    "created": "2026-07-15T03:07:26.894257+00:00",
+    "updated": "2026-07-15T03:07:26.894257+00:00"
+  }
+]
