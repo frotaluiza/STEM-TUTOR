@@ -5,7 +5,7 @@ area: IA
 status: "Em andamento"
 objetivo: "Plataforma personalizada para estudantes de engenharia do ciclo básico e profissional de engenharia elétrica da UFRJ"
 repositorio_codigo: "frotaluiza/STEM-TUTOR"
-branch_atual: "main"
+branch_atual: "ps/mindmap-v2"
 ultima_sessao:
   slug: continuacao-sessao
   titulo: "Project Orchestrator — implementação completa + merge"
@@ -62,6 +62,8 @@ proximos_passos:
   - descricao: "ChatBlock no NoteBlocks — mini-sessão opencode com origem: noteblocks"
     prioridade: media
   - descricao: "Popular Projetos/ com dados reais dos outros projetos (TCC, bateria, PC)"
+    prioridade: media
+  - descricao: "Visualização de worktree no PM — acompanhar branches em tempo real pelo DeepTutor"
     prioridade: media
   - descricao: "Relatório diário automático — resumo das alterações do dia no project-state e código"
     prioridade: baixa

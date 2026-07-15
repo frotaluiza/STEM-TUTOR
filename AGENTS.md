@@ -290,6 +290,23 @@ Final da sessão
 | `@pull-notion` | Puxa alterações do Notion → local |
 | `@generate-report` | Gera resumo diário do projeto |
 
+### Múltiplas Branches ao Mesmo Tempo
+
+A API dos project-states (`scripts/api/`) pode servir branches diferentes
+simultaneamente usando `git worktree`:
+
+```powershell
+# Cria worktree da main e inicia APIs nas portas 8080 e 8081
+.\scripts\kb\worktree-setup.ps1 -Branches "main" -StartAPIs
+
+# STEM-TUTOR/           → branch atual → :8080
+# STEM-TUTOR-main/      → main         → :8081
+```
+
+Cada worktree é uma pasta separada com seu próprio checkout Git,
+compartilhando o mesmo repositório remoto. Útil para comparar
+comportamento entre branches sem precisar fazer checkout.
+
 ---
 
 ## Dependency Layers
