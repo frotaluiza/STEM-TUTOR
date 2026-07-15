@@ -1192,6 +1192,120 @@ async def pm_update_tarefa(task_id: str, body: dict):
     raise HTTPException(status_code=404, detail="Task not found")
 
 
+
+
+@router.get("/api/v1/pm/conflicts")
+async def pm_conflicts(source: str = "main", target: str | None = None):
+    """Simulate a merge to detect conflicts between two branches."""
+    if not target:
+        target = _run_git(["branch", "--show-current"]) or "main"
+
+    # Fetch latest from remote
+    _run_git(["fetch", "--prune", "personal"])
+    _run_git(["fetch", "--prune", "origin"])
+
+    def _resolve_ref(name: str) -> str:
+        """Resolve a branch name to a full ref that git can use."""
+        # Try local first
+        local = _run_git(["rev-parse", "--verify", name])
+        if local:
+            return name
+        # Try with origin/ prefix
+        origin_ref = _run_git(["rev-parse", "--verify", f"origin/{name}"])
+        if origin_ref:
+            return f"origin/{name}"
+        # Try personal/ prefix
+        personal_ref = _run_git(["rev-parse", "--verify", f"personal/{name}"])
+        if personal_ref:
+            return f"personal/{name}"
+        return name  # fallback, will fail
+
+    source_ref = _resolve_ref(source)
+    target_ref = _resolve_ref(target)
+
+    # Use git merge-tree to simulate merge
+    merge_base = _run_git(["merge-base", source_ref, target_ref])
+    if not merge_base:
+        return {"error": f"Não foi possível encontrar base comum entre {source} e {target}", "conflicts": []}
+
+    tree_result = _run_git_binary(["merge-tree", merge_base, source_ref, target_ref])
+    if not tree_result:
+        return {"error": "merge-tree falhou", "conflicts": []}
+
+    # Parse merge-tree output for conflicts
+    lines = tree_result.split("\n")
+    conflicts = []
+    current_file = ""
+    in_conflict = False
+
+    for line in lines:
+        # Detect changed files (not conflicted)
+        if line.startswith("CHANGED:") or line.startswith("CONFLICT"):
+            in_conflict = True
+
+        # merge-tree format: "CONFLICT (content): Merge conflict in file.txt"
+        if "CONFLICT" in line and "in " in line:
+            fname = line.split("in ")[-1].strip()
+            conflicts.append({
+                "file": fname,
+                "type": "content",
+                "description": line.strip(),
+            })
+            current_file = fname
+
+        # Auto-mergeable changes
+        if line.startswith("CHANGED:"):
+            parts = line.split()
+            if len(parts) >= 2:
+                fname = parts[-1]
+                conflicts.append({
+                    "file": fname,
+                    "type": "auto-merge",
+                    "description": f"Será mergeado automaticamente",
+                })
+
+    # Get ahead/behind info
+    ahead = _run_git(["rev-list", "--count", f"{target_ref}..{source_ref}"]) or "0"
+    behind = _run_git(["rev-list", "--count", f"{source_ref}..{target_ref}"]) or "0"
+
+    # Diff stats
+    diff_stat = _run_git(["diff", "--stat", f"{target_ref}...{source_ref}"])
+    files_changed = 0
+    insertions = 0
+    deletions = 0
+    for line in (diff_stat or "").split("\n"):
+        if "file" in line and "changed" in line:
+            import re
+            m = re.search(r"(\d+) file", line)
+            if m: files_changed = int(m.group(1))
+            m = re.search(r"(\d+) insertion", line)
+            if m: insertions = int(m.group(1))
+            m = re.search(r"(\d+) deletion", line)
+            if m: deletions = int(m.group(1))
+
+    # Commits to be merged
+    log = _run_git(["log", "--oneline", f"{target_ref}...{source_ref}"])
+    commits = [l.strip() for l in (log or "").split("\n") if l.strip()][:20]
+
+    has_conflicts = any(c["type"] == "content" for c in conflicts)
+
+    return {
+        "source": source,
+        "source_ref": source_ref,
+        "target": target,
+        "target_ref": target_ref,
+        "has_conflicts": has_conflicts,
+        "conflicts": conflicts[:20],
+        "conflict_count": len([c for c in conflicts if c["type"] == "content"]),
+        "auto_merge_count": len([c for c in conflicts if c["type"] == "auto-merge"]),
+        "ahead": int(ahead),
+        "behind": int(behind),
+        "files_changed": files_changed,
+        "insertions": insertions,
+        "deletions": deletions,
+        "commits": commits,
+        "merge_base": merge_base[:12],
+    }
 @router.delete("/api/v1/pm/tarefas/{task_id}")
 async def pm_delete_tarefa(task_id: str, branch: str = "main"):
     """Delete a task."""
@@ -1204,6 +1318,19 @@ async def pm_delete_tarefa(task_id: str, branch: str = "main"):
 # ---------------------------------------------------------------------------
 # Branches + Sync Status
 # ---------------------------------------------------------------------------
+
+
+def _run_git_binary(args: list[str]) -> str:
+    """Run git and return stdout as utf-8, ignoring decode errors."""
+    try:
+        result = subprocess.run(
+            ["git"] + args,
+            capture_output=True, timeout=15,
+            cwd=PROJECT_DIR,
+        )
+        return result.stdout.decode("utf-8", errors="replace").strip()
+    except Exception:
+        return ""
 
 
 def _run_git(args: list[str]) -> str:
@@ -1221,14 +1348,23 @@ def _run_git(args: list[str]) -> str:
 
 @router.get("/api/v1/pm/branches")
 async def pm_list_branches(slug: str = "ai-stem-tutor"):
-    """List all branches with their project state files."""
-    # Git branches
-    git_branches = _run_git(["branch", "--list"]).split("\n")
+    """List all branches (local + remote) with their project state files."""
+    _run_git(["fetch", "--prune", "personal"])
+    _run_git(["fetch", "--prune", "origin"])
+    local_raw = _run_git(["branch", "--list"]).split("\n")
     branches = []
-    for b in git_branches:
+    seen = set()
+    for b in local_raw:
         name = b.replace("*", "").strip()
-        if name:
+        if name and name not in seen:
+            seen.add(name)
             branches.append({"name": name, "current": "*" in b})
+    remote_raw = _run_git(["branch", "-r"]).split("\n")
+    for b in remote_raw:
+        name = b.strip().replace("personal/", "").replace("origin/", "")
+        if name and name not in seen and "HEAD" not in name:
+            seen.add(name)
+            branches.append({"name": name, "current": False, "remote": True})
 
     # Project state files in branches dir
     ps_files = []

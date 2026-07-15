@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 interface BranchInfo {
   name: string;
   current: boolean;
+  remote?: boolean;
 }
 
 interface PMBranchSelectorProps {
@@ -59,6 +60,7 @@ export default function PMBranchSelector({ currentBranch, onSelect }: PMBranchSe
                 <GitBranch size={11} strokeWidth={1.5} className="shrink-0 text-[var(--muted-foreground)]" />
                 <span className="flex-1 font-mono truncate">{b.name}</span>
                 {b.current && <span className="text-[10px] text-green-500">●</span>}
+                {b.remote && <span className="text-[10px] text-[var(--muted-foreground)]/40">☁</span>}
               </button>
             ))}
           </div>
