@@ -1,9 +1,10 @@
-﻿from pathlib import Path
+﻿import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from scripts.api.utils import resolve_projetos_dir, current_branch, PROJETOS_DIR, REPO_DIR
 from fastapi import APIRouter, HTTPException, Query
 import yaml
-
-from ..utils import resolve_projetos_dir, current_branch, PROJETOS_DIR, REPO_DIR
 
 router = APIRouter()
 
@@ -67,23 +68,19 @@ def get_project(slug: str, branch: str = Query(None)):
     projetos_dir, real_branch = resolve_projetos_dir(branch)
     project_dir = projetos_dir / slug
     if not project_dir.exists() or not (project_dir / "project-state.yaml").exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
-
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
     state = _load_yaml(project_dir / "project-state.yaml")
     if not state:
         raise HTTPException(status_code=500, detail=f"Erro ao ler project-state de '{slug}'")
-
     fontes = {}
     for sub in ["fontes", "arquitetura", "tarefas", "rotinas", "frameworks", "ferramentas", "docs", "sessoes", "conversas"]:
         fontes[sub] = _list_markdown_files(project_dir, sub)
-
     relatorios = {}
     rel_dir = project_dir / "relatorios"
     if rel_dir.exists():
         for sub in rel_dir.iterdir():
             if sub.is_dir():
                 relatorios[sub.name] = _list_markdown_files(project_dir, f"relatorios/{sub.name}")
-
     return {
         "slug": slug,
         "project_state": state,
@@ -98,10 +95,10 @@ def get_project_state(slug: str, branch: str = Query(None)):
     projetos_dir, real_branch = resolve_projetos_dir(branch)
     project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
     state = _load_yaml(project_dir / "project-state.yaml")
     if not state:
-        raise HTTPException(status_code=404, detail="project-state.yaml nÃ£o encontrado")
+        raise HTTPException(status_code=404, detail="project-state.yaml não encontrado")
     return {**state, "branch_detectada": real_branch}
 
 
@@ -110,7 +107,7 @@ def get_mastery_paths(slug: str, branch: str = Query(None)):
     projetos_dir, real_branch = resolve_projetos_dir(branch)
     project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
     state = _load_yaml(project_dir / "project-state.yaml")
     paths = state.get("mastery_paths", []) if state else []
     return {"mastery_paths": paths, "count": len(paths)}
@@ -121,18 +118,15 @@ def get_project_database(slug: str, database: str, branch: str = Query(None)):
     projetos_dir, real_branch = resolve_projetos_dir(branch)
     project_dir = projetos_dir / slug
     if not project_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' nÃ£o encontrado")
-
+        raise HTTPException(status_code=404, detail=f"Projeto '{slug}' não encontrado")
     allowed = {"fontes", "arquitetura", "tarefas", "rotinas", "frameworks", "ferramentas", "docs", "sessoes", "conversas"}
     if database not in allowed:
-        raise HTTPException(status_code=400, detail=f"Database invÃ¡lida. Use: {', '.join(sorted(allowed))}")
-
+        raise HTTPException(status_code=400, detail=f"Database inválida. Use: {', '.join(sorted(allowed))}")
     return {database: _list_markdown_files(project_dir, database)}
 
 
 @router.get("/branches")
 def list_branches():
-    """List available worktree branches."""
     import subprocess
     try:
         result = subprocess.run(
@@ -143,13 +137,9 @@ def list_branches():
         for line in result.stdout.strip().split("\n"):
             parts = line.split()
             if len(parts) >= 3:
-                path = parts[0]
-                branch = parts[2].strip("[]")
-                branches.append({"path": path, "branch": branch})
+                branches.append({"path": parts[0], "branch": parts[2].strip("[]")})
             elif len(parts) >= 2:
-                path = parts[0]
-                branch = parts[1]
-                branches.append({"path": path, "branch": branch})
+                branches.append({"path": parts[0], "branch": parts[1]})
         return {"branches": branches, "current": current_branch()}
     except Exception as e:
         return {"branches": [], "current": current_branch(), "error": str(e)}
@@ -161,5 +151,5 @@ def get_profile(branch: str = Query(None)):
     profile_path = projetos_dir / "perfis" / "frota.yaml"
     profile = _load_yaml(profile_path)
     if not profile:
-        raise HTTPException(status_code=404, detail="Perfil Frota nÃ£o encontrado")
+        raise HTTPException(status_code=404, detail="Perfil Frota não encontrado")
     return profile

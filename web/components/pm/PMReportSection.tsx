@@ -110,7 +110,7 @@ export default function PMReportSection({ project, loading }: PMReportSectionPro
             {project.todos.map((t, i) => (
               <div key={i} className="flex items-start gap-2 text-[11.5px] text-[var(--foreground)]/85">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                {t}
+                {typeof t === "string" ? t : (t as any).task || (t as any).descricao || JSON.stringify(t)}
               </div>
             ))}
           </div>

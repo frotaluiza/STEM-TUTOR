@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
   fetchProject,
   fetchSessions,
   type ProjectDetail,
   type SessionEntry,
 } from "@/lib/projects-api";
+import BranchSelector from "@/components/BranchSelector";
 
 const DB_LABELS: Record<string, string> = {
   fontes: "Fontes",
@@ -24,19 +25,21 @@ const DB_LABELS: Record<string, string> = {
 
 export default function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
+  const searchParams = useSearchParams();
   const [project, setProject] = useState<ProjectDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sessions, setSessions] = useState<SessionEntry[]>([]);
   const [showMiniSessions, setShowMiniSessions] = useState(false);
+  const [branch, setBranch] = useState(searchParams.get("branch") || "");
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const [proj, sess] = await Promise.all([
-        fetchProject(slug),
-        fetchSessions(slug),
+        fetchProject(slug, branch || undefined),
+        fetchSessions(slug, undefined, branch || undefined),
       ]);
       setProject(proj);
       setSessions(sess);
@@ -45,7 +48,7 @@ export default function ProjectDetailPage() {
     } finally {
       setLoading(false);
     }
-  }, [slug]);
+  }, [slug, branch]);
 
   useEffect(() => {
     void load();
@@ -90,17 +93,17 @@ export default function ProjectDetailPage() {
     <div className="mx-auto h-full max-w-5xl overflow-y-auto p-6">
       {/* Header */}
       <div className="mb-6">
-        <Link
-          href="/projects"
-          className="mb-2 inline-block text-sm text-[var(--accent)] hover:underline"
-        >
-          ← Projetos
-        </Link>
+        <div className="mb-2 flex items-center justify-between">
+          <Link href="/projects" className="text-sm text-[var(--accent)] hover:underline">
+            ← Projetos
+          </Link>
+          <BranchSelector selected={branch || "atual"} onChange={setBranch} />
+        </div>
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold">{state.projeto}</h1>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {state.area} &middot; {state.objetivo}
+              {state.area} &middot; {branch ? `branch: ${branch}` : state.objetivo}
             </p>
           </div>
           <span
