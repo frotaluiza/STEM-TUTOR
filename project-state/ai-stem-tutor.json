@@ -2,10 +2,11 @@
   "project": "AI STEM Tutor",
   "slug": "ai-stem-tutor",
   "created": "2026-07-11T21:11:50Z",
-  "last_updated": "2026-07-14T15:30:00Z",
-  "branch": "ps/mindmap-v2",
-  "repo_branch": "ps/mindmap-v2",
+  "last_updated": "2026-07-14T23:59:00Z",
+  "branch": "feature/source-providers-system",
+  "repo_branch": "feature/source-providers-system",
   "session_slug": "lucky-wizard",
+  "session_title": "Source Providers System — Fase 1",
   "last_commit": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap",
   "branching_strategy": {
     "model": "session → project_state_branch → repo_branch",
@@ -14,6 +15,11 @@
     "ps_branch": "ps/mindmap-v2",
     "repo_branches_created": [
       "feature/source-providers-system"
+    ],
+    "tarefas_registradas": 12,
+    "artefatos_gerados": [
+      "2026-07-14--lucky-wizard--changelog.md",
+      "2026-07-14--lucky-wizard--relatorio.md"
     ]
   },
   "git_log": "3d0ee1b8 chore: iniciar branch ps/mindmap-v2 para melhorias no mindmap\nce4028be Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n220ad923 feat: tarefas (tasks) system — backend API + PM panel + AGENTS.md guideline\n1b6f80b2 Merge branch 'main' of https://github.com/frotaluiza/STEM-TUTOR\n57aa68c3 docs: atualiza project-state com decisoes da sessao e proximos passos",
@@ -28,10 +34,23 @@
         "Mar da Eletrica: projeto no sistema de fontes, mastery paths = futuro",
         "Perplexity DeepSearch: util como camada de sintese sobre resultados brutos"
       ],
+      "tarefas_pm": 12,
       "files": [
-        "deeptutor/services/sources/ (planejado — modulo novo a ser criado)",
-        "project-state/ai-stem-tutor.md (atualizado)",
-        "project-state/ai-stem-tutor.json (atualizado)"
+        "deeptutor/services/sources/__init__.py",
+        "deeptutor/services/sources/models.py",
+        "deeptutor/services/sources/db.py",
+        "deeptutor/services/sources/registry.py",
+        "deeptutor/services/sources/manager.py",
+        "deeptutor/services/sources/suggestions.py",
+        "deeptutor/services/sources/api.py",
+        "deeptutor/services/sources/providers/__init__.py",
+        "deeptutor/services/sources/providers/base.py",
+        "deeptutor/services/sources/providers/open_library.py",
+        "tests/sources/__init__.py",
+        "tests/sources/test_db.py",
+        "tests/sources/test_manager.py",
+        "tests/sources/test_suggestions.py",
+        "scripts/run_sources_api.py"
       ]
     },
     {
