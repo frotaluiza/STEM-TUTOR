@@ -13,7 +13,7 @@ _DB_PATH: Optional[str] = None
 def _get_db() -> sqlite3.Connection:
     global _DB_PATH
     if _DB_PATH is None:
-        _DB_PATH = str(Path(__file__).resolve().parents[4] / "data" / "sources.db")
+        _DB_PATH = str(Path(__file__).resolve().parents[3] / "data" / "sources.db")
     conn = sqlite3.connect(_DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
