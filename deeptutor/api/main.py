@@ -347,6 +347,7 @@ from deeptutor.noteblocks.subtopic_test import router as noteblocks_subtopic_rou
 from deeptutor.noteblocks.workspace_agent import router as noteblocks_agent_router
 from deeptutor.noteblocks.ws_note import router as noteblocks_ws_router
 from deeptutor.noteblocks.ws_terminal import router as noteblocks_terminal_router
+from deeptutor.api.routers.artefacts import router as artefacts_router
 
 # Auth router is public — login/logout/register/status require no token
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
@@ -455,6 +456,12 @@ app.include_router(
 )
 app.include_router(
     noteblocks_subtopic_router,
+    dependencies=_auth,
+)
+app.include_router(
+    artefacts_router,
+    prefix="/api/v1",
+    tags=["artefacts"],
     dependencies=_auth,
 )
 app.include_router(
