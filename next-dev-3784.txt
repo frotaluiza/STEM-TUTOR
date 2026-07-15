@@ -1,0 +1,284 @@
+﻿Ôû▓ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3784
+- Network:       http://100.117.222.86:3784
+Ô£ô Ready in 1570ms
+- Experiments (use with caution):
+  ┬À proxyClientMaxBodySize: 220200960
+
+ GET / 200 in 1062ms (next.js: 216ms, proxy.ts: 293ms, application-code: 553ms)
+ GET /home 200 in 4.2s (next.js: 4.0s, proxy.ts: 44ms, application-code: 138ms)
+ GET /noteblocks 200 in 474ms (next.js: 316ms, proxy.ts: 52ms, application-code: 106ms)
+ GET /pm 200 in 209ms (next.js: 108ms, proxy.ts: 25ms, application-code: 76ms)
+ GET /space 200 in 205ms (next.js: 117ms, proxy.ts: 10ms, application-code: 77ms)
+ GET /space/learning 200 in 205ms (next.js: 122ms, proxy.ts: 10ms, application-code: 73ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 91ms (next.js: 15ms, proxy.ts: 11ms, application-code: 66ms)
+Ô£ô Compiled in 3.4s
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 659ms (next.js: 207ms, proxy.ts: 223ms, application-code: 230ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 345ms (next.js: 12ms, proxy.ts: 25ms, application-code: 307ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 288ms (next.js: 21ms, proxy.ts: 18ms, application-code: 249ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 282ms (next.js: 110ms, proxy.ts: 18ms, application-code: 154ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 285ms (next.js: 67ms, proxy.ts: 17ms, application-code: 201ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 280ms (next.js: 153ms, proxy.ts: 16ms, application-code: 110ms)
+Ô£ô Compiled in 1165ms
+node.exe : Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+No linha:1 caractere:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Ô¿» ./features/...yout.tsx:386:10:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 1164ms (next.js: 609ms, proxy.ts: 156ms, application-code: 399ms)
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 79ms (next.js: 41ms, proxy.ts: 8ms, application-code: 30ms)
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 46ms (next.js: 22ms, proxy.ts: 6ms, application-code: 17ms)
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 75ms (next.js: 36ms, proxy.ts: 6ms, application-code: 32ms)
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 74ms (next.js: 54ms, proxy.ts: 7ms, application-code: 14ms)
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  [90m384 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m385 |[0m
+[31m[1m>[0m [90m386 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m387 |[0m
+  [90m388 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m389 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 48ms (next.js: 22ms, proxy.ts: 9ms, application-code: 18ms)
+[browser] Uncaught Error: ./features/noteblocks/components/WorkspaceLayout.tsx:386:10
+the name `Loader2` is defined multiple times
+  384 | // ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔ
+öÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  385 |
+> 386 | import { Loader2 } from "lucide-react";
+      |          ^^^^^^^
+  387 |
+  388 | function Panel({
+  389 |   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./features/noteblocks/components/WorkspaceLayout.tsx:386:10)
+    at <unknown> (Error: (./features/noteblocks/components/WorkspaceLayout.tsx:386:10)
+Ô¿» ./features/noteblocks/components/WorkspaceLayout.tsx:353:10
+the name `Loader2` is defined multiple times
+  [90m351 |[0m [90m// ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö
+ÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ[0m
+  [90m352 |[0m
+[31m[1m>[0m [90m353 |[0m [36mimport[0m { [33mLoader2[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m    |[0m          [31m[1m^^^^^^^[0m
+  [90m354 |[0m
+  [90m355 |[0m [36mfunction[0m [33mPanel[0m({
+  [90m356 |[0m   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 500 in 118ms (next.js: 60ms, proxy.ts: 9ms, application-code: 48ms)
+[browser] Uncaught Error: ./features/noteblocks/components/WorkspaceLayout.tsx:353:10
+the name `Loader2` is defined multiple times
+  351 | // ÔöÇÔöÇ Panel Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔ
+öÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  352 |
+> 353 | import { Loader2 } from "lucide-react";
+      |          ^^^^^^^
+  354 |
+  355 | function Panel({
+  356 |   tab,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component Browser]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./features/noteblocks/components/WorkspaceLayout.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Client Component SSR]
+    ./features/noteblocks/components/NoteBlocksView.tsx [Server Component]
+    ./app/(workspace)/noteblocks/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./features/noteblocks/components/WorkspaceLayout.tsx:353:10)
+    at <unknown> (Error: (./features/noteblocks/components/WorkspaceLayout.tsx:353:10)
+Ô£ô Compiled in 557ms
+ GET /noteblocks?session=1&pathId=unified_1783914444499_8edcf399 200 in 568ms (next.js: 147ms, proxy.ts: 5ms, application-code: 416ms)
